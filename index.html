@@ -1,315 +1,542 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="icon" href="https://yt3.ggpht.com/7iXXNPMZBA9TukmPYwAEKDMdS0V5E9Xol_g4X--BD3BAFGi_sS_UeYAjw76f8MpyY1ZLIb4MVjM=s88-c-k-c0x00ffffff-no-rj" type="image/x-icon">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>La Araña Que Pica - Página Oficial</title>
-  <!-- TIPOGRAFÍA PIXEL/RETRO -->
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
+
+  <!-- TIPOGRAFÍAS: Bungee (más gruesa, parecida a la referencia) + Press Start 2P -->
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      background: #101010;
-      margin: 0;
-      min-height: 100vh;
-      font-family: 'Roboto', Arial, sans-serif;
-      overflow-x: hidden;
-      position: relative;
-      /* Fondo glitch overlay */
-    }
-    /* Fondo miniatura OF */
-    .of-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: url('https://i.ytimg.com/vi/i5qveTnigW4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAXDL3VlXGYg4NLK1AviqJJLJbFKQ') center center/cover no-repeat, #000;
-      opacity: 0.18;
-      z-index: 0;
-      pointer-events: none;
-      filter: blur(2px) grayscale(0.1);
+    :root{
+      --bg: #070707;
+      --neon-cyan: #00ffe7;
+      --neon-pink: #ff00aa;
+      --muted: #cfeff0;
+      --container: 1200px;
+      --radius: 18px;
     }
 
-    .glitch-title {
-      font-family: 'Press Start 2P', 'Roboto', Arial, sans-serif;
-      font-size: 2.4rem;
-      color: #fff;
-      text-align: center;
-      margin-top: 48px;
-      margin-bottom: 8px;
-      position: relative;
-      letter-spacing: 2px;
-      text-shadow:
-        2px 0 #00ffe7,
-        -2px 0 #ff007f,
-        0 2px #00ffe7,
-        0 -2px #ff007f,
-        0 0 12px #ff00aa99,
-        0 0 32px #00ffe799;
-      animation: glitch-flicker 1.5s infinite linear alternate;
-      z-index: 2;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: var(--bg);
+      color:#e6f9f9;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
     }
-    @keyframes glitch-flicker {
-      0% { text-shadow: 2px 0 #00ffe7, -2px 0 #ff007f;}
-      10% { text-shadow: 2px 0 #ff007f, -2px 0 #00ffe7;}
-      25% { text-shadow: 4px 1px #00ffe7, -4px -1px #ff007f;}
-      50% { text-shadow: -2px -2px #ff007f, 2px 2px #00ffe7;}
-      75% { text-shadow: 1px 3px #00ffe7, -3px -1px #ff007f;}
-      100% { text-shadow: 2px 0 #00ffe7, -2px 0 #ff007f;}
-    }
-    .of-miniatura {
-      max-width: 580px;
-      width: 90vw;
-      display: block;
-      margin: 26px auto 22px auto;
-      border-radius: 18px;
-      box-shadow: 0 0 42px #00ffe7a8, 0 0 0 5px #ff00aa30 inset;
-      border: 3.5px solid #212;
-      filter: brightness(1.04) contrast(1.08);
-      transition: filter .2s;
-      position: relative;
-      z-index: 2;
-    }
-    .of-miniatura:hover {
-      filter: brightness(1.15) contrast(1.16) drop-shadow(0 0 32px #00ffe7a0);
-    }
-    /* PANEL DE SECCIONES */
-    .panel-secciones {
-      max-width: 1100px;
-      margin: 38px auto 30px auto;
-      display: flex;
-      gap: 38px;
-      justify-content: center;
-      flex-wrap: wrap;
-      z-index: 2;
-      position: relative;
-    }
-    .tarjeta-seccion {
-      background: linear-gradient(115deg, #21222d 80%, #ff00aa22 100%);
-      border-radius: 19px;
-      box-shadow: 0 8px 46px #00ffe733, 0 0 0 4px #ff00aa48 inset;
-      border: 2.5px solid #ff00aa80;
-      min-width: 270px;
-      max-width: 340px;
-      flex: 1 1 290px;
-      padding: 30px 16px 24px 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 14px;
-      transition: transform .15s, box-shadow .22s, border .19s;
-      z-index: 2;
-    }
-    .tarjeta-seccion:hover {
-      transform: translateY(-5px) scale(1.03) rotate(-1deg);
-      box-shadow: 0 16px 50px #00ffe7cc, 0 0 0 6px #ff00aa99 inset;
-      border-color: #fff;
-      background: linear-gradient(115deg, #101010 60%, #00ffe733 100%);
-      cursor: pointer;
-    }
-    .tarjeta-img {
-      width: 86px; height: 86px;
-      object-fit: cover;
-      border-radius: 16px;
-      margin-bottom: 17px;
-      background: #131313;
-      border: 2.5px solid #00ffe7bb;
-      box-shadow: 0 0 20px #ff00aa60;
-      filter: brightness(1.08);
-    }
-    .tarjeta-seccion h3 {
-      font-family: 'Press Start 2P', Arial, sans-serif;
-      color: #fff;
-      font-size: 1.11rem;
-      text-align: center;
-      margin: 0 0 12px 0;
-      letter-spacing: 1px;
-      text-shadow: 0 0 7px #ff00aa, 0 2px #00ffe7;
-    }
-    .tarjeta-seccion p {
-      font-size: 15px;
-      color: #d5d5d5;
-      text-align: center;
-      min-height: 44px;
-      margin-bottom: 16px;
-    }
-    .tarjeta-btn {
-      background: linear-gradient(90deg, #00ffe7 40%, #ff00aa 100%);
-      color: #121212;
-      font-family: 'Press Start 2P', Arial, sans-serif;
-      font-size: 1.01rem;
-      padding: 14px 24px;
-      border-radius: 9px;
-      text-decoration: none;
-      border: none;
-      box-shadow: 0 0 18px #ff00aa33, 0 3px 15px #00ffe7b6;
-      font-weight: bold;
-      transition: background .18s, color .14s, box-shadow .18s;
-      letter-spacing: 1px;
-      display: inline-block;
-      margin-top: 8px;
-      outline: none;
-    }
-    .tarjeta-btn:hover {
-      background: linear-gradient(90deg, #ff00aa 40%, #00ffe7 100%);
-      color: #fff;
-      box-shadow: 0 0 28px #ff00aaff, 0 6px 24px #00ffe7f5;
-      text-shadow: 0 0 12px #00ffe7;
-    }
-    /* Responsive */
-    @media (max-width: 950px) {
-      .panel-secciones { gap: 18px;}
-      .tarjeta-seccion {min-width: 210px;}
-    }
-    @media (max-width: 600px) {
-      .glitch-title { font-size: 1.2rem; margin-top: 26px;}
-      .panel-secciones {flex-direction: column; gap: 14px;}
-      .of-miniatura {max-width: 99vw;}
-      .tarjeta-seccion {padding: 24px 8px 19px 8px;}
-    }
-    /* Glitch deco barras */
-    .glitch-bar {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 22px;
-      background: repeating-linear-gradient(90deg, #ff00aa 0 2px, #00ffe7 3px 4px, transparent 6px 13px);
-      opacity: .23;
-      z-index: 1;
-      pointer-events: none;
-      filter: blur(1px);
-      mix-blend-mode: lighten;
-      animation: bar-move 2.8s infinite linear alternate;
-    }
-    @keyframes bar-move {
-      0% { background-position-x: 0;}
-      100% { background-position-x: 120px;}
-    }
-    /* Footer */
-    .of-footer {
-      text-align: center;
-      color: #7afcff;
-      font-family: 'Press Start 2P', Arial, sans-serif;
-      font-size: 0.8rem;
-      margin: 38px auto 13px auto;
-      opacity: 0.78;
-      letter-spacing: 1px;
-      text-shadow: 0 0 8px #ff00aa, 0 1px #00ffe7;
-      z-index: 2;
-      position: relative;
-    }
-    /* Deploy section styling */
-    .deploy {
-      max-width: 1100px;
-      margin: 24px auto 10px auto;
-      color: #d9ffff;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius: 12px;
+
+    .wrap{
+      max-width: var(--container);
+      margin: 0 auto;
       padding: 18px;
-      border: 1px solid rgba(122,252,255,0.06);
-      font-family: monospace;
-      font-size: 0.95rem;
-      z-index: 2;
       position: relative;
+      z-index: 2;
     }
-    .deploy pre {
-      margin: 8px 0 0 0;
-      background: rgba(0,0,0,0.35);
-      padding: 12px;
-      border-radius: 8px;
-      overflow-x: auto;
-      color: #bff;
+
+    /* header */
+    header.site-header{
+      margin-top: 8px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background: linear-gradient(90deg,#05060a 0%, #0f1220 100%);
+      border-radius: 10px;
+      padding: 12px 18px;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
     }
-    .deploy .label {
-      font-family: 'Press Start 2P', Arial, sans-serif;
-      font-size: 0.78rem;
-      color: #7afcff;
-      margin-bottom: 6px;
+    .brand{ display:flex; align-items:center; gap:14px; }
+    .brand .logo{ width:46px; height:46px; border-radius:10px; background: url('img/LOGO CANAL.png') center/cover no-repeat; border:2px solid rgba(0,0,0,0.25); }
+    .brand h1{ margin:0; font-family: 'Press Start 2P', monospace; font-size:0.95rem; color:#fff; }
+
+    nav.main-nav{ display:flex; gap:16px; align-items:center; font-size:0.9rem; }
+    nav.main-nav a, nav.main-nav button { color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:8px; background:transparent; border:0; cursor:pointer;}
+    nav.main-nav a:hover, nav.main-nav button:hover { background: linear-gradient(90deg,var(--neon-cyan),var(--neon-pink)); color:#071014; }
+
+    .page-title { font-family: 'Press Start 2P'; font-size:1.8rem; text-align:center; margin:22px 0 10px; color:#fff;
+      text-shadow: 2px 0 var(--neon-cyan), -2px 0 var(--neon-pink); }
+
+    /* HERO layout */
+    .hero{ display:grid; grid-template-columns: 1fr 360px; gap:26px; margin-top:6px; align-items:start; }
+
+    /* MAIN: "BASE DE DATOS" - clickeable */
+    .hero-feature{
+      background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(6,6,8,0.6));
+      border-radius: 18px;
+      padding: 48px 28px;
+      position:relative;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 24px 90px rgba(0,0,0,0.7);
+      min-height:420px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .db-link {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      height:100%;
+      text-decoration:none;
+      color:inherit;
+      position:relative;
+      outline: none;
+      border-radius: 12px;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .db-link:focus { box-shadow: 0 0 0 6px rgba(0,255,231,0.06); }
+
+    .db-frame {
+      position:absolute;
+      inset:14px;
+      border-radius:14px;
+      pointer-events:none;
+      box-shadow: 0 0 140px rgba(0,255,231,0.04) inset, 0 0 60px rgba(255,0,170,0.02) inset;
+      border: 2px solid rgba(255,255,255,0.02);
+      mix-blend-mode: screen;
+      z-index:0;
+    }
+
+    .db-hero { text-align:center; z-index:2; position:relative; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; }
+
+    .db-pill {
+      position:relative;
+      display:inline-block;
+      padding: 18px 44px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(10,10,12,0.85), rgba(28,20,34,0.8));
+      border: 2px solid rgba(255,255,255,0.04);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 6px 40px rgba(0,255,231,0.03) inset;
+      backdrop-filter: blur(2px);
+    }
+
+    .db-pill::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform: translate(-50%, -50%);
+      width: calc(100% + 48px);
+      height: calc(100% + 48px);
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, rgba(0,255,231,0.06), transparent 25%),
+                  radial-gradient(circle at 70% 70%, rgba(255,0,170,0.04), transparent 30%);
+      filter: blur(10px);
+      z-index:-2;
+    }
+    .db-pill::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform: translate(-50%, -50%);
+      width: calc(100% + 56px);
+      height: calc(100% + 56px);
+      border-radius:999px;
+      border: 2px solid rgba(0,255,231,0.06);
+      box-shadow: 0 0 26px rgba(0,255,231,0.06);
+      z-index:-3;
+      mix-blend-mode: screen;
+    }
+
+    .db-label {
+      display:inline-block;
+      font-family: 'Bungee', 'Press Start 2P', monospace;
+      font-size: 3.0rem;
+      letter-spacing: 1.8px;
+      color: #ffffff;
+      line-height:1;
+      -webkit-text-stroke: 2px rgba(0,0,0,0.85);
+      text-shadow:
+        4px 0 var(--neon-cyan),
+        -4px 0 var(--neon-pink),
+        0 6px rgba(0,0,0,0.6),
+        0 0 20px rgba(255,0,170,0.06);
+      padding: 0 6px;
+      transform: translateZ(0);
+      display:inline-block;
+    }
+
+    .db-sub {
+      margin:0;
+      color: rgba(200,255,255,0.86);
+      font-size:0.95rem;
+      opacity:0.95;
+    }
+
+    .db-link:hover { transform: translateY(-6px); box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+    .db-link:active { transform: translateY(-2px); }
+
+    /* Right column: three mini-cards stacked - adjusted heights & thumb sizes */
+    .hero-grid{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    /* Increased min-height, slightly taller thumb, and more breathing room */
+    .small-card{
+      position:relative;
+      border-radius:12px;
+      overflow:hidden;
+      min-height:132px; /* increased from 110 */
+      background: linear-gradient(180deg, rgba(18,16,20,0.95), rgba(12,12,14,0.95));
+      border: 1px solid rgba(255,255,255,0.04);
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px; /* a bit more padding */
+    }
+    .small-card .thumb{
+      width:128px; /* slightly wider */
+      height:92px; /* slightly taller */
+      border-radius:10px;
+      background-size:cover;
+      background-position:center;
+      border: 2px solid rgba(0,255,231,0.06);
+      box-shadow: 0 6px 26px rgba(0,0,0,0.6);
+      flex:0 0 128px;
+    }
+
+    /* make the content container a column so the button can align to the right */
+    .small-card .content {
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      flex:1;
+    }
+
+    .small-card .meta{
+      color:#fff;
+      font-family:'Press Start 2P';
+      font-size:0.94rem;
+      letter-spacing:0.6px;
+      line-height:1.05;
+    }
+    .small-card p.desc{
+      font-family:Roboto, Arial, sans-serif;
+      font-size:0.82rem;
+      color:#cfecec;
+      margin:0;
+      font-weight:400;
+      letter-spacing:0.1px;
+    }
+
+    /* Button adjustments: push more to the right, add animation on hover */
+    .small-card .btn {
+      align-self:flex-end; /* push to right within the content column */
+      margin-right:8px; /* a bit more gap from the edge */
+      text-decoration:none;
+      padding:10px 16px;
+      border-radius:10px;
+      background: linear-gradient(90deg,var(--neon-cyan) 30%, var(--neon-pink));
+      color:#071014;
+      font-weight:700;
+      box-shadow: 0 10px 26px rgba(0,255,231,0.06);
+      transition: transform .22s cubic-bezier(.2,.9,.3,1), box-shadow .22s ease, filter .22s ease, background-position .5s ease;
+      background-size:200% 100%;
+      position:relative;
+      z-index:2;
+      display:inline-block;
+    }
+
+    /* Hover animation: lift + subtle horizontal gradient shift + glow */
+    .small-card .btn:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 18px 46px rgba(0,255,231,0.12), 0 6px 28px rgba(255,0,170,0.08);
+      filter: saturate(1.08);
+      background-position: 100% 0; /* shift gradient */
+    }
+
+    /* Add a small ripple-like pseudo-element animation on hover to enhance interactivity */
+    .small-card .btn::after {
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:10px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+      opacity:0;
+      transition: opacity .28s ease, transform .28s ease;
+      transform: scaleX(0.96);
+      pointer-events:none;
+    }
+    .small-card .btn:hover::after {
+      opacity:1;
+      transform: scaleX(1);
+    }
+
+    /* Panel inferior - Tutoriales de instalación + other cards */
+    .panel-secciones{ margin-top:26px; display:grid; grid-template-columns: repeat(3, 1fr); gap:22px; }
+    .tarjeta-seccion{ background: linear-gradient(180deg, rgba(10,10,12,0.9), rgba(20,16,24,0.9)); padding:20px; border-radius: var(--radius); border: 2px solid rgba(255,0,170,0.12); box-shadow: 0 18px 60px rgba(0,0,0,0.6); text-align:center; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; }
+    .tarjeta-seccion .icon{ width:84px; height:84px; margin:6px auto 12px; border-radius:14px; background:#0f0f13; border:3px solid rgba(0,255,231,0.12); box-shadow:0 0 30px rgba(255,0,170,0.06); display:flex; align-items:center; justify-content:center; }
+    .tarjeta-seccion h3{ font-family:'Press Start 2P'; color:#fff; font-size:0.86rem; margin:8px 0; letter-spacing:0.6px; }
+    .tarjeta-btn{ display:inline-block; font-family:'Press Start 2P'; text-decoration:none; padding:12px 18px; border-radius:10px; background: linear-gradient(90deg,var(--neon-cyan) 30%, var(--neon-pink)); color:#071014; font-size:0.78rem; box-shadow:0 10px 26px rgba(0,255,231,0.06); margin-top:6px; transition: transform .18s ease, box-shadow .18s ease; }
+    .tarjeta-btn:hover { transform: translateY(-6px); box-shadow: 0 18px 46px rgba(0,255,231,0.12); }
+
+    .glitch-bar { height:12px; margin-top:12px; border-radius:8px; background: repeating-linear-gradient(90deg, var(--neon-pink) 0 3px, var(--neon-cyan) 4px 6px, transparent 7px 15px); opacity: .2; filter: blur(1px); }
+
+    .site-footer{ margin:34px 0 80px; text-align:center; color:#7afcff; font-family:'Press Start 2P'; font-size:0.75rem; }
+
+    /* Dropdown visuals - show on hover/focus-within */
+    .dropdown{ position:relative; }
+    .dropdown .dropdown-menu{ display:none; position:absolute; top:calc(100% + 8px); left:0; background: linear-gradient(180deg, rgba(10,10,12,0.98), rgba(20,16,24,0.98)); border-radius:10px; min-width:220px; padding:8px; box-shadow: 0 12px 40px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.03); z-index: 30; }
+    .dropdown .dropdown-menu a{ display:block; padding:8px 12px; color:#dffbfb; text-decoration:none; border-radius:6px; font-size:0.9rem; }
+    .dropdown .dropdown-menu a:hover{ background: rgba(0,255,231,0.06); color:#fff; }
+    .dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu { display:block; }
+    .dropdown.open .dropdown-menu{ display:block; }
+
+    /* responsive tweaks */
+    @media (max-width:1100px){
+      .hero{ grid-template-columns: 1fr 320px; }
+      .db-label { font-size:2.6rem; }
+      .small-card{ min-height:120px; }
+      .small-card .thumb{ width:112px; height:84px; flex:0 0 112px; }
+    }
+    @media (max-width:900px){
+      .hero{ grid-template-columns: 1fr; }
+      .hero-grid{ flex-direction:row; gap:12px; }
+      .hero-grid .small-card{ min-height:120px; flex-direction:column; align-items:flex-start; }
+      .small-card .thumb{ width:100%; height:88px; flex:0 0 auto; }
+      .panel-secciones{ grid-template-columns: repeat(2, 1fr); }
+      .db-pill { padding: 14px 28px; }
+      .db-label { font-size:2.2rem; -webkit-text-stroke:1.6px; }
+      .small-card .content { align-items:flex-start; }
+      .small-card .btn { align-self:flex-start; margin-right:0; }
+    }
+    @media (max-width:560px){
+      .db-label { font-size:1.9rem; -webkit-text-stroke:1.2px; }
+      .panel-secciones{ grid-template-columns: 1fr; gap:14px; }
     }
   </style>
 </head>
 <body>
-  <!--Fondo (Miniatura OF Glitch)-->
-  <div class="of-bg" aria-hidden="true"></div>
 
-  <!--Título glitch-->
-  <div class="glitch-title">La Araña Que Pica — Página Oficial</div>
+  <div class="wrap">
 
-  <!--Miniatura portada OF-->
-  <img alt="Option File portada" class="of-miniatura" src="https://i.ytimg.com/vi/i5qveTnigW4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&amp;rs=AOn4CLAXDL3VlXGYg4NLK1AviqJJLJbFKQ" />
+    <!-- Header -->
+    <header class="site-header" role="banner" aria-label="Cabecera del sitio">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>La Araña Que Pica</h1>
+      </div>
 
-  <!--Panel de secciones-->
-  <main class="panel-secciones" role="main" aria-label="Secciones principales">
-    <!-- BASE DE DATOS -->
-    <article class="tarjeta-seccion">
-      <img alt="Base de Datos" class="tarjeta-img" src="https://yt3.ggpht.com/7iXXNPMZBA9TukmPYwAEKDMdS0V5E9Xol_g4X--BD3BAFGi_sS_UeYAjw76f8MpyY1ZLIb4MVjM=s88-c-k-c0x00ffffff-no-rj" />
-      <h3>Base de datos</h3>
-      <p>Consultá plantillas, stats, medias y clubes actualizados para cada liga y equipo.</p>
-      <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/07/blog-post.html" target="_blank" rel="noopener">Ver Base de Datos</a>
-      <div class="glitch-bar" aria-hidden="true"></div>
-    </article>
+      <nav class="main-nav" role="navigation" aria-label="Menú principal">
+        <a href="#">Inicio</a>
 
-    <!-- NOVEDADES -->
-    <article class="tarjeta-seccion">
-      <img alt="Novedades" class="tarjeta-img" src="https://emoralesvet.com/wp-content/uploads/2017/05/icono-novedades.png" />
-      <h3>Novedades</h3>
-      <p>Mantenete al día con las actualizaciones, nuevas versiones y noticias importantes del Option File.</p>
-      <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/07/novedades.html">Ver Novedades</a>
-      <div class="glitch-bar" aria-hidden="true"></div>
-    </article>
+        <div class="dropdown" id="dd-descargar">
+          <button class="dropbtn" aria-haspopup="true" aria-expanded="false" aria-controls="menu-descargar">Descargar ▾</button>
+          <div id="menu-descargar" class="dropdown-menu" role="menu" aria-label="Opciones de descarga">
+            <a role="menuitem" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/07/descarga-el-of.html" target="_blank" rel="noopener">OF última versión</a>
+            <a role="menuitem" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/10/descarga-el-complemento.html" target="_blank" rel="noopener">OF complemento</a>
+          </div>
+        </div>
 
-    <!-- DESCARGA -->
-    <article class="tarjeta-seccion">
-      <img alt="Descargar Option File" class="tarjeta-img" src="https://images.emojiterra.com/google/android-12l/512px/1f517.png" />
-      <h3>Descargar Option File V4</h3>
-      <p>¡Descargá el Option File 2025 para PES 2018! Última actualización, links seguros y compatibles.</p>
-      <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/07/descarga-el-of.html" target="_blank" rel="noopener">Ir a Descarga</a>
-      <div class="glitch-bar" aria-hidden="true"></div>
-    </article>
+        <div class="dropdown" id="dd-novedades">
+          <button class="dropbtn" aria-haspopup="true" aria-expanded="false" aria-controls="menu-novedades">Novedades ▾</button>
+          <div id="menu-novedades" class="dropdown-menu" role="menu" aria-label="Versiones de Novedades">
+            <a role="menuitem" href="#v1">V1</a>
+            <a role="menuitem" href="#v2">V2</a>
+            <a role="menuitem" href="#v2-5">V2.5</a>
+            <a role="menuitem" href="#v3">V3</a>
+            <a role="menuitem" href="#v4">V4</a>
+          </div>
+        </div>
 
-    <!-- DESCARGA COMPLEMENTO -->
-    <article class="tarjeta-seccion">
-      <img alt="Descargar complemento" class="tarjeta-img" src="https://images.emojiterra.com/google/android-12l/512px/1f517.png" />
-      <h3>Descargar complemento</h3>
-      <p>¡Descargá los kits de los equipos restantes para tener tu PES 100% licenciado!.</p>
-      <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/10/descarga-el-complemento.html" target="_blank" rel="noopener">Ir a Descarga</a>
-      <div class="glitch-bar" aria-hidden="true"></div>
-    </article>
+        <a href="https://laqpofpes2018al2025ovr.blogspot.com/p/comunidad.html">Comunidad</a>
+      </nav>
+    </header>
 
-    <!-- TUTORIALES -->
-    <article class="tarjeta-seccion">
-      <img alt="Tutoriales" class="tarjeta-img" src="https://cdn-icons-png.flaticon.com/512/4940/4940574.png" />
-      <h3>Tutoriales</h3>
-      <p>¿No sabés instalar el OF? Encontrá tutoriales paso a paso, guías en video y tips para solucionar errores.</p>
-      <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/p/tutoriales.html">Ver Tutoriales</a>
-      <div class="glitch-bar" aria-hidden="true"></div>
-    </article>
+    <div class="page-title" role="heading" aria-level="1">La Araña Que Pica — Página Oficial</div>
 
-    <!-- COLABORACIONES -->
-    <article class="tarjeta-seccion">
-      <img alt="Colaboraciones" class="tarjeta-img" src="https://images.emojiterra.com/google/noto-emoji/unicode-15/color/512px/1f91d.png" />
-      <h3>Colaboraciones</h3>
-      <p>Agradecimientos y créditos a la comunidad, editores y creadores que hacen posible el Option File.</p>
-      <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/p/colaboraciones.html">Ver Créditos</a>
-      <div class="glitch-bar" aria-hidden="true"></div>
-    </article>
+    <!-- HERO -->
+    <section class="hero" role="region" aria-label="Contenido destacado">
 
-    <!-- COMUNIDAD -->
-    <article class="tarjeta-seccion">
-      <img alt="Redes Sociales" class="tarjeta-img" src="https://img.freepik.com/vector-premium/logotipo-cuadrado-youtube-aislado-sobre-fondo-blanco_469489-911.jpg" />
-      <h3>Comunidad</h3>
-      <p>Sumate a la comunidad: YouTube, Tik Tok, Instagram y más. Enterate de videos nuevos, encuestas y novedades.</p>
-      <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/p/comunidad.html">Ir a Comunidad</a>
-      <div class="glitch-bar" aria-hidden="true"></div>
-    </article>
+      <!-- MAIN: clickable BASE DE DATOS -->
+      <article class="hero-feature" role="main" aria-labelledby="db-title">
+        <div class="db-frame" aria-hidden="true"></div>
 
-    <!-- PREGUNTAS -->
-    <article class="tarjeta-seccion">
-      <img alt="Preguntas" class="tarjeta-img" src="https://images.emojiterra.com/google/android-11/512px/1f914.png" />
-      <h3>Preguntas</h3>
-      <p>¿Tenés dudas? Preguntá lo que quieras o revisá respuestas frecuentes de la comunidad.</p>
-      <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/07/preguntas-sobre-el-option-file.html" target="_blank" rel="noopener">Ir a Preguntas</a>
-      <div class="glitch-bar" aria-hidden="true"></div>
-    </article>
-  </main>
+        <a class="db-link" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/07/blog-post.html" id="db-link" aria-labelledby="db-title">
+          <div class="db-hero" id="db-title">
+            <span class="db-pill" role="img" aria-hidden="true">
+              <span class="db-label">BASE DE DATOS</span>
+            </span>
+            <p class="db-sub" aria-hidden="true"> </p>
+          </div>
+        </a>
+      </article>
+
+      <!-- RIGHT: three mini-cards (use your local images in /img) -->
+      <aside class="hero-grid" aria-label="Accesos rápidos">
+        <div class="small-card" role="article" aria-labelledby="mini-1">
+          <div class="thumb" style="background-image:url('img/OF COMPLEMENTO.png');" aria-hidden="true"></div>
+          <div class="content">
+            <div id="mini-1" class="meta">OF complemento</div>
+            <p class="desc">Complementos y kits para completar el Option File.</p>
+            <a class="btn" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/10/descarga-el-complemento.html" target="_blank" rel="noopener">Descargar complemento</a>
+          </div>
+        </div>
+
+        <div class="small-card" role="article" aria-labelledby="mini-2">
+          <div class="thumb" style="background-image:url('img/OF 2025 V2 Portada.png');" aria-hidden="true"></div>
+          <div class="content">
+            <div id="mini-2" class="meta">Tutorial: Instalar PES 2018 en PC</div>
+            <p class="desc">Guía paso a paso para instalar PES2018 correctamente en Windows.</p>
+            <a class="btn" href="https://laqpofpes2018al2025ovr.blogspot.com/p/tutoriales.html" target="_blank" rel="noopener">Ver Tutorial</a>
+          </div>
+        </div>
+
+        <div class="small-card" role="article" aria-labelledby="mini-3">
+          <div class="thumb" style="background-image:url('img/OF 2025 V4.png');" aria-hidden="true"></div>
+          <div class="content">
+            <div id="mini-3" class="meta">Option File V4</div>
+            <p class="desc">Option File PES 2018 al 2025 V4 — Premier League actualizada.</p>
+            <a class="btn" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/07/descarga-el-of.html" target="_blank" rel="noopener">Descargar V4</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Panel inferior - replaced with Tutoriales de instalación as requested -->
+    <main class="panel-secciones" role="main" aria-label="Secciones principales">
+      <article class="tarjeta-seccion" aria-labelledby="t-tutoriales">
+        <div class="icon" aria-hidden="true">
+          <img src="img/OF 2025 V2 Portada.png" width="56" height="56" alt="" />
+        </div>
+        <h3 id="t-tutoriales">Tutoriales de instalación</h3>
+        <p>Guías paso a paso para instalar PES2018, agregar el Option File y solucionar errores comunes.</p>
+        <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/p/tutoriales.html">Ver Tutoriales</a>
+        <div class="glitch-bar" aria-hidden="true"></div>
+      </article>
+
+      <article class="tarjeta-seccion" aria-labelledby="t6">
+        <div class="icon" aria-hidden="true">
+          <img src="img/OF 2025 V2.5.png" width="56" height="56" alt="" />
+        </div>
+        <h3 id="t6">Colaboraciones</h3>
+        <p>Agradecimientos y créditos a la comunidad, editores y creadores que hacen posible el Option File.</p>
+        <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/p/colaboraciones.html">Ver Créditos</a>
+        <div class="glitch-bar" aria-hidden="true"></div>
+      </article>
+
+      <article class="tarjeta-seccion" aria-labelledby="t8">
+        <div class="icon" aria-hidden="true">
+          <img src="img/OF 2025 V3 Portada (2).png" width="56" height="56" alt="" />
+        </div>
+        <h3 id="t8">Preguntas</h3>
+        <p>¿Tenés dudas? Preguntá lo que quieras o revisá respuestas frecuentes de la comunidad.</p>
+        <a class="tarjeta-btn" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/07/preguntas-sobre-el-option_file.html" target="_blank" rel="noopener">Ir a Preguntas</a>
+        <div class="glitch-bar" aria-hidden="true"></div>
+      </article>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">© La Araña Que Pica — Página Oficial</footer>
+
+  </div>
+
+  <script>
+    // Dropdown behavior (improved): JS still provides keyboard and click toggles,
+    // while CSS :hover and :focus-within ensures menus stay visible on slow mouse moves.
+    (function(){
+      const DROPDOWN_DELAY_OPEN = 80;
+      const DROPDOWN_DELAY_CLOSE = 220;
+      const dropdowns = document.querySelectorAll('.dropdown');
+
+      dropdowns.forEach(dd => {
+        let openTimer = null;
+        let closeTimer = null;
+        const btn = dd.querySelector('.dropbtn');
+        const menu = dd.querySelector('.dropdown-menu');
+
+        function open() {
+          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+          if (!dd.classList.contains('open')) {
+            dd.classList.add('open');
+            if (btn) btn.setAttribute('aria-expanded', 'true');
+          }
+        }
+        function close() {
+          if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+          if (dd.classList.contains('open')) {
+            dd.classList.remove('open');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        dd.addEventListener('mouseenter', () => {
+          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+          openTimer = setTimeout(open, DROPDOWN_DELAY_OPEN);
+        });
+        dd.addEventListener('mouseleave', () => {
+          if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+          closeTimer = setTimeout(close, DROPDOWN_DELAY_CLOSE);
+        });
+
+        if (btn) {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (dd.classList.contains('open')) close();
+            else open();
+          });
+
+          btn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              if (dd.classList.contains('open')) close();
+              else open();
+            } else if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              open();
+              const first = menu.querySelector('[role="menuitem"]');
+              if (first) first.focus();
+            } else if (e.key === 'Escape') {
+              close();
+              btn.focus();
+            }
+          });
+        }
+
+        // close other dropdowns when opening one by click
+        if (btn) {
+          btn.addEventListener('click', () => {
+            dropdowns.forEach(other => {
+              if (other !== dd) {
+                other.classList.remove('open');
+                const otherBtn = other.querySelector('.dropbtn');
+                if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+              }
+            });
+          });
+        }
+
+        // close when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!dd.contains(e.target)) {
+            close();
+          }
+        });
+
+      });
+
+      // Global keyboard: Escape closes all
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.dropdown.open').forEach(d => {
+            d.classList.remove('open');
+            const b = d.querySelector('.dropbtn');
+            if (b) b.setAttribute('aria-expanded','false');
+          });
+        }
+      });
+    })();
+  </script>
+
 </body>
 </html>

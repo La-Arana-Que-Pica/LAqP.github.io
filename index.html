@@ -1,4 +1,3 @@
-<title>LAqP - Página Principal</title>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -28,6 +27,29 @@
       color:#e6f9f9;
       -webkit-font-smoothing:antialiased;
       overflow-x:hidden;
+      position:relative;
+    }
+
+    /* ------ PAGE BACKGROUND (user-provided image in img/fondo) ------ */
+    /* This element sits fixed behind everything, blurred and darkened */
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: url('img/fondo.png') center center / cover no-repeat;
+      filter: blur(6px) brightness(.42) saturate(.95);
+      opacity: 1;
+      transform: scale(1.02); /* avoid visible edges when blur applied */
+    }
+    /* optional extra overlay to darken even more and add vignette */
+    .page-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));
+      mix-blend-mode: multiply;
+      pointer-events: none;
     }
 
     .wrap{
@@ -35,7 +57,7 @@
       margin: 0 auto;
       padding: 18px;
       position: relative;
-      z-index: 2;
+      z-index: 2; /* keep content above the bg */
     }
 
     /* header */
@@ -183,7 +205,6 @@
       gap:14px;
     }
 
-    /* Increased min-height, slightly taller thumb, and more breathing room */
     .small-card{
       position:relative;
       border-radius:12px;
@@ -194,11 +215,11 @@
       display:flex;
       align-items:center;
       gap:12px;
-      padding:14px; /* a bit more padding */
+      padding:14px;
     }
     .small-card .thumb{
-      width:128px; /* slightly wider */
-      height:92px; /* slightly taller */
+      width:128px;
+      height:92px;
       border-radius:10px;
       background-size:cover;
       background-position:center;
@@ -207,7 +228,6 @@
       flex:0 0 128px;
     }
 
-    /* make the content container a column so the button can align to the right */
     .small-card .content {
       display:flex;
       flex-direction:column;
@@ -231,10 +251,10 @@
       letter-spacing:0.1px;
     }
 
-    /* Button adjustments: push more to the right, add animation on hover */
+    /* Button adjustments + hover animation */
     .small-card .btn {
-      align-self:flex-end; /* push to right within the content column */
-      margin-right:8px; /* a bit more gap from the edge */
+      align-self:flex-end;
+      margin-right:8px;
       text-decoration:none;
       padding:10px 16px;
       border-radius:10px;
@@ -248,16 +268,12 @@
       z-index:2;
       display:inline-block;
     }
-
-    /* Hover animation: lift + subtle horizontal gradient shift + glow */
     .small-card .btn:hover {
       transform: translateY(-6px) scale(1.02);
       box-shadow: 0 18px 46px rgba(0,255,231,0.12), 0 6px 28px rgba(255,0,170,0.08);
       filter: saturate(1.08);
-      background-position: 100% 0; /* shift gradient */
+      background-position: 100% 0;
     }
-
-    /* Add a small ripple-like pseudo-element animation on hover to enhance interactivity */
     .small-card .btn::after {
       content:"";
       position:absolute;
@@ -319,6 +335,9 @@
   </style>
 </head>
 <body>
+
+  <!-- Page background (blurred + darkened) - uses the image you uploaded at img/fondo -->
+  <div class="page-bg" aria-hidden="true"></div>
 
   <div class="wrap">
 

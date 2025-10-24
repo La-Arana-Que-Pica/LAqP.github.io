@@ -1,0 +1,218 @@
+<link rel="icon" href="img/Logo Web.png" type="image/png" sizes="32x32">
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LAqP - Principal</title>
+
+  <!-- TIPOGRAFÍAS: Bungee (más gruesa, parecida a la referencia) + Press Start 2P -->
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos externos -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Page background (blurred + darkened) - uses the image you uploaded at img/fondo -->
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <!-- Header -->
+    <header class="site-header" role="banner" aria-label="Cabecera del sitio">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>LAqP</h1>
+      </div>
+
+      <nav class="main-nav" role="navigation" aria-label="Menú principal">
+        <a href="#">Inicio</a>
+
+        <div class="dropdown" id="dd-descargar">
+          <button class="dropbtn" aria-haspopup="true" aria-expanded="false" aria-controls="menu-descargar">Descargar ▾</button>
+          <div id="menu-descargar" class="dropdown-menu" role="menu" aria-label="Opciones de descarga">
+            <a role="menuitem" href="descargar uv.html" target="_blank" rel="noopener">OF última versión</a>
+            <a role="menuitem" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/10/descarga-el-complemento.html" target="_blank" rel="noopener">OF complemento</a>
+          </div>
+        </div>
+
+        <div class="dropdown" id="dd-novedades">
+          <button class="dropbtn" aria-haspopup="true" aria-expanded="false" aria-controls="menu-novedades">Novedades ▾</button>
+          <div id="menu-novedades" class="dropdown-menu" role="menu" aria-label="Versiones de Novedades">
+            <a role="menuitem" href="#v1">V1</a>
+            <a role="menuitem" href="#v2">V2</a>
+            <a role="menuitem" href="#v2-5">V2.5</a>
+            <a role="menuitem" href="#v3">V3</a>
+            <a role="menuitem" href="#v4">V4</a>
+          </div>
+        </div>
+
+        <div class="dropdown" id="dd-comunidad">
+          <button class="dropbtn" aria-haspopup="true" aria-expanded="false" aria-controls="menu-comunidad">Comunidad ▾</button>
+          <div id="menu-comunidad" class="dropdown-menu" role="menu" aria-label="comunidad">
+            <a role="menuitem" href="https://laqpofpes2018al2025ovr.blogspot.com/p/tutoriales.html">Tutoriales</a>
+            <a role="menuitem" href="https://laqpofpes2018al2025ovr.blogspot.com/p/colaboraciones.html">Créditos</a>
+            <a role="menuitem" href="https://laqpofpes2018al2025ovr.blogspot.com/p/comunidad.html">Mis redes</a>
+          </div>
+        </div>
+
+        <a href="https://laqpofpes2018al2025ovr.blogspot.com/2025/07/preguntas-sobre-el-option_file.html">Preguntas</a>
+      </nav>
+    </header>
+
+    <div class="page-title" role="heading" aria-level="1">La Araña Que Pica — Página Oficial</div>
+
+    <!-- HERO -->
+    <section class="hero" role="region" aria-label="Contenido destacado">
+
+      <!-- MAIN: clickable BASE DE DATOS -->
+      <article class="hero-feature" role="main" aria-labelledby="db-title">
+        <div class="db-frame" aria-hidden="true"></div>
+
+        <!-- Anchor envuelve toda el área: imagen (llena el cartel) + rótulo sobre la imagen -->
+        <a class="db-link" href="ligas.html" id="db-link" aria-labelledby="db-title">
+          <!-- El cartel (.db-pill) está posicionado para cubrir completamente el interior del bloque -->
+          <div class="db-pill" role="img" aria-label="Base de Datos — vista previa">
+            <img class="db-pill-img" src="img/Base de datos.png" alt="Base de Datos — vista previa">
+            <!-- Texto principal sobre la imagen (parte inferior del cartel) -->
+            <span class="db-label" id="db-title">BASE DE DATOS</span>
+          </div>
+        </a>
+      </article>
+
+      <!-- RIGHT: three mini-cards (use your local images in /img) -->
+      <aside class="hero-grid" aria-label="Accesos rápidos">
+        <div class="small-card" role="article" aria-labelledby="mini-1">
+          <div class="thumb" style="background-image:url('img/OF COMPLEMENTO.png');" aria-hidden="true"></div>
+          <div class="content">
+            <div id="mini-1" class="meta">OF complemento</div>
+            <p class="desc">Complementos y kits para completar el Option File.</p>
+            <a class="btn" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/10/descarga-el-complemento.html" target="_blank" rel="noopener">Descargar complemento</a>
+          </div>
+        </div>
+
+        <div class="small-card" role="article" aria-labelledby="mini-2">
+          <div class="thumb" style="background-image:url('img/OF 2025 V2 Portada.png');" aria-hidden="true"></div>
+          <div class="content">
+            <div id="mini-2" class="meta">Instalar PES 2018 en PC</div>
+            <p class="desc">Guía paso a paso para instalar PES2018 correctamente en Windows.</p>
+            <a class="btn" href="https://youtu.be/snXuQh4NLxI?si=CkkveEz58CfUOAeU" target="_blank" rel="noopener">Ver Tutorial</a>
+          </div>
+        </div>
+
+        <div class="small-card" role="article" aria-labelledby="mini-3">
+          <div class="thumb" style="background-image:url('img/OF 2025 V4.png');" aria-hidden="true"></div>
+          <div class="content">
+            <div id="mini-3" class="meta">Option File V4</div>
+            <p class="desc">Option File PES 2018 al 2025 V4 — Premier League actualizada.</p>
+            <a class="btn" href="descargar uv.html" target="_blank" rel="noopener">Descargar V4</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="site-footer" role="contentinfo">© La Araña Que Pica — Página Oficial</footer>
+
+  </div>
+
+  <script>
+    // Dropdown behavior (improved): JS still provides keyboard and click toggles,
+    // while CSS :hover and :focus-within ensures menus stay visible on slow mouse moves.
+    (function(){
+      const DROPDOWN_DELAY_OPEN = 80;
+      const DROPDOWN_DELAY_CLOSE = 220;
+      const dropdowns = document.querySelectorAll('.dropdown');
+
+      dropdowns.forEach(dd => {
+        let openTimer = null;
+        let closeTimer = null;
+        const btn = dd.querySelector('.dropbtn');
+        const menu = dd.querySelector('.dropdown-menu');
+
+        function open() {
+          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+          if (!dd.classList.contains('open')) {
+            dd.classList.add('open');
+            if (btn) btn.setAttribute('aria-expanded', 'true');
+          }
+        }
+        function close() {
+          if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+          if (dd.classList.contains('open')) {
+            dd.classList.remove('open');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        dd.addEventListener('mouseenter', () => {
+          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+          openTimer = setTimeout(open, DROPDOWN_DELAY_OPEN);
+        });
+        dd.addEventListener('mouseleave', () => {
+          if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+          closeTimer = setTimeout(close, DROPDOWN_DELAY_CLOSE);
+        });
+
+        if (btn) {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (dd.classList.contains('open')) close();
+            else open();
+          });
+
+          btn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              if (dd.classList.contains('open')) close();
+              else open();
+            } else if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              open();
+              const first = menu.querySelector('[role="menuitem"]');
+              if (first) first.focus();
+            } else if (e.key === 'Escape') {
+              close();
+              btn.focus();
+            }
+          });
+        }
+
+        // close other dropdowns when opening one by click
+        if (btn) {
+          btn.addEventListener('click', () => {
+            dropdowns.forEach(other => {
+              if (other !== dd) {
+                other.classList.remove('open');
+                const otherBtn = other.querySelector('.dropbtn');
+                if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+              }
+            });
+          });
+        }
+
+        // close when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!dd.contains(e.target)) {
+            close();
+          }
+        });
+
+      });
+
+      // Global keyboard: Escape closes all
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.dropdown.open').forEach(d => {
+            d.classList.remove('open');
+            const b = d.querySelector('.dropbtn');
+            if (b) b.setAttribute('aria-expanded','false');
+          });
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

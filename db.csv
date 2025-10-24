@@ -1,0 +1,6 @@
+id,team_name,league,country,added_date,notes,logo,link
+1,Manchester United,Premier League,Inglaterra,2025-07-12,Actualizado dorsales,img/logos/mu.png,https://example.com/mu
+2,Real Madrid,LaLiga,España,2025-07-12,Plantilla 2025,img/logos/rm.png,https://example.com/rm
+3,Boca Juniors,Primera División,Argentina,2025-08-01,Kits incluidos,img/logos/boca.png,https://example.com/boca
+4,PSG,Ligue 1,Francia,2025-09-05,Nuevas caras,img/logos/psg.png,https://example.com/psg
+5,Racing Club,Primera División,Argentina,2025-10-24,,,

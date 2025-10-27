@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Equipo — La Araña Que Pica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .header{display:flex;gap:14px;align-items:center;margin:14px 0}
+    .header img.logo{width:72px;height:72px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
+    .flag{width:24px;height:18px;object-fit:cover;border-radius:2px;margin-left:6px;vertical-align:middle}
+    .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:10px}
+    .row{display:flex;gap:12px;align-items:center;background:linear-gradient(180deg,rgba(10,10,12,.96),rgba(20,16,24,.96));border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:12px}
+    .photo{width:64px;height:64px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
+    .badge{display:inline-block;border-radius:8px;padding:4px 8px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));color:#071014;font-weight:700;margin-left:6px}
+    a.clean{color:inherit;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1><a href="index.html" class="clean" style="color:inherit;text-decoration:none">LAqP</a></h1>
+      </div>
+      <nav class="main-nav">
+        <a href="ligas.html">Ligas</a>
+        <a href="equipos.html">Equipos</a>
+        <a href="jugadores.html">Jugadores</a>
+      </nav>
+    </header>
+
+    <div id="content"></div>
+
+    <footer class="site-footer">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script>
+    (async function(){
+      const $c = document.getElementById('content');
+      const slug = DB.getParam('slug');
+      if(!slug){ $c.innerHTML='<div class="no-results">Equipo no especificado.</div>'; return; }
+      let leagues, teams, players, maps;
+      try {
+        ({ leagues, teams, players, maps } = await DB.load({ leagues:true, teams:true, players:true }));
+      } catch (e) {
+        $c.innerHTML = '<div class="no-results">No se pudo cargar data/*.json. Ejecuta "python manage_db.py export" y serví la web por HTTP (python -m http.server).</div>';
+        return;
+      }
+      const team = teams.find(t=>t.slug===slug);
+      if(!team){ $c.innerHTML='<div class="no-results">Equipo no encontrado.</div>'; return; }
+      const league = maps.leagueById[team.league_id] || null;
+      const playersInTeam = players.filter(p => String(p.team_id)===String(team.id))
+                                   .sort((a,b)=> (b.rating||0)-(a.rating||0));
+
+      const header = `
+        <div class="header">
+          <img class="logo" src="${team.logo||'img/equipos/placeholder.png'}" alt="${team.name}" onerror="this.src='img/equipos/placeholder.png'">
+          <div>
+            <div class="page-title" style="margin:0">${team.name}</div>
+            <div style="color:#cfecec;font-size:.95rem">
+              ${league ? `<a class="clean" href="liga.html?slug=${encodeURIComponent(league.slug)}" style="color:#7afcff">${league.name}</a>` : 'Sin liga'}
+              ${league ? `<img class="flag" src="${DB.countryFlagSrc(league.country)}" alt="${league.country}" onerror="this.style.display='none'">` : ''}
+            </div>
+          </div>
+        </div>`;
+
+      const list = document.createElement('div'); list.className='list';
+      for(const p of playersInTeam){
+        const full = `${p.first_name} ${p.last_name}`.trim();
+        const age = DB.ageFromBirthDate(p.birth_date);
+        const a = document.createElement('a'); a.className='row clean';
+        // Enlace a la página estática del jugador
+        a.href = `players/${encodeURIComponent(p.slug)}.html`;
+        a.innerHTML = `
+          <img class="photo" src="${p.photo||'img/jugadores/placeholder.png'}" alt="${full}" onerror="this.src='img/jugadores/placeholder.png'">
+          <div style="flex:1">
+            <div style="font-family:'Bungee';color:#fff">${full}
+              <span class="badge">${p.rating||'-'}</span>
+            </div>
+            <div style="color:#cfecec;font-size:.9rem">${p.position||'-'} • ${isNaN(age)? '' : (age+' años')}</div>
+          </div>`;
+        list.appendChild(a);
+      }
+
+      $c.innerHTML = header;
+      $c.appendChild(list);
+    })();
+  </script>
+</body>
+</html>

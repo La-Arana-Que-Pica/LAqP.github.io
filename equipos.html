@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Equipos — La Araña Que Pica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:12px}
+    .card{background:linear-gradient(180deg,rgba(10,10,12,.96),rgba(20,16,24,.96));border:1px solid rgba(255,255,255,.05);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center}
+    .card img.logo{width:56px;height:56px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
+    .flag{width:22px;height:16px;object-fit:cover;border-radius:2px;margin-left:6px;vertical-align:middle}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+    .filters input,.filters select{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);color:var(--muted)}
+    a.clean{color:inherit;text-decoration:none}
+    .no-results{padding:10px;color:#dff}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header" role="banner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1><a href="index.html" class="clean">LAqP</a></h1>
+      </div>
+      <nav class="main-nav" role="navigation" aria-label="Menú principal">
+        <a href="ligas.html">Ligas</a>
+        <a href="equipos.html" aria-current="page">Equipos</a>
+        <a href="jugadores.html">Jugadores</a>
+      </nav>
+    </header>
+
+    <h2 class="page-title">Equipos</h2>
+
+    <section class="filters" aria-label="Filtros">
+      <input id="q" type="search" placeholder="Buscar equipo">
+      <select id="league"><option value="">Todas las ligas</option></select>
+      <select id="country"><option value="">Todos los países</option></select>
+    </section>
+
+    <section id="list" class="grid-cards" aria-label="Listado de equipos"></section>
+
+    <footer class="site-footer">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script>
+    (async function(){
+      const $q = document.getElementById('q');
+      const $league = document.getElementById('league');
+      const $country = document.getElementById('country');
+      const $list = document.getElementById('list');
+
+      let leagues = [], teams = [], maps = {};
+      try {
+        ({ leagues, teams, maps } = await DB.load({ leagues:true, teams:true }));
+      } catch (e) {
+        $list.innerHTML = '<div class="no-results">No se pudo cargar data/ligas.json o data/equipos.json. Ejecuta "python manage_db.py export" y serví la web por HTTP (python -m http.server).</div>';
+        return;
+      }
+
+      const leagueOptions = leagues.slice().sort((a,b)=> a.name.localeCompare(b.name));
+      leagueOptions.forEach(l => {
+        const opt=document.createElement('option');opt.value=l.id; opt.textContent=l.name; $league.appendChild(opt);
+      });
+
+      const countries = Array.from(new Set(leagues.map(l=>l.country).filter(Boolean))).sort();
+      countries.forEach(c=>{ const opt=document.createElement('option'); opt.value=c; opt.textContent=c; $country.appendChild(opt); });
+
+      function render(items){
+        $list.innerHTML='';
+        if(items.length===0){ $list.innerHTML='<div class="no-results">Sin resultados</div>'; return;}
+        for(const t of items){
+          const lg = maps.leagueById[t.league_id] || null;
+          const a = document.createElement('a'); a.className='clean'; a.href=`equipo.html?slug=${encodeURIComponent(t.slug)}`;
+          a.innerHTML=`
+            <div class="card">
+              <img class="logo" src="${t.logo||'img/equipos/placeholder.png'}" alt="${t.name} logo" onerror="this.src='img/equipos/placeholder.png'">
+              <div>
+                <div style="font-family:'Bungee';color:#fff">${t.name}</div>
+                <div style="color:#cfecec;font-size:.9rem">
+                  ${lg? lg.name : 'Sin liga'}
+                  ${lg? `<img class="flag" src="${DB.countryFlagSrc(lg.country)}" alt="${lg.country}" onerror="this.style.display='none'">` : ''}
+                </div>
+              </div>
+            </div>`;
+          $list.appendChild(a);
+        }
+      }
+
+      function apply(){
+        const q = $q.value.trim().toLowerCase();
+        const l = $league.value;
+        const c = $country.value;
+        let items = teams.slice();
+        if(q){ items = items.filter(t => (t.name||'').toLowerCase().includes(q)); }
+        if(l){ items = items.filter(t => String(t.league_id)===String(l)); }
+        if(c){ items = items.filter(t => {
+          const lg = maps.leagueById[t.league_id] || null;
+          return lg && lg.country===c;
+        });}
+        items.sort((a,b)=> a.name.localeCompare(b.name));
+        render(items);
+      }
+
+      $q.addEventListener('input', DB.debounce(apply,150));
+      $league.addEventListener('change', apply);
+      $country.addEventListener('change', apply);
+      apply();
+    })();
+  </script>
+</body>
+</html>

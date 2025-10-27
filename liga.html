@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Liga — La Araña Que Pica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .header{display:flex;gap:14px;align-items:center;margin:14px 0}
+    .header img.logo{width:72px;height:72px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
+    .flag{width:24px;height:18px;object-fit:cover;border-radius:2px;margin-left:6px;vertical-align:middle}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:12px}
+    .card{display:flex;gap:12px;align-items:center;background:linear-gradient(180deg,rgba(10,10,12,.96),rgba(20,16,24,.96));border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px}
+    .card img.logo{width:56px;height:56px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1><a href="index.html" class="clean" style="color:inherit;text-decoration:none">LAqP</a></h1>
+      </div>
+      <nav class="main-nav">
+        <a href="ligas.html">Ligas</a>
+        <a href="equipos.html">Equipos</a>
+        <a href="jugadores.html">Jugadores</a>
+      </nav>
+    </header>
+
+    <div id="content"></div>
+
+    <footer class="site-footer">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script>
+    (async function(){
+      const $c = document.getElementById('content');
+      const slug = DB.getParam('slug');
+      if(!slug){ $c.innerHTML='<div class="no-results">Liga no especificada.</div>'; return; }
+      const { leagues, teams } = await DB.load({ leagues:true, teams:true });
+      const league = leagues.find(l=>l.slug===slug);
+      if(!league){ $c.innerHTML='<div class="no-results">Liga no encontrada.</div>'; return; }
+
+      const teamsInLeague = teams.filter(t => String(t.league_id)===String(league.id))
+                                 .sort((a,b)=>a.name.localeCompare(b.name));
+
+      const header = `
+        <div class="header">
+          <img class="logo" src="${league.logo||'img/ligas/placeholder.png'}" alt="${league.name}" onerror="this.src='img/ligas/placeholder.png'">
+          <div>
+            <div class="page-title" style="margin:0">${league.name}</div>
+            <div style="color:#cfecec;font-size:.95rem">
+              ${league.country}
+              <img class="flag" src="${DB.countryFlagSrc(league.country)}" alt="${league.country}" onerror="this.style.display='none'">
+            </div>
+          </div>
+        </div>`;
+
+      const grid = document.createElement('div'); grid.className='grid';
+      for(const t of teamsInLeague){
+        const a = document.createElement('a'); a.className='clean';
+        a.href = `equipo.html?slug=${encodeURIComponent(t.slug)}`;
+        a.innerHTML = `
+          <div class="card">
+            <img class="logo" src="${t.logo||'img/equipos/placeholder.png'}" alt="${t.name}" onerror="this.src='img/equipos/placeholder.png'">
+            <div style="font-family:'Bungee';color:#fff">${t.name}</div>
+          </div>`;
+        grid.appendChild(a);
+      }
+
+      $c.innerHTML = header;
+      $c.appendChild(grid);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Jugadores — La Araña Que Pica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+    .filters input,.filters select{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);color:var(--muted)}
+    .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:10px}
+    .row{display:flex;gap:12px;align-items:center;background:linear-gradient(180deg,rgba(10,10,12,.96),rgba(20,16,24,.96));border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:12px}
+    .photo{width:64px;height:64px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
+    .flag{width:22px;height:16px;object-fit:cover;border-radius:2px;margin-left:6px;vertical-align:middle}
+    .meta{color:#cfecec;font-size:.9rem}
+    .badge{display:inline-block;border-radius:8px;padding:4px 8px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));color:#071014;font-weight:700;margin-left:6px}
+    .pager{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin:10px 0}
+    .btn{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);color:#fff;cursor:pointer}
+    a.clean{color:inherit;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header" role="banner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1><a href="index.html" class="clean" style="color:inherit;text-decoration:none">LAqP</a></h1>
+      </div>
+      <nav class="main-nav" role="navigation" aria-label="Menú principal">
+        <a href="ligas.html">Ligas</a>
+        <a href="equipos.html">Equipos</a>
+        <a href="jugadores.html" aria-current="page">Jugadores</a>
+      </nav>
+    </header>
+
+    <h2 class="page-title">Jugadores</h2>
+
+    <section class="filters" aria-label="Filtros">
+      <input id="q" type="search" placeholder="Buscar nombre o apellido">
+      <select id="position">
+        <option value="">Todas las posiciones</option>
+        <option>Arquero</option>
+        <option>Defensor</option>
+        <option>Mediocampista</option>
+        <option>Delantero</option>
+      </select>
+      <select id="league"><option value="">Todas las ligas</option></select>
+      <select id="team"><option value="">Todos los equipos</option></select>
+      <select id="country"><option value="">Todos los países</option></select>
+
+      <label for="minR">Rating</label>
+      <input id="minR" type="number" min="40" max="99" value="40" style="width:76px">
+      <span>-</span>
+      <input id="maxR" type="number" min="40" max="99" value="99" style="width:76px">
+
+      <select id="sort">
+        <option value="rating_desc">Orden: Rating (desc)</option>
+        <option value="rating_asc">Rating (asc)</option>
+        <option value="name_asc">Nombre (A-Z)</option>
+        <option value="name_desc">Nombre (Z-A)</option>
+      </select>
+    </section>
+
+    <div class="pager">
+      <button id="prev" class="btn">« Anterior</button>
+      <span id="pageInfo" class="meta"></span>
+      <button id="next" class="btn">Siguiente »</button>
+    </div>
+
+    <section id="list" class="list" aria-label="Listado de jugadores"></section>
+
+    <footer class="site-footer">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script>
+    (async function(){
+      const $q = document.getElementById('q');
+      const $pos = document.getElementById('position');
+      const $league = document.getElementById('league');
+      const $team = document.getElementById('team');
+      const $country = document.getElementById('country');
+      const $minR = document.getElementById('minR');
+      const $maxR = document.getElementById('maxR');
+      const $sort = document.getElementById('sort');
+      const $list = document.getElementById('list');
+      const $prev = document.getElementById('prev');
+      const $next = document.getElementById('next');
+      const $pageInfo = document.getElementById('pageInfo');
+
+      const PAGE = 50;
+
+      let leagues, teams, players, maps;
+      try {
+        ({ leagues, teams, players, maps } = await DB.load({ leagues:true, teams:true, players:true }));
+      } catch (e) {
+        $list.innerHTML = '<div class="no-results">No se pudo cargar data/*.json. Ejecuta "python manage_db.py export" y serví la web por HTTP (python -m http.server).</div>';
+        return;
+      }
+
+      // Filtros dependientes
+      leagues.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(l=>{
+        const opt=document.createElement('option'); opt.value=l.id; opt.textContent=l.name; $league.appendChild(opt);
+      });
+      function updateTeamsOptions(){
+        const li = $league.value;
+        $team.innerHTML = '<option value="">Todos los equipos</option>';
+        let ts = teams.slice();
+        if(li){ ts = ts.filter(t => String(t.league_id)===String(li)); }
+        ts.sort((a,b)=>a.name.localeCompare(b.name)).forEach(t=>{
+          const opt=document.createElement('option'); opt.value=t.id; opt.textContent=t.name; $team.appendChild(opt);
+        });
+      }
+      updateTeamsOptions();
+      $league.addEventListener('change', ()=>{ updateTeamsOptions(); apply(true); });
+
+      // Países
+      const countries = Array.from(new Set(players.map(p=>p.country).filter(Boolean))).sort();
+      countries.forEach(c=>{ const opt=document.createElement('option'); opt.value=c; opt.textContent=c; $country.appendChild(opt); });
+
+      let page = 1;
+      let current = players.slice();
+
+      function apply(resetPage=false){
+        if(resetPage) page = 1;
+        const q = $q.value.trim().toLowerCase();
+        const pos = $pos.value;
+        const li = $league.value;
+        const ti = $team.value;
+        const co = $country.value;
+        const minR = Math.max(40, Math.min(99, parseInt($minR.value || 40)));
+        const maxR = Math.max(40, Math.min(99, parseInt($maxR.value || 99)));
+        let items = players.slice();
+        if(q){
+          items = items.filter(p => (p.first_name+' '+p.last_name).toLowerCase().includes(q));
+        }
+        if(pos){ items = items.filter(p => p.position===pos); }
+        if(li){ items = items.filter(p => {
+          const t = maps.teamById[p.team_id]; if(!t) return false;
+          return String(t.league_id)===String(li);
+        });}
+        if(ti){ items = items.filter(p => String(p.team_id)===String(ti)); }
+        if(co){ items = items.filter(p => p.country===co); }
+        items = items.filter(p => {
+          const r = parseInt(p.rating||0);
+          return r>=minR && r<=maxR;
+        });
+
+        // Orden
+        const s = $sort.value;
+        if(s==='rating_desc'){ items.sort((a,b)=> (b.rating||0)-(a.rating||0)); }
+        else if(s==='rating_asc'){ items.sort((a,b)=> (a.rating||0)-(b.rating||0)); }
+        else if(s==='name_asc'){ items.sort((a,b)=> (a.last_name+a.first_name).localeCompare(b.last_name+b.first_name)); }
+        else if(s==='name_desc'){ items.sort((a,b)=> (b.last_name+b.first_name).localeCompare(a.last_name+a.first_name)); }
+
+        current = items;
+        render();
+      }
+
+      function render(){
+        $list.innerHTML='';
+        if(current.length===0){ $list.innerHTML='<div class="no-results">Sin resultados</div>'; $pageInfo.textContent=''; return;}
+        const totalPages = Math.max(1, Math.ceil(current.length / PAGE));
+        page = Math.max(1, Math.min(totalPages, page));
+        const start = (page-1)*PAGE;
+        const end = Math.min(page*PAGE, current.length);
+
+        for(const p of current.slice(start, end)){
+          const t = maps.teamById[p.team_id] || null;
+          const l = t ? maps.leagueById[t.league_id] || null : null;
+          const age = DB.ageFromBirthDate(p.birth_date);
+          const full = `${p.first_name} ${p.last_name}`.trim();
+          const row = document.createElement('a');
+          row.className='row clean';
+          // Ahora apunta a la página estática generada
+          row.href = `players/${encodeURIComponent(p.slug)}.html`;
+          row.innerHTML = `
+            <img class="photo" src="${p.photo||'img/jugadores/placeholder.png'}" alt="${full}" onerror="this.src='img/jugadores/placeholder.png'">
+            <div style="flex:1">
+              <div style="font-family:'Bungee';color:#fff">${full}
+                <span class="badge">${p.rating||'-'}</span>
+              </div>
+              <div class="meta">
+                ${t? t.name : 'Sin equipo'}${l? ' • '+l.name : ''}
+                ${p.country? `<img class="flag" src="${DB.countryFlagSrc(p.country)}" alt="${p.country}" onerror="this.style.display='none'">` : ''}
+                • ${p.position||'-'} • ${isNaN(age)? '' : (age+' años')}
+              </div>
+            </div>`;
+          $list.appendChild(row);
+        }
+
+        $pageInfo.textContent = `Mostrando ${start+1}-${end} de ${current.length}`;
+        $prev.disabled = page<=1; $next.disabled = page>=totalPages;
+      }
+
+      $q.addEventListener('input', DB.debounce(()=>apply(true), 150));
+      $pos.addEventListener('change', ()=>apply(true));
+      $team.addEventListener('change', ()=>apply(true));
+      $country.addEventListener('change', ()=>apply(true));
+      $minR.addEventListener('change', ()=>apply(true));
+      $maxR.addEventListener('change', ()=>apply(true));
+      $sort.addEventListener('change', ()=>apply(true));
+      $prev.addEventListener('click', ()=>{ page--; render(); });
+      $next.addEventListener('click', ()=>{ page++; render(); });
+
+      $sort.value = 'rating_desc';
+      apply(true);
+    })();
+  </script>
+</body>
+</html>

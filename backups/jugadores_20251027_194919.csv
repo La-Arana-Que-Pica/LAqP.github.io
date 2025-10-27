@@ -1,0 +1,3 @@
+id,first_name,last_name,birth_date,team_id,country,photo,position,rating,sofifa_url,face_video_url,slug
+1,Facundo,Colidio,2000-01-04,1,Argentina,Facundo Colidio,Delantero,76,,,facundo-colidio
+2,Franco,Armani,1986-10-16,1,Argentina,Franco Armani.png,Arquero,79,https://www.pesmaster.com/es/franco-armani/efootball-2022/player/45674/,https://youtu.be/kbhGj5fskYU?si=xjviJoTHtIKXub_w,franco-armani

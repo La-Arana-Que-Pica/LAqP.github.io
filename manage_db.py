@@ -1,12 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-manage_db.py — Herramienta CLI + menú interactivo para administrar db.csv
-- Si se ejecuta sin argumentos (o con --interactive) abre un menú amigable.
-- Conserva las acciones básicas (list, add, update, delete, validate, export) como subcomandos
-  para usuarios avanzados.
+Gestor de base de datos (Ligas, Equipos, Jugadores) con menú interactivo.
+- Fuente de verdad: CSV en data/ligas.csv, data/equipos.csv, data/jugadores.csv
+- Exporta JSON para la web: data/ligas.json, data/equipos.json, data/jugadores.json
+- Genera páginas estáticas por jugador: players/<slug>.html (build)
+- Slugs únicos por entidad (URLs tipo ?slug= o players/<slug>.html)
+- Validaciones:
+  - Jugadores.rating: 40..99
+  - Jugadores.position: {Arquero, Defensor, Mediocampista, Delantero}
+  - birth_date: YYYY-MM-DD
+  - team_id y league_id deben existir (equipos pueden quedar sin liga)
+- Borrados:
+  - Liga: no se borran equipos; se “desasigna” (league_id vacío)
+  - Equipo: bloqueado si tiene jugadores
+- Backups automáticos en backups/
 
-Coloca este archivo en la misma carpeta que db.csv (o ajusta CSV_PATH).
+Uso rápido:
+  python manage_db.py            # menú interactivo
+  python manage_db.py export     # exporta JSON
+  python manage_db.py build      # genera páginas estáticas de jugadores
 """
 import csv
 import argparse
@@ -15,484 +28,600 @@ from datetime import datetime
 import json
 from pathlib import Path
 import shutil
+import re
+import unicodedata
 
-CSV_PATH = Path('db.csv')
+DATA_DIR = Path('data')
 BACKUP_DIR = Path('backups')
-HEADERS = ['id','team_name','league','country','added_date','notes','logo','link']
-PAGE_SIZE = 10
+PLAYERS_DIR = Path('players')
+TEMPLATES_DIR = Path('templates')
 
-# -----------------------
-# Utilidades de fichero
-# -----------------------
-def ensure_backup_dir():
+LEAGUES_CSV = DATA_DIR / 'ligas.csv'
+TEAMS_CSV = DATA_DIR / 'equipos.csv'
+PLAYERS_CSV = DATA_DIR / 'jugadores.csv'
+
+LEAGUES_JSON = DATA_DIR / 'ligas.json'
+TEAMS_JSON = DATA_DIR / 'equipos.json'
+PLAYERS_JSON = DATA_DIR / 'jugadores.json'
+
+ALLOWED_POSITIONS = ['Arquero','Defensor','Mediocampista','Delantero']
+
+def ensure_dirs():
+    DATA_DIR.mkdir(exist_ok=True)
     BACKUP_DIR.mkdir(exist_ok=True)
+    PLAYERS_DIR.mkdir(exist_ok=True)
+    TEMPLATES_DIR.mkdir(exist_ok=True)
 
-def backup_csv():
-    """Crear copia de seguridad con timestamp y devolver la ruta creada."""
-    if not CSV_PATH.exists():
-        return None
-    ensure_backup_dir()
+def backup_all():
+    ensure_dirs()
     ts = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
-    target = BACKUP_DIR / f"db_backup_{ts}.csv"
-    shutil.copy2(CSV_PATH, target)
-    return target
+    paths = [LEAGUES_CSV, TEAMS_CSV, PLAYERS_CSV]
+    made = []
+    for p in paths:
+        if p.exists():
+            dst = BACKUP_DIR / f"{p.stem}_{ts}{p.suffix}"
+            shutil.copy2(p, dst)
+            made.append(dst)
+    return made
 
-def read_rows():
-    if not CSV_PATH.exists():
-        return []
-    with CSV_PATH.open(newline='', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        rows = [r for r in reader]
-    return rows
+def read_csv(path):
+    if not path.exists(): return []
+    with path.open(newline='', encoding='utf-8') as f:
+        r = csv.DictReader(f)
+        return [dict(row) for row in r]
 
-def write_rows(rows):
-    # asegura que las cabeceras estén en orden consistente
-    with CSV_PATH.open('w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=HEADERS)
-        writer.writeheader()
+def write_csv(path, rows, headers):
+    with path.open('w', newline='', encoding='utf-8') as f:
+        w = csv.DictWriter(f, fieldnames=headers)
+        w.writeheader()
         for r in rows:
-            writer.writerow({k: r.get(k,'') for k in HEADERS})
+            w.writerow({k: r.get(k,'') for k in headers})
 
 def next_id(rows):
-    ids = [int(r.get('id') or 0) for r in rows if str(r.get('id') or '').isdigit()]
+    ids = [int(r['id']) for r in rows if str(r.get('id','')).isdigit()]
     return str(max(ids)+1 if ids else 1)
 
-# -----------------------
-# Validación
-# -----------------------
-def validate_rows(rows):
-    problems = []
-    for r in rows:
-        if not r.get('team_name'):
-            problems.append((r.get('id'), 'team_name faltante'))
-        if not r.get('league'):
-            problems.append((r.get('id'), 'league faltante'))
-        d = r.get('added_date','')
-        if d:
-            try:
-                datetime.strptime(d, '%Y-%m-%d')
-            except Exception:
-                problems.append((r.get('id'), f'added_date inválida: {d}'))
-    return problems
+def slugify(s: str) -> str:
+    s = (s or '').strip().lower()
+    s = unicodedata.normalize('NFD', s)
+    s = ''.join(c for c in s if unicodedata.category(c) != 'Mn')
+    s = re.sub(r'[^a-z0-9\s-]', '', s)
+    s = re.sub(r'\s+', '-', s).strip('-')
+    s = re.sub(r'-+', '-', s)
+    return s
 
-# -----------------------
-# Presentación en consola
-# -----------------------
-def format_row_for_table(r):
-    # crea una versión corta para visualización
-    return {
-        'id': r.get('id',''),
-        'team': r.get('team_name','')[:40],
-        'league': r.get('league','')[:25],
-        'country': r.get('country','')[:20],
-        'date': r.get('added_date',''),
-        'notes': (r.get('notes','')[:40] + ('...' if len(r.get('notes',''))>40 else '')),
-    }
+def unique_slug(base, existing_slugs):
+    s = slugify(base)
+    if s == '': s = 'item'
+    if s not in existing_slugs: return s
+    i = 2
+    while f"{s}-{i}" in existing_slugs:
+        i += 1
+    return f"{s}-{i}"
 
-def print_table(rows, page=None):
-    if not rows:
-        print("(sin registros)")
-        return
-    formatted = [format_row_for_table(r) for r in rows]
-    cols = ['id','team','league','country','date','notes']
-    widths = {c: max(len(c), max((len(str(item[c])) for item in formatted), default=0)) for c in cols}
-    sep = '  '
-    header = sep.join(c.upper().ljust(widths[c]) for c in cols)
-    print(header)
-    print('-' * len(header))
-    start = 0
-    end = len(formatted)
-    if page is not None:
-        start = page * PAGE_SIZE
-        end = min((page+1)*PAGE_SIZE, len(formatted))
-    for item in formatted[start:end]:
-        line = sep.join(str(item[c]).ljust(widths[c]) for c in cols)
-        print(line)
-    if page is not None:
-        print(f"-- mostrando {start+1}-{end} de {len(formatted)} --")
+def valid_date(s):
+    try:
+        datetime.strptime(s, '%Y-%m-%d')
+        return True
+    except Exception:
+        return False
 
-def input_with_default(prompt, default):
-    if default:
-        res = input(f"{prompt} [{default}]: ").strip()
-    else:
-        res = input(f"{prompt}: ").strip()
-    return res if res != '' else default
+def country_to_file(country: str) -> str:
+    if not country: return 'unknown'
+    s = unicodedata.normalize('NFD', country)
+    s = ''.join(c for c in s if unicodedata.category(c) != 'Mn')
+    s = s.lower().strip()
+    s = re.sub(r'[^a-z0-9\s_-]', '', s)
+    s = re.sub(r'\s+', '_', s)
+    s = re.sub(r'_+', '_', s)
+    return s or 'unknown'
 
-# -----------------------
-# Operaciones CRUD
-# -----------------------
-def list_cmd(args):
-    rows = read_rows()
-    if not rows:
-        print("No hay registros.")
-        return
-    page = 0
+def load_all():
+    leagues = read_csv(LEAGUES_CSV)
+    teams = read_csv(TEAMS_CSV)
+    players = read_csv(PLAYERS_CSV)
+    # Normalizar
+    for l in leagues:
+        l['id'] = str(l.get('id','')).strip()
+        l['name'] = l.get('name','').strip()
+        l['country'] = l.get('country','').strip()
+        l['logo'] = l.get('logo','').strip()
+        l['slug'] = l.get('slug','').strip()
+    for t in teams:
+        t['id'] = str(t.get('id','')).strip()
+        t['name'] = t.get('name','').strip()
+        t['league_id'] = str(t.get('league_id','')).strip()
+        t['logo'] = t.get('logo','').strip()
+        t['slug'] = t.get('slug','').strip()
+    for p in players:
+        p['id'] = str(p.get('id','')).strip()
+        p['first_name'] = p.get('first_name','').strip()
+        p['last_name'] = p.get('last_name','').strip()
+        p['birth_date'] = p.get('birth_date','').strip()
+        p['team_id'] = str(p.get('team_id','')).strip()
+        p['country'] = p.get('country','').strip()
+        p['photo'] = p.get('photo','').strip()
+        p['position'] = p.get('position','').strip()
+        try:
+            p['rating'] = int(p.get('rating', '') or 0)
+        except:
+            p['rating'] = 0
+        p['sofifa_url'] = p.get('sofifa_url','').strip()
+        p['face_video_url'] = p.get('face_video_url','').strip()
+        p['slug'] = p.get('slug','').strip()
+    return leagues, teams, players
+
+def save_all(leagues, teams, players):
+    write_csv(LEAGUES_CSV, leagues, ['id','name','country','logo','slug'])
+    write_csv(TEAMS_CSV, teams, ['id','name','league_id','logo','slug'])
+    write_csv(PLAYERS_CSV, players, ['id','first_name','last_name','birth_date','team_id','country','photo','position','rating','sofifa_url','face_video_url','slug'])
+
+def validate(leagues, teams, players, verbose=True):
+    ok = True
+    league_ids = {l['id'] for l in leagues}
+    team_ids = {t['id'] for t in teams}
+    # Slugs únicos
+    if len({l['slug'] for l in leagues if l['slug']}) != len(leagues):
+        ok = False; 
+        if verbose: print("Ligas: slugs duplicados")
+    if len({t['slug'] for t in teams if t['slug']}) != len(teams):
+        ok = False; 
+        if verbose: print("Equipos: slugs duplicados")
+    if len({p['slug'] for p in players if p['slug']}) != len(players):
+        ok = False; 
+        if verbose: print("Jugadores: slugs duplicados")
+    # Referencias y campos
+    for t in teams:
+        if t['league_id'] and t['league_id'] not in league_ids:
+            ok = False
+            if verbose: print(f"Equipo {t['name']} con league_id inexistente: {t['league_id']}")
+    for p in players:
+        if p['team_id'] and p['team_id'] not in team_ids:
+            ok = False
+            if verbose: print(f"Jugador {p['first_name']} {p['last_name']} con team_id inexistente: {p['team_id']}")
+        if p['position'] and p['position'] not in ALLOWED_POSITIONS:
+            ok = False
+            if verbose: print(f"Jugador {p['first_name']} {p['last_name']} posición inválida: {p['position']}")
+        if p['rating'] and not (40 <= int(p['rating']) <= 99):
+            ok = False
+            if verbose: print(f"Jugador {p['first_name']} {p['last_name']} rating fuera de rango: {p['rating']}")
+        if p['birth_date'] and not valid_date(p['birth_date']):
+            ok = False
+            if verbose: print(f"Jugador {p['first_name']} {p['last_name']} fecha inválida: {p['birth_date']}")
+    if verbose:
+        print("Validación OK" if ok else "Validación con problemas")
+    return ok
+
+def export_json(leagues, teams, players):
+    with LEAGUES_JSON.open('w', encoding='utf-8') as f:
+        json.dump(leagues, f, ensure_ascii=False, indent=2)
+    with TEAMS_JSON.open('w', encoding='utf-8') as f:
+        json.dump(teams, f, ensure_ascii=False, indent=2)
+    with PLAYERS_JSON.open('w', encoding='utf-8') as f:
+        json.dump(players, f, ensure_ascii=False, indent=2)
+    print("Exportado JSON a data/*.json")
+
+def read_player_template():
+    ensure_dirs()
+    tpl_path = TEMPLATES_DIR / 'player.html'
+    if tpl_path.exists():
+        return tpl_path.read_text(encoding='utf-8')
+    # Plantilla mínima por defecto si no existe el archivo
+    return """<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{title}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .layout{{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start;margin-top:16px}}
+    .photo{{width:120px;height:120px;border-radius:14px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}}
+    .flag{{width:24px;height:18px;object-fit:cover;border-radius:2px;margin-left:8px;vertical-align:middle}}
+    .badge{{display:inline-block;border-radius:8px;padding:6px 10px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));color:#071014;font-weight:700;margin-left:8px}}
+    .box{{background:linear-gradient(180deg,rgba(10,10,12,.96),rgba(20,16,24,.96));border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px}}
+    a.clean{{color:#7afcff;text-decoration:none}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1><a href="../index.html" class="clean" style="color:inherit;text-decoration:none">LAqP</a></h1>
+      </div>
+      <nav class="main-nav">
+        <a href="../ligas.html">Ligas</a>
+        <a href="../equipos.html">Equipos</a>
+        <a href="../jugadores.html">Jugadores</a>
+      </nav>
+    </header>
+
+    <div class="layout">
+      <img class="photo" src="../{photo}" alt="{full_name}" onerror="this.src='../img/jugadores/placeholder.png'">
+      <div>
+        <div class="page-title" style="margin:0">{full_name}
+          <span class="badge">{rating}</span>
+        </div>
+        <div class="box" style="margin-top:10px">
+          <div><strong>Posición:</strong> {position}</div>
+          <div><strong>Nacimiento:</strong> {birth_date} {age_text}</div>
+          <div><strong>Equipo:</strong> {team_link}</div>
+          <div><strong>Liga:</strong> {league_link}</div>
+          <div><strong>País:</strong> {country} {flag_img}</div>
+          <div style="margin-top:10px">{sofifa_link} {face_video_link}</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+</body>
+</html>"""
+
+def build_player_pages(leagues, teams, players):
+    ensure_dirs()
+    template = read_player_template()
+
+    league_by_id = {l['id']: l for l in leagues}
+    team_by_id = {t['id']: t for t in teams}
+
+    count = 0
+    for p in players:
+        full_name = f"{p['first_name']} {p['last_name']}".strip()
+        # edad
+        age_text = ''
+        try:
+            d = datetime.strptime(p['birth_date'], '%Y-%m-%d')
+            now = datetime.utcnow()
+            age = now.year - d.year - ((now.month, now.day) < (d.month, d.day))
+            age_text = f"({age} años)"
+        except Exception:
+            age_text = ''
+
+        t = team_by_id.get(p['team_id']) if p.get('team_id') else None
+        l = league_by_id.get(t['league_id']) if t and t.get('league_id') else None
+
+        team_link = f"<a class='clean' href='../equipo.html?slug={t['slug']}'>{t['name']}</a>" if t else "Sin equipo"
+        league_link = f"<a class='clean' href='../liga.html?slug={l['slug']}'>{l['name']}</a>" if l else "—"
+
+        flag_src = f"img/flags/{country_to_file(p['country'])}.png"
+        flag_img = f"<img class='flag' src='../{flag_src}' alt='{p['country']}' onerror=\"this.style.display='none'\">" if p.get('country') else ''
+
+        sofifa_link = f"<a class='clean' href='{p['sofifa_url']}' target='_blank' rel='noopener'>Ver en SoFIFA</a>" if p.get('sofifa_url') else ""
+        face_video_link = f"<a class='clean' href='{p['face_video_url']}' target='_blank' rel='noopener' style='margin-left:12px'>Video de cara</a>" if p.get('face_video_url') else ""
+
+        html = template.format(
+            title=f"{full_name} — LAQP",
+            full_name=full_name or "Jugador",
+            rating=p.get('rating', '') or '',
+            photo=p.get('photo') or 'img/jugadores/placeholder.png',
+            position=p.get('position') or '-',
+            birth_date=p.get('birth_date') or '',
+            age_text=age_text,
+            team_link=team_link,
+            league_link=league_link,
+            country=p.get('country') or '',
+            flag_img=flag_img,
+            sofifa_link=sofifa_link,
+            face_video_link=face_video_link,
+        )
+
+        out_path = PLAYERS_DIR / f"{p['slug']}.html"
+        out_path.write_text(html, encoding='utf-8')
+        count += 1
+
+    print(f"Generadas {count} páginas en {PLAYERS_DIR}/")
+
+def export_cmd():
+    leagues, teams, players = load_all()
+    if not validate(leagues, teams, players, verbose=True):
+        ans = input("Validación con problemas. Exportar igual? (s/N): ").strip().lower()
+        if ans != 's':
+            return
+    export_json(leagues, teams, players)
+
+def build_cmd():
+    leagues, teams, players = load_all()
+    if not validate(leagues, teams, players, verbose=True):
+        ans = input("Validación con problemas. Continuar build? (s/N): ").strip().lower()
+        if ans != 's':
+            return
+    build_player_pages(leagues, teams, players)
+
+def prompt(msg, default=None, required=False, validator=None):
     while True:
-        print_table(rows, page)
-        if (page+1)*PAGE_SIZE >= len(rows):
-            break
-        choice = input("Presiona Enter para ver más, 'q' para salir, o 'n' para siguiente: ").strip().lower()
-        if choice == 'q':
-            break
-        page += 1
+        if default:
+            val = input(f"{msg} [{default}]: ").strip()
+            if val == '': val = default
+        else:
+            val = input(f"{msg}: ").strip()
+        if required and val == '':
+            print("Campo requerido.")
+            continue
+        if validator:
+            ok, err = validator(val)
+            if not ok:
+                print(err); continue
+        return val
 
-def add_cmd_interactive():
-    print("Añadir nuevo registro. Rellena los campos (ENTER para valores por defecto / mantener vacío).")
-    team = ''
-    while not team:
-        team = input("Nombre del equipo (requerido): ").strip()
-        if not team:
-            print("El nombre del equipo es obligatorio.")
-    league = ''
-    while not league:
-        league = input("Liga (requerido): ").strip()
-        if not league:
-            print("La liga es obligatoria.")
-    country = ''
-    while not country:
-        country = input("País (requerido): ").strip()
-        if not country:
-            print("El país es obligatorio.")
-    date = input_with_default("Fecha (YYYY-MM-DD)", datetime.utcnow().strftime('%Y-%m-%d'))
-    # validar fecha simple
-    try:
-        datetime.strptime(date, '%Y-%m-%d')
-    except Exception:
-        print("Fecha inválida. Se usará la fecha actual.")
-        date = datetime.utcnow().strftime('%Y-%m-%d')
-    notes = input("Notas (opcional): ").strip()
-    logo = input("Ruta logo (opcional, ej. img/logos/x.png): ").strip()
-    link = input("Enlace (opcional): ").strip()
+def pick_from(rows, label_key='name'):
+    for r in rows:
+        print(f"{r['id']}: {r[label_key]}")
+    return input("Ingresa id (o vacío para cancelar): ").strip()
 
-    rows = read_rows()
-    new = {
-        'id': next_id(rows),
-        'team_name': team,
-        'league': league,
-        'country': country,
-        'added_date': date,
-        'notes': notes,
-        'logo': logo,
-        'link': link,
-    }
-    print("\nResumen del nuevo registro:")
-    print(json.dumps(new, ensure_ascii=False, indent=2))
-    ok = input("Confirmar guardado? (s/N): ").strip().lower()
-    if ok != 's':
-        print("Cancelado.")
-        return
-    b = backup_csv()
-    if b:
-        print(f"Copia de seguridad creada: {b}")
-    rows.append(new)
-    write_rows(rows)
-    print("Registro añadido con id", new['id'])
+def ensure_slug_entity(name, existing_slugs):
+    return unique_slug(name, set(s for s in existing_slugs if s))
 
-def find_index(rows, idv):
-    for i,r in enumerate(rows):
-        if str(r.get('id')) == str(idv):
-            return i
-    return None
-
-def update_cmd_interactive():
-    rows = read_rows()
-    if not rows:
-        print("No hay registros para actualizar.")
-        return
-    idv = input("Introduce el id a actualizar (o deja vacío para buscar por nombre): ").strip()
-    idx = None
-    if idv:
-        idx = find_index(rows, idv)
-        if idx is None:
-            print("Id no encontrado.")
-            return
-    else:
-        q = input("Buscar nombre (texto): ").strip().lower()
-        matches = [r for r in rows if q in (r.get('team_name','').lower())]
-        if not matches:
-            print("No se encontraron coincidencias.")
-            return
-        print("Coincidencias:")
-        print_table(matches)
-        idv = input("Introduce el id exacto de la fila que deseas actualizar: ").strip()
-        idx = find_index(rows, idv)
-        if idx is None:
-            print("Id no encontrado.")
-            return
-
-    r = rows[idx]
-    print("Valores actuales (ENTER para mantener):")
-    team = input_with_default("Nombre del equipo", r.get('team_name',''))
-    league = input_with_default("Liga", r.get('league',''))
-    country = input_with_default("País", r.get('country',''))
-    date = input_with_default("Fecha (YYYY-MM-DD)", r.get('added_date', datetime.utcnow().strftime('%Y-%m-%d')))
-    try:
-        datetime.strptime(date, '%Y-%m-%d')
-    except Exception:
-        print("Fecha inválida, se mantiene la original.")
-        date = r.get('added_date','')
-    notes = input_with_default("Notas", r.get('notes',''))
-    logo = input_with_default("Logo", r.get('logo',''))
-    link = input_with_default("Enlace", r.get('link',''))
-
-    updated = {
-        'id': r.get('id'),
-        'team_name': team,
-        'league': league,
-        'country': country,
-        'added_date': date,
-        'notes': notes,
-        'logo': logo,
-        'link': link,
-    }
-    print("\nRegistro resultante:")
-    print(json.dumps(updated, ensure_ascii=False, indent=2))
-    ok = input("Confirmar actualización? (s/N): ").strip().lower()
-    if ok != 's':
-        print("Cancelado.")
-        return
-    b = backup_csv()
-    if b:
-        print(f"Copia de seguridad creada: {b}")
-    rows[idx] = updated
-    write_rows(rows)
-    print("Registro actualizado:", updated['id'])
-
-def delete_cmd_interactive():
-    rows = read_rows()
-    if not rows:
-        print("No hay registros para eliminar.")
-        return
-    idv = input("Introduce el id a eliminar (o deja vacío para buscar por nombre): ").strip()
-    idx = None
-    if idv:
-        idx = find_index(rows, idv)
-        if idx is None:
-            print("Id no encontrado.")
-            return
-    else:
-        q = input("Buscar nombre (texto): ").strip().lower()
-        matches = [r for r in rows if q in (r.get('team_name','').lower())]
-        if not matches:
-            print("No se encontraron coincidencias.")
-            return
-        print("Coincidencias:")
-        print_table(matches)
-        idv = input("Introduce el id exacto de la fila que deseas eliminar: ").strip()
-        idx = find_index(rows, idv)
-        if idx is None:
-            print("Id no encontrado.")
-            return
-
-    r = rows[idx]
-    print("Registro a eliminar:")
-    print(json.dumps(r, ensure_ascii=False, indent=2))
-    ok = input("Confirmar eliminación? ESTA ACCIÓN NO SE PUEDE DESHACER. (s/N): ").strip().lower()
-    if ok != 's':
-        print("Cancelado.")
-        return
-    b = backup_csv()
-    if b:
-        print(f"Copia de seguridad creada: {b}")
-    removed = rows.pop(idx)
-    write_rows(rows)
-    print("Registro eliminado:", removed.get('id'))
-
-def validate_cmd(args):
-    rows = read_rows()
-    problems = validate_rows(rows)
-    if not problems:
-        print("Validación OK — no issues found.")
-    else:
-        print("Problemas encontrados:")
-        for p in problems:
-            print("-", p[0], p[1])
-
-def export_cmd(args):
-    rows = read_rows()
-    out = args.json if args.json else 'out.json'
-    with open(out, 'w', encoding='utf-8') as f:
-        json.dump(rows, f, ensure_ascii=False, indent=2)
-    print("Exportado a", out)
-
-# -----------------------
-# Menú interactivo
-# -----------------------
 def interactive_menu():
-    MENU = [
-        ("Listar registros", lambda: list_cmd(None)),
-        ("Buscar por texto", interactive_search),
-        ("Añadir registro", add_cmd_interactive),
-        ("Actualizar registro", update_cmd_interactive),
-        ("Eliminar registro", delete_cmd_interactive),
-        ("Validar CSV", lambda: validate_cmd(None)),
-        ("Exportar a JSON", interactive_export),
-        ("Crear copia de seguridad manual", interactive_backup),
+    print("=== Gestor LAQP — Menú ===")
+    actions = [
+        ("Ligas: listar / buscar", menu_list_leagues),
+        ("Ligas: añadir", menu_add_league),
+        ("Ligas: editar", menu_edit_league),
+        ("Ligas: eliminar (desasigna equipos)", menu_delete_league),
+        ("Equipos: listar / buscar", menu_list_teams),
+        ("Equipos: añadir", menu_add_team),
+        ("Equipos: editar", menu_edit_team),
+        ("Equipos: eliminar (bloquea si tiene jugadores)", menu_delete_team),
+        ("Jugadores: listar / buscar", menu_list_players),
+        ("Jugadores: añadir", menu_add_player),
+        ("Jugadores: editar", menu_edit_player),
+        ("Jugadores: eliminar", menu_delete_player),
+        ("Validar base", lambda: validate(*load_all())),
+        ("Exportar JSON", export_cmd),
+        ("Generar páginas de jugadores (build)", build_cmd),
+        ("Backup CSV", menu_backup),
         ("Salir", lambda: sys.exit(0)),
     ]
-    print("=== Gestor de db.csv — Menú interactivo ===")
     while True:
-        for i,(label,_) in enumerate(MENU, start=1):
-            print(f"{i}) {label}")
+        print()
+        for i,(t,_) in enumerate(actions,1):
+            print(f"{i}) {t}")
+        ch = input("Opción: ").strip()
+        if not ch.isdigit() or not (1 <= int(ch) <= len(actions)):
+            print("Opción inválida"); continue
         try:
-            choice = input("Selecciona una opción (número): ").strip()
-        except (EOFError, KeyboardInterrupt):
-            print()
-            print("Salida.")
-            return
-        if not choice.isdigit() or int(choice) < 1 or int(choice) > len(MENU):
-            print("Opción no válida.")
-            continue
-        idx = int(choice)-1
-        try:
-            MENU[idx][1]()
+            actions[int(ch)-1][1]()
+        except KeyboardInterrupt:
+            print("\n(Cancelado)")
         except Exception as e:
-            print("Error ejecutando la acción:", e)
-        input("\n(ENTER para volver al menú)")
+            print("Error:", e)
 
-# -----------------------
-# Funciones auxiliares del menú (search, export, backup)
-# -----------------------
-def interactive_search():
-    q = input("Texto a buscar (nombre/liga/país/notas): ").strip().lower()
-    if not q:
-        print("Nada que buscar.")
+# --- Ligas ---
+def menu_list_leagues():
+    leagues, _, _ = load_all()
+    q = input("Buscar (nombre/país, vacío para listar todo): ").strip().lower()
+    rows = [l for l in leagues if q in (l['name']+' '+l['country']).lower()] if q else leagues
+    rows = sorted(rows, key=lambda l: l['name'])
+    for l in rows:
+        print(f"{l['id']}: {l['name']} — {l['country']} (slug: {l['slug']})")
+
+def menu_add_league():
+    leagues, _, _ = load_all()
+    name = prompt("Nombre de liga", required=True)
+    country = prompt("País", required=True)
+    logo = prompt("Ruta logo (img/ligas/...)", default="img/ligas/placeholder.png")
+    slug = ensure_slug_entity(name, [l['slug'] for l in leagues])
+    l = {'id': next_id(leagues), 'name': name, 'country': country, 'logo': logo, 'slug': slug}
+    backup_all()
+    leagues.append(l)
+    save_all(leagues, *load_all()[1:])
+    print("Liga añadida:", l['id'], l['name'])
+
+def menu_edit_league():
+    leagues, teams, players = load_all()
+    lid = pick_from(sorted(leagues, key=lambda l:l['name']))
+    if not lid: return
+    l = next((x for x in leagues if x['id']==lid), None)
+    if not l: print("No encontrada"); return
+    name = prompt("Nombre", default=l['name'], required=True)
+    country = prompt("País", default=l['country'], required=True)
+    logo = prompt("Logo", default=l['logo'] or "img/ligas/placeholder.png")
+    if name != l['name']:
+        l['slug'] = ensure_slug_entity(name, [x['slug'] for x in leagues if x['id']!=l['id']])
+    l['name']=name; l['country']=country; l['logo']=logo
+    backup_all()
+    save_all(leagues, teams, players)
+    print("Liga actualizada.")
+
+def menu_delete_league():
+    leagues, teams, players = load_all()
+    lid = pick_from(sorted(leagues, key=lambda l:l['name']))
+    if not lid: return
+    l = next((x for x in leagues if x['id']==lid), None)
+    if not l: print("No encontrada"); return
+    print(f"Eliminará la liga '{l['name']}' y desasignará {sum(1 for t in teams if t['league_id']==lid)} equipos.")
+    if input("Confirmar? (s/N): ").strip().lower()!='s': return
+    backup_all()
+    leagues = [x for x in leagues if x['id']!=lid]
+    for t in teams:
+        if t['league_id']==lid:
+            t['league_id']=''
+    save_all(leagues, teams, players)
+    print("Liga eliminada y equipos desasignados.")
+
+# --- Equipos ---
+def menu_list_teams():
+    leagues, teams, _ = load_all()
+    lid_name = {l['id']:l['name'] for l in leagues}
+    q = input("Buscar (nombre, vacío para todo): ").strip().lower()
+    rows = [t for t in teams if q in t['name'].lower()] if q else teams
+    for t in sorted(rows, key=lambda t:t['name']):
+        print(f"{t['id']}: {t['name']} — {lid_name.get(t['league_id'],'Sin liga')} (slug: {t['slug']})")
+
+def menu_add_team():
+    leagues, teams, players = load_all()
+    name = prompt("Nombre de equipo", required=True)
+    print("Liga (opcional):")
+    lid = pick_from(sorted(leagues, key=lambda l:l['name'])) or ''
+    logo = prompt("Ruta logo (img/equipos/...)", default="img/equipos/placeholder.png")
+    slug = ensure_slug_entity(name, [t['slug'] for t in teams])
+    t = {'id': next_id(teams), 'name': name, 'league_id': lid, 'logo': logo, 'slug': slug}
+    backup_all()
+    teams.append(t)
+    save_all(leagues, teams, players)
+    print("Equipo añadido:", t['id'], t['name'])
+
+def menu_edit_team():
+    leagues, teams, players = load_all()
+    tid = pick_from(sorted(teams, key=lambda t:t['name']))
+    if not tid: return
+    t = next((x for x in teams if x['id']==tid), None)
+    if not t: print("No encontrado"); return
+    name = prompt("Nombre", default=t['name'], required=True)
+    print("Seleccionar liga (opcional):")
+    lid = pick_from(sorted(leagues, key=lambda l:l['name'])) or ''
+    logo = prompt("Logo", default=t['logo'] or "img/equipos/placeholder.png")
+    if name != t['name']:
+        t['slug'] = ensure_slug_entity(name, [x['slug'] for x in teams if x['id']!=t['id']])
+    t['name']=name; t['league_id']=lid; t['logo']=logo
+    backup_all()
+    save_all(leagues, teams, players)
+    print("Equipo actualizado.")
+
+def menu_delete_team():
+    leagues, teams, players = load_all()
+    tid = pick_from(sorted(teams, key=lambda t:t['name']))
+    if not tid: return
+    t = next((x for x in teams if x['id']==tid), None)
+    if not t: print("No encontrado"); return
+    cnt = sum(1 for p in players if p['team_id']==tid)
+    if cnt>0:
+        print(f"Bloqueado: el equipo tiene {cnt} jugadores. Reasigna o elimina jugadores antes.")
         return
-    rows = read_rows()
-    matches = [r for r in rows if q in (r.get('team_name','').lower() + " " + r.get('league','').lower() + " " + r.get('country','').lower() + " " + r.get('notes','').lower())]
-    if not matches:
-        print("No hay coincidencias.")
-        return
-    print_table(matches)
+    if input(f"Confirmar eliminación de '{t['name']}'? (s/N): ").strip().lower()!='s': return
+    backup_all()
+    teams = [x for x in teams if x['id']!=tid]
+    save_all(leagues, teams, players)
+    print("Equipo eliminado.")
 
-def interactive_export():
-    out = input_with_default("Nombre de archivo JSON de salida", "out.json")
-    args = argparse.Namespace(json=out)
-    export_cmd(args)
+# --- Jugadores ---
+def menu_list_players():
+    leagues, teams, players = load_all()
+    team_name = {t['id']:t['name'] for t in teams}
+    q = input("Buscar (nombre/apellido, vacío para todo): ").strip().lower()
+    rows = [p for p in players if q in (p['first_name']+' '+p['last_name']).lower()] if q else players
+    rows = sorted(rows, key=lambda p:(-int(p['rating'] or 0), p['last_name'], p['first_name']))
+    for p in rows[:200]:
+        print(f"{p['id']}: {p['first_name']} {p['last_name']} — {team_name.get(p['team_id'],'Sin equipo')} — {p['position']} — {p['rating']} (slug: {p['slug']})")
+    if len(rows)>200: print(f"... {len(rows)-200} más")
 
-def interactive_backup():
-    b = backup_csv()
-    if b:
-        print("Copia creada:", b)
+def menu_add_player():
+    leagues, teams, players = load_all()
+    first = prompt("Nombre", required=True)
+    last = prompt("Apellido", required=True)
+    birth = prompt("Fecha nacimiento (YYYY-MM-DD)", required=True, validator=lambda v: (valid_date(v),"Fecha inválida (YYYY-MM-DD)"))
+    print("Elegir equipo (opcional):")
+    tid = pick_from(sorted(teams, key=lambda t:t['name'])) or ''
+    country = prompt("País (para bandera img/flags/nombre_del_pais.png)", required=True)
+    photo = prompt("Foto (img/jugadores/...)", default="img/jugadores/placeholder.png")
+    def val_pos(v): return (v in ALLOWED_POSITIONS, f"Posición inválida. Usa: {', '.join(ALLOWED_POSITIONS)}")
+    position = prompt(f"Posición {ALLOWED_POSITIONS}", required=True, validator=val_pos)
+    def val_rating(v):
+        try:
+            n=int(v); return (40<=n<=99, "Rating debe estar entre 40 y 99")
+        except: return (False, "Rating numérico 40..99")
+    rating = int(prompt("Rating (40-99)", required=True, validator=val_rating))
+    sofifa = prompt("URL SoFIFA (opcional)", default="")
+    face_video = prompt("URL Video de cara (opcional)", default="")
+    slug = ensure_slug_entity(f"{first} {last}", [x['slug'] for x in players])
+    p = {'id': next_id(players),'first_name':first,'last_name':last,'birth_date':birth,'team_id':tid,'country':country,'photo':photo,'position':position,'rating':rating,'sofifa_url':sofifa,'face_video_url':face_video,'slug':slug}
+    backup_all()
+    players.append(p)
+    save_all(leagues, teams, players)
+    print("Jugador añadido:", p['id'], first, last)
+
+def menu_edit_player():
+    leagues, teams, players = load_all()
+    q = input("Buscar jugador (texto, vacío para listar): ").strip().lower()
+    rows = [p for p in players if q in (p['first_name']+' '+p['last_name']).lower()] if q else players
+    rows = sorted(rows, key=lambda p:(p['last_name'], p['first_name']))
+    for p in rows[:100]:
+        print(f"{p['id']}: {p['first_name']} {p['last_name']}")
+    pid = input("Id a editar: ").strip()
+    if not pid: return
+    p = next((x for x in players if x['id']==pid), None)
+    if not p: print("No encontrado"); return
+
+    first = prompt("Nombre", default=p['first_name'], required=True)
+    last = prompt("Apellido", default=p['last_name'], required=True)
+    birth = prompt("Fecha (YYYY-MM-DD)", default=p['birth_date'] or '', required=True, validator=lambda v: (valid_date(v),"Fecha inválida"))
+    print("Elegir equipo (opcional):")
+    tid = pick_from(sorted(teams, key=lambda t:t['name'])) or ''
+    country = prompt("País", default=p['country'] or '', required=True)
+    photo = prompt("Foto", default=p['photo'] or "img/jugadores/placeholder.png")
+    def val_pos(v): return (v in ALLOWED_POSITIONS, f"Posición inválida. Usa: {', '.join(ALLOWED_POSITIONS)}")
+    position = prompt("Posición", default=p['position'] or '', required=True, validator=val_pos)
+    def val_rating(v):
+        try:
+            n=int(v); return (40<=n<=99, "Rating 40..99")
+        except: return (False, "Rating numérico 40..99")
+    rating = int(prompt("Rating (40-99)", default=str(p['rating'] or 40), required=True, validator=val_rating))
+    sofifa = prompt("URL SoFIFA", default=p.get('sofifa_url',''))
+    face_video = prompt("URL Video de cara", default=p.get('face_video_url',''))
+
+    if first!=p['first_name'] or last!=p['last_name']:
+        p['slug'] = ensure_slug_entity(f"{first} {last}", [x['slug'] for x in players if x['id']!=p['id']])
+    p.update({'first_name':first,'last_name':last,'birth_date':birth,'team_id':tid,'country':country,'photo':photo,'position':position,'rating':rating,'sofifa_url':sofifa,'face_video_url':face_video})
+    backup_all()
+    save_all(leagues, teams, players)
+    print("Jugador actualizado.")
+
+def menu_delete_player():
+    leagues, teams, players = load_all()
+    q = input("Buscar (texto, vacío para listar): ").strip().lower()
+    rows = [p for p in players if q in (p['first_name']+' '+p['last_name']).lower()] if q else players
+    for p in rows[:100]:
+        print(f"{p['id']}: {p['first_name']} {p['last_name']}")
+    pid = input("Id a eliminar: ").strip()
+    if not pid: return
+    p = next((x for x in players if x['id']==pid), None)
+    if not p: print("No encontrado"); return
+    if input(f"Confirmar eliminación de {p['first_name']} {p['last_name']}? (s/N): ").strip().lower()!='s': return
+    backup_all()
+    players = [x for x in players if x['id']!=pid]
+    save_all(leagues, teams, players)
+    print("Jugador eliminado.")
+
+# --- Meta ---
+def menu_backup():
+    made = backup_all()
+    if not made: print("Nada que copiar (CSV no existentes).")
     else:
-        print("No existe db.csv para copiar.")
+        for p in made: print("Backup:", p)
 
-# -----------------------
-# Soporte de comandos clásicos por línea
-# -----------------------
 def build_arg_parser():
-    parser = argparse.ArgumentParser(description='Administrar db.csv (menu interactivo si se ejecuta sin subcomando)')
-    parser.add_argument('--interactive', action='store_true', help='Abrir menú interactivo')
-    sub = parser.add_subparsers(dest='cmd')
-
-    sub.add_parser('list')
-    p_add = sub.add_parser('add')
-    p_add.add_argument('--team', required=False)
-    p_add.add_argument('--league', required=False)
-    p_add.add_argument('--country', required=False)
-    p_add.add_argument('--date')
-    p_add.add_argument('--notes')
-    p_add.add_argument('--logo')
-    p_add.add_argument('--link')
-
-    p_up = sub.add_parser('update')
-    p_up.add_argument('--id', required=True)
-    p_up.add_argument('--team')
-    p_up.add_argument('--league')
-    p_up.add_argument('--country')
-    p_up.add_argument('--date')
-    p_up.add_argument('--notes')
-    p_up.add_argument('--logo')
-    p_up.add_argument('--link')
-
-    p_del = sub.add_parser('delete')
-    p_del.add_argument('--id', required=True)
-
+    p = argparse.ArgumentParser(description="Gestor LAQP (interactivo por defecto).")
+    sub = p.add_subparsers(dest='cmd')
+    sub.add_parser('export')
     sub.add_parser('validate')
-    p_exp = sub.add_parser('export')
-    p_exp.add_argument('--json', required=False)
+    sub.add_parser('build')
+    return p
 
-    return parser
+def ensure_csv_headers():
+    ensure_dirs()
+    if not LEAGUES_CSV.exists():
+        write_csv(LEAGUES_CSV, [], ['id','name','country','logo','slug'])
+    if not TEAMS_CSV.exists():
+        write_csv(TEAMS_CSV, [], ['id','name','league_id','logo','slug'])
+    if not PLAYERS_CSV.exists():
+        write_csv(PLAYERS_CSV, [], ['id','first_name','last_name','birth_date','team_id','country','photo','position','rating','sofifa_url','face_video_url','slug'])
 
-def cmd_add_from_args(args):
-    if not (args.team and args.league and args.country):
-        print("Para add vía CLI debes pasar --team, --league y --country (usa el modo interactivo para prompts).")
-        return
-    rows = read_rows()
-    new = {
-        'id': next_id(rows),
-        'team_name': args.team,
-        'league': args.league,
-        'country': args.country,
-        'added_date': args.date or datetime.utcnow().strftime('%Y-%m-%d'),
-        'notes': args.notes or '',
-        'logo': args.logo or '',
-        'link': args.link or '',
-    }
-    b = backup_csv()
-    if b:
-        print("Backup:", b)
-    rows.append(new)
-    write_rows(rows)
-    print("Registro añadido con id", new['id'])
-
-def cmd_update_from_args(args):
-    rows = read_rows()
-    idx = find_index(rows, args.id)
-    if idx is None:
-        print("Id no encontrado.")
-        return
-    r = rows[idx]
-    for k in ['team','league','country','date','notes','logo','link']:
-        val = getattr(args, k)
-        if val is not None:
-            keymap = {'team':'team_name','date':'added_date'}
-            r[keymap.get(k,k)] = val
-    b = backup_csv()
-    if b:
-        print("Backup:", b)
-    rows[idx] = r
-    write_rows(rows)
-    print("Registro actualizado:", r['id'])
-
-def cmd_delete_from_args(args):
-    rows = read_rows()
-    idx = find_index(rows, args.id)
-    if idx is None:
-        print("Id no encontrado.")
-        return
-    b = backup_csv()
-    if b:
-        print("Backup:", b)
-    removed = rows.pop(idx)
-    write_rows(rows)
-    print("Registro eliminado:", removed.get('id'))
-
-# -----------------------
-# Main
-# -----------------------
 def main():
+    ensure_csv_headers()
     parser = build_arg_parser()
     args = parser.parse_args()
-
-    # si se solicita interactivo explícito o no se pasan subcomandos -> menú
-    if args.interactive or args.cmd is None:
+    if not args.cmd:
         interactive_menu()
         return
-
-    # comandos por línea
-    if args.cmd == 'list':
-        list_cmd(args)
-    elif args.cmd == 'add':
-        cmd_add_from_args(args)
-    elif args.cmd == 'update':
-        cmd_update_from_args(args)
-    elif args.cmd == 'delete':
-        cmd_delete_from_args(args)
-    elif args.cmd == 'validate':
-        validate_cmd(args)
-    elif args.cmd == 'export':
-        export_cmd(args)
+    if args.cmd=='export':
+        export_cmd()
+    elif args.cmd=='validate':
+        validate(*load_all())
+    elif args.cmd=='build':
+        build_cmd()
     else:
         parser.print_help()
 

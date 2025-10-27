@@ -1,288 +1,107 @@
-<link rel="icon" href="img/Logo Web.png" type="image/png" sizes="32x32">
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>LAqP - Base de Datos</title>
+  <title>Ligas — La Araña Que Pica</title>
   <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Estilos mínimos específicos para la página de DB (usa tu style.css para el resto) */
-    .db-controls { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin:18px 0; }
-    .db-controls input[type="search"], .db-controls select { padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); color:var(--muted); }
-    .db-table-wrap{ overflow:auto; border-radius:12px; border:1px solid rgba(255,255,255,0.03); margin-top:12px; }
-    table.db-table { width:100%; border-collapse:collapse; min-width:720px; }
-    table.db-table thead th { text-align:left; padding:12px 16px; background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); position:sticky; top:0; z-index:4; font-family:'Bungee', sans-serif; font-size:0.9rem; }
-    table.db-table tbody td { padding:12px 16px; border-top:1px solid rgba(255,255,255,0.02); vertical-align:middle; color:#dff; }
-    table.db-table tbody tr:hover { background: rgba(0,255,231,0.02); }
-    .small-logo { width:48px; height:32px; object-fit:contain; border-radius:6px; background:linear-gradient(180deg,#00000022,#00000044); display:inline-block; margin-right:8px; vertical-align:middle; }
-    .controls-right { margin-left:auto; display:flex; gap:8px; }
-    .btn-ghost { padding:8px 12px; border-radius:8px; text-decoration:none; color:var(--muted); border:1px solid rgba(255,255,255,0.04); background:transparent; cursor:pointer; }
-    .sort-button { font-size:0.85rem; padding:6px 10px; border-radius:8px; }
-    .no-results { padding:20px; color:#f5f5f5; opacity:0.8; text-align:center; }
-    @media (max-width:900px){ .db-controls{ flex-direction:column; align-items:stretch; } .controls-right{ margin-left:0; } table.db-table{ min-width:640px; } }
+    .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:12px}
+    .card{background:linear-gradient(180deg,rgba(10,10,12,.96),rgba(20,16,24,.96));border:1px solid rgba(255,255,255,.05);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center}
+    .card img.logo{width:56px;height:56px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
+    .flag{width:22px;height:16px;object-fit:cover;border-radius:2px;margin-left:6px;vertical-align:middle}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+    .filters input,.filters select{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);color:var(--muted)}
+    a.clean{color:inherit;text-decoration:none}
+    .no-results{padding:10px;color:#dff}
   </style>
 </head>
 <body>
-
   <div class="wrap">
     <header class="site-header" role="banner" aria-label="Cabecera del sitio">
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
-        <h1><a href="index.html" style="color:inherit; text-decoration:none;">LAqP</a></h1>
+        <h1><a href="index.html" class="clean">LAqP</a></h1>
       </div>
-
       <nav class="main-nav" role="navigation" aria-label="Menú principal">
-        <a href="index.html">Inicio</a>
-        <a href="ligas.html" aria-current="page">Base de Datos</a>
-        <a href="https://laqpofpes2018al2025ovr.blogspot.com/">Blog</a>
+        <a href="ligas.html" aria-current="page">Ligas</a>
+        <a href="equipos.html">Equipos</a>
+        <a href="jugadores.html">Jugadores</a>
       </nav>
     </header>
 
-    <h2 class="page-title" role="heading" aria-level="1">Base de Datos del Option File</h2>
+    <h2 class="page-title">Ligas</h2>
 
-    <section aria-label="Controles de la base de datos">
-      <div class="db-controls" role="region" aria-label="Controles de búsqueda y filtros">
-        <label for="search"><span class="sr-only">Buscar:</span></label>
-        <input id="search" type="search" placeholder="Buscar por equipo, liga, país..." aria-label="Buscar en la base de datos">
-
-        <select id="filter-league" aria-label="Filtrar por liga">
-          <option value="">Todas las ligas</option>
-        </select>
-
-        <select id="filter-country" aria-label="Filtrar por país">
-          <option value="">Todos los países</option>
-        </select>
-
-        <div class="controls-right" role="group" aria-label="Acciones">
-          <button id="download-csv" class="btn-ghost" title="Descargar CSV original">Descargar CSV</button>
-          <button id="reset-filters" class="btn-ghost">Limpiar</button>
-        </div>
-      </div>
-
-      <div id="table-container" class="db-table-wrap" role="region" aria-label="Tabla de base de datos">
-        <!-- Tabla se llena dinámicamente -->
-      </div>
-      <div id="no-results" class="no-results" hidden>No se encontraron resultados.</div>
+    <section class="filters" aria-label="Filtros">
+      <input id="q" type="search" placeholder="Buscar liga o país">
+      <select id="country">
+        <option value="">Todos los países</option>
+      </select>
     </section>
 
-    <footer class="site-footer" role="contentinfo">© La Araña Que Pica — Página Oficial</footer>
+    <section id="list" class="grid-cards" aria-label="Listado de ligas"></section>
+
+    <footer class="site-footer">© La Araña Que Pica — Página Oficial</footer>
   </div>
 
+  <script src="js/db.js"></script>
   <script>
-    // ligas.html — Lógica para cargar db.csv, parsear y renderizar
-    (function(){
-      const CSV_PATH = 'db.csv'; // ruta relativa al sitio
-      const searchEl = document.getElementById('search');
-      const filterLeague = document.getElementById('filter-league');
-      const filterCountry = document.getElementById('filter-country');
-      const tableContainer = document.getElementById('table-container');
-      const downloadBtn = document.getElementById('download-csv');
-      const resetBtn = document.getElementById('reset-filters');
-      const noResults = document.getElementById('no-results');
+    (async function(){
+      const $q = document.getElementById('q');
+      const $country = document.getElementById('country');
+      const $list = document.getElementById('list');
 
-      let rows = []; // array de objetos {id, team_name, league, country, added_date, notes, logo}
-      let sortState = { col: 'team_name', dir: 'asc' };
-
-      function fetchCSV(){
-        return fetch(CSV_PATH, {cache:'no-store'}).then(r=>{
-          if(!r.ok) throw new Error('No se pudo cargar ' + CSV_PATH);
-          return r.text();
-        });
+      let leagues = [];
+      try {
+        const data = await DB.load({ leagues: true });
+        leagues = (data.leagues || []).slice().sort((a,b)=> a.name.localeCompare(b.name));
+      } catch (e) {
+        $list.innerHTML = '<div class="no-results">No se pudo cargar data/ligas.json. Ejecuta "python manage_db.py export" y serví la web por HTTP (python -m http.server).</div>';
+        return;
       }
 
-      // Parse CSV simple (no dependencias). Asume primera fila headers.
-      function parseCSV(text){
-        const lines = text.split(/\r?\n/).filter(l=>l.trim().length>0);
-        if(lines.length === 0) return [];
-        const headers = lines[0].split(',').map(h=>h.trim());
-        const data = [];
-        for(let i=1;i<lines.length;i++){
-          // split respecting quotes basic
-          const parts = csvSplitLine(lines[i]);
-          if(parts.length === 0) continue;
-          const obj = {};
-          for(let j=0;j<headers.length;j++){
-            obj[headers[j]] = (parts[j] !== undefined) ? parts[j].trim().replace(/^"|"$/g, '') : '';
-          }
-          data.push(obj);
-        }
-        return data;
-      }
-
-      function csvSplitLine(line){
-        const out = [];
-        let cur = '';
-        let inQuotes = false;
-        for(let i=0;i<line.length;i++){
-          const ch = line[i];
-          if(ch === '"' ) { inQuotes = !inQuotes; cur += ch; continue; }
-          if(ch === ',' && !inQuotes){ out.push(cur); cur = ''; continue; }
-          cur += ch;
-        }
-        out.push(cur);
-        return out;
-      }
-
-      function populateFilters(items){
-        const leagues = Array.from(new Set(items.map(r=>r.league).filter(Boolean))).sort();
-        const countries = Array.from(new Set(items.map(r=>r.country).filter(Boolean))).sort();
-        // limpiar selects excepto primera opción
-        filterLeague.innerHTML = '<option value="">Todas las ligas</option>';
-        filterCountry.innerHTML = '<option value="">Todos los países</option>';
-        leagues.forEach(l=> {
-          const o = document.createElement('option'); o.value = l; o.textContent = l; filterLeague.appendChild(o);
-        });
-        countries.forEach(c=> {
-          const o = document.createElement('option'); o.value = c; o.textContent = c; filterCountry.appendChild(o);
-        });
-      }
-
-      function renderTable(data){
-        if(!data || data.length === 0){
-          tableContainer.innerHTML = '';
-          noResults.hidden = false;
-          return;
-        }
-        noResults.hidden = true;
-        // columnas: logo, team_name, league, country, added_date, notes, link
-        const table = document.createElement('table');
-        table.className = 'db-table';
-        table.setAttribute('role','table');
-        const thead = document.createElement('thead');
-        thead.innerHTML = `<tr>
-          <th scope="col">Equipo</th>
-          <th scope="col">Liga</th>
-          <th scope="col">País</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Notas</th>
-          <th scope="col">Enlace</th>
-        </tr>`;
-        table.appendChild(thead);
-
-        const tbody = document.createElement('tbody');
-        data.forEach(r=>{
-          const tr = document.createElement('tr');
-
-          const tdTeam = document.createElement('td');
-          let logoHTML = '';
-          if(r.logo) {
-            const img = document.createElement('img');
-            img.src = r.logo;
-            img.alt = r.team_name + ' logo';
-            img.className = 'small-logo';
-            tdTeam.appendChild(img);
-          }
-          const span = document.createElement('span');
-          span.textContent = r.team_name || '(sin nombre)';
-          tdTeam.appendChild(span);
-
-          tr.appendChild(tdTeam);
-
-          const tdLeague = document.createElement('td'); tdLeague.textContent = r.league || ''; tr.appendChild(tdLeague);
-          const tdCountry = document.createElement('td'); tdCountry.textContent = r.country || ''; tr.appendChild(tdCountry);
-          const tdDate = document.createElement('td'); tdDate.textContent = r.added_date || ''; tr.appendChild(tdDate);
-          const tdNotes = document.createElement('td'); tdNotes.textContent = r.notes || ''; tr.appendChild(tdNotes);
-          const tdLink = document.createElement('td');
-          if(r.link){
-            const a = document.createElement('a'); a.href = r.link; a.target = '_blank'; a.rel='noopener'; a.textContent = 'Abrir';
-            tdLink.appendChild(a);
-          } else {
-            tdLink.textContent = '-';
-          }
-          tr.appendChild(tdLink);
-
-          tbody.appendChild(tr);
-        });
-
-        // Reemplazar contenido
-        table.appendChild(tbody);
-        tableContainer.innerHTML = '';
-        tableContainer.appendChild(table);
-      }
-
-      function applyFilters(){
-        let filtered = rows.slice();
-        const q = searchEl.value.trim().toLowerCase();
-        const league = filterLeague.value;
-        const country = filterCountry.value;
-        if(q){
-          filtered = filtered.filter(r => {
-            return (r.team_name && r.team_name.toLowerCase().includes(q))
-              || (r.league && r.league.toLowerCase().includes(q))
-              || (r.country && r.country.toLowerCase().includes(q))
-              || (r.notes && r.notes.toLowerCase().includes(q));
-          });
-        }
-        if(league) filtered = filtered.filter(r=> r.league === league);
-        if(country) filtered = filtered.filter(r=> r.country === country);
-
-        // ordenar
-        filtered.sort((a,b) => {
-          const col = sortState.col;
-          const va = (a[col]||'').toLowerCase();
-          const vb = (b[col]||'').toLowerCase();
-          if(va < vb) return sortState.dir === 'asc' ? -1 : 1;
-          if(va > vb) return sortState.dir === 'asc' ? 1 : -1;
-          return 0;
-        });
-
-        renderTable(filtered);
-      }
-
-      function initDownload(){
-        downloadBtn.addEventListener('click', ()=> {
-          // force download of the CSV file as-is
-          fetch(CSV_PATH).then(r=>r.blob()).then(blob=>{
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'db.csv';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            URL.revokeObjectURL(url);
-          }).catch(err=> alert('Error al descargar CSV: ' + err.message));
-        });
-      }
-
-      function initEvents(){
-        searchEl.addEventListener('input', debounce(applyFilters, 150));
-        filterLeague.addEventListener('change', applyFilters);
-        filterCountry.addEventListener('change', applyFilters);
-        resetBtn.addEventListener('click', () => {
-          searchEl.value = '';
-          filterLeague.selectedIndex = 0;
-          filterCountry.selectedIndex = 0;
-          sortState = { col: 'team_name', dir: 'asc' };
-          applyFilters();
-        });
-      }
-
-      function debounce(fn, ms){
-        let t;
-        return (...args) => { clearTimeout(t); t = setTimeout(()=>fn.apply(null,args), ms); };
-      }
-
-      // Carga inicial
-      fetchCSV().then(txt => {
-        try {
-          rows = parseCSV(txt);
-        } catch (err) {
-          console.error('Error al parsear CSV', err);
-          tableContainer.innerHTML = '<div class="no-results">Error al cargar la base de datos.</div>';
-          return;
-        }
-        populateFilters(rows);
-        initEvents();
-        initDownload();
-        applyFilters();
-      }).catch(err => {
-        console.error(err);
-        tableContainer.innerHTML = '<div class="no-results">No se pudo cargar db.csv. Asegúrate de que existe y que el servidor lo sirve.</div>';
+      const countries = Array.from(new Set(leagues.map(l=>l.country).filter(Boolean))).sort();
+      countries.forEach(c=>{
+        const opt=document.createElement('option'); opt.value=c; opt.textContent=c; $country.appendChild(opt);
       });
 
+      function render(items){
+        $list.innerHTML = '';
+        if(items.length===0){ $list.innerHTML='<div class="no-results">Sin resultados</div>'; return;}
+        for(const l of items){
+          const a = document.createElement('a');
+          a.href = `liga.html?slug=${encodeURIComponent(l.slug)}`;
+          a.className = 'clean';
+          a.innerHTML = `
+            <div class="card">
+              <img class="logo" src="${l.logo||'img/ligas/placeholder.png'}" alt="${l.name} logo" onerror="this.src='img/ligas/placeholder.png'">
+              <div>
+                <div style="font-family:'Bungee';color:#fff">${l.name}</div>
+                <div style="color:#cfecec;font-size:.9rem">
+                  ${l.country||'-'}
+                  <img class="flag" src="${DB.countryFlagSrc(l.country)}" alt="${l.country||''}" onerror="this.style.display='none'">
+                </div>
+              </div>
+            </div>`;
+          $list.appendChild(a);
+        }
+      }
+
+      function apply(){
+        const q = $q.value.trim().toLowerCase();
+        const c = $country.value;
+        let items = leagues;
+        if(q){
+          items = items.filter(l => (l.name||'').toLowerCase().includes(q) || (l.country||'').toLowerCase().includes(q));
+        }
+        if(c){ items = items.filter(l => l.country===c); }
+        render(items);
+      }
+
+      $q.addEventListener('input', DB.debounce(apply, 150));
+      $country.addEventListener('change', apply);
+      apply();
     })();
   </script>
 </body>

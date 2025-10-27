@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Facundo Colidio — LAQP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .layout{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start;margin-top:16px}
+    .photo{width:120px;height:120px;border-radius:14px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
+    .flag{width:24px;height:18px;object-fit:cover;border-radius:2px;margin-left:8px;vertical-align:middle}
+    .badge{display:inline-block;border-radius:8px;padding:6px 10px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));color:#071014;font-weight:700;margin-left:8px}
+    .box{background:linear-gradient(180deg,rgba(10,10,12,.96),rgba(20,16,24,.96));border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px}
+    a.clean{color:#7afcff;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1><a href="../index.html" class="clean" style="color:inherit;text-decoration:none">LAqP</a></h1>
+      </div>
+      <nav class="main-nav">
+        <a href="../ligas.html">Ligas</a>
+        <a href="../equipos.html">Equipos</a>
+        <a href="../jugadores.html">Jugadores</a>
+      </nav>
+    </header>
+
+    <div class="layout">
+      <img class="photo" src="../Facundo Colidio.png" alt="Facundo Colidio" onerror="this.src='../img/jugadores/placeholder.png'">
+      <div>
+        <div class="page-title" style="margin:0">Facundo Colidio
+          <span class="badge">76</span>
+        </div>
+        <div class="box" style="margin-top:10px">
+          <div><strong>Posición:</strong> Delantero</div>
+          <div><strong>Nacimiento:</strong> 2000-01-04 (25 años)</div>
+          <div><strong>Equipo:</strong> <a class='clean' href='../equipo.html?slug=river-plate'>River Plate</a></div>
+          <div><strong>Liga:</strong> <a class='clean' href='../liga.html?slug=torneo-clausura'>Torneo Clausura</a></div>
+          <div><strong>País:</strong> Argentina <img class='flag' src='../img/flags/argentina.png' alt='Argentina' onerror="this.style.display='none'"></div>
+          <div style="margin-top:10px"><a class='clean' href='https://www.pesmaster.com/es/facundo-colidio/efootball-2022/player/126133/' target='_blank' rel='noopener'>Ver en SoFIFA</a> <a class='clean' href='https://youtu.be/xoftUIZJnqA?si=Kt0KXwqr9M97vfzf' target='_blank' rel='noopener' style='margin-left:12px'>Video de cara</a></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+</body>
+</html>

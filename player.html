@@ -1,0 +1,166 @@
+<link rel="icon" href="img/Logo Web.png" type="image/png" sizes="32x32">
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jugador - LAqP</title>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* Versión dinámica ligera */
+.player-wrap{max-width:var(--container);margin:0 auto;padding:18px}
+.hero{
+  position:relative;
+  display:grid;
+  grid-template-columns:140px 1fr;
+  gap:24px;
+  background:linear-gradient(140deg,rgba(14,16,24,.82),rgba(26,20,32,.88));
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:22px;
+  padding:26px 28px 24px;
+  box-shadow:0 16px 55px rgba(0,0,0,.55);
+  overflow:hidden;
+  margin-top:14px;
+}
+.photo{width:140px;height:140px;border-radius:20px;object-fit:cover;border:2px solid rgba(255,255,255,.10);box-shadow:0 6px 28px rgba(0,0,0,.6);background:#000}
+.dial{
+  --r:0;
+  width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 50% 45%,#071014 0%,#0e1822 70%,#071014 100%);
+  border:2px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;
+  font-family:'Bungee','Press Start 2P';font-size:1.45rem;color:#fff;letter-spacing:1px;
+  box-shadow:0 0 16px rgba(0,255,231,.25),0 0 8px rgba(255,0,170,.22);margin-top:16px
+}
+.dial::after{
+  --pct:clamp(0%,calc(((var(--r)-40)/59)*100%),100%);
+  content:"";position:absolute;inset:0;border-radius:50%;padding:4px;
+  background:conic-gradient(var(--neon-cyan) 0% var(--pct),rgba(255,255,255,.14) var(--pct) 100%);
+  -webkit-mask:radial-gradient(circle at 50% 50%,transparent 58%,black 60%);mask:radial-gradient(circle at 50% 50%,transparent 58%,black 60%);
+  filter:blur(.65px);opacity:.95;
+}
+.big-btn{
+  display:inline-flex;align-items:center;gap:10px;padding:13px 22px 12px;border-radius:16px;
+  background:linear-gradient(90deg,var(--neon-cyan) 10%,var(--neon-pink));color:#071014;
+  font-family:'Press Start 2P';font-size:.72rem;letter-spacing:.85px;font-weight:800;text-decoration:none;
+  box-shadow:0 14px 40px rgba(0,255,231,.24),0 8px 30px rgba(255,0,170,.22);transition:transform .22s, box-shadow .22s, filter .22s;
+  min-width:150px;justify-content:center;margin-top:14px
+}
+.big-btn:hover{transform:translateY(-6px) scale(1.035);box-shadow:0 26px 70px rgba(0,255,231,.30),0 12px 48px rgba(255,0,170,.30);filter:saturate(1.08)}
+.big-btn .ico{width:24px;height:24px;background-size:24px 24px;background-position:center;background-repeat:no-repeat}
+.big-btn.stats .ico{background-image:url("img/icons/stats.svg")}
+.big-btn.video .ico{background-image:url("img/icons/youtube.svg")}
+.name-line{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.name{margin:0;font-family:'Bungee','Press Start 2P';font-size:2.2rem;letter-spacing:1.6px;color:#fff;text-shadow:2px 0 var(--neon-cyan),-2px 0 var(--neon-pink),0 0 16px rgba(0,255,231,.16)}
+.badge{display:inline-block;padding:6px 12px 5px;border-radius:999px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));font-family:'Press Start 2P';font-size:.58rem;letter-spacing:.6px;color:#071014;font-weight:800}
+.sub{color:#cfecec;font-size:.95rem;letter-spacing:.45px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.flag{width:34px;height:22px;object-fit:cover;border-radius:5px;border:1px solid rgba(255,255,255,.28);box-shadow:0 0 8px rgba(0,0,0,.45)}
+.video-box{margin-top:4px;margin-left:auto;max-width:440px;width:100%;background:linear-gradient(180deg,rgba(16,18,26,.88),rgba(10,10,14,.92));border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:16px 18px 18px;box-shadow:0 18px 60px rgba(0,0,0,.58)}
+.video-frame{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/9;background:#000;border:1px solid rgba(255,255,255,.09);box-shadow:0 10px 32px rgba(0,0,0,.55);margin-top:12px}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.grid{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.card{background:linear-gradient(180deg,rgba(14,16,22,.88),rgba(10,10,14,.9));border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:14px 16px 12px;display:flex;flex-direction:column;gap:6px;min-height:92px}
+.lk{font-family:'Press Start 2P';font-size:.56rem;letter-spacing:.8px;font-weight:700;color:#9ee1ef;opacity:.85}
+.val{font-family:'Bungee';font-size:1.05rem;color:#fff;text-shadow:0 0 14px rgba(0,255,231,.18)}
+@media (max-width:780px){.hero{grid-template-columns:1fr;gap:22px}.left-col{flex-direction:row;align-items:flex-start}.photo{width:120px;height:120px}.dial{width:80px;height:80px;font-size:1.35rem}.video-box{margin-left:0;max-width:100%;margin-top:2px}.name{font-size:1.95rem}}
+@media (max-width:520px){.name{font-size:1.7rem}.photo{width:110px;height:110px}.dial{width:74px;height:74px;font-size:1.2rem}.big-btn{padding:11px 18px 10px;font-size:.63rem}.card{min-height:84px;padding:12px 14px}.val{font-size:.98rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <div class="brand"><div class="logo"></div><h1><a href="index.html" class="clean" style="color:inherit;text-decoration:none">LAqP</a></h1></div>
+    <nav class="main-nav">
+      <a href="ligas.html">Ligas</a>
+      <a href="equipos.html">Equipos</a>
+      <a href="jugadores.html">Jugadores</a>
+    </nav>
+  </header>
+
+  <div id="content" class="player-wrap"></div>
+
+  <footer class="site-footer">© La Araña Que Pica — Página Oficial</footer>
+</div>
+
+<script src="js/db.js"></script>
+<script>
+(async function(){
+  const $c = document.getElementById('content');
+  const slug = DB.getParam('slug');
+  if(!slug){ $c.innerHTML='<div class="no-results">Jugador no especificado.</div>'; return; }
+
+  let leagues, teams, players, maps;
+  try { ({ leagues, teams, players, maps } = await DB.load({ leagues:true, teams:true, players:true })); }
+  catch(e){ $c.innerHTML='<div class="no-results">Error cargando JSON. Ejecuta "python manage_db.py export".</div>'; return; }
+
+  const p = players.find(x=>x.slug===slug);
+  if(!p){ $c.innerHTML='<div class="no-results">Jugador no encontrado.</div>'; return; }
+
+  const t = maps.teamById[p.team_id] || null;
+  const l = t ? maps.leagueById[t.league_id] || null : null;
+  const age = DB.ageFromBirthDate(p.birth_date);
+  const full = `${p.first_name} ${p.last_name}`.trim();
+  const rating = parseInt(p.rating||0,10);
+
+  // País: nombre limpio + bandera (archivo original)
+  let rawCountry = (p.country||'').trim();
+  let displayName = rawCountry.replace(/\.(png|jpe?g|webp|gif|svg)$/i,'').replace(/[_-]+/g,' ').trim();
+  let flagFile = rawCountry;
+  if(rawCountry && !/\.(png|jpe?g|webp|gif|svg)$/i.test(rawCountry)) flagFile += '.png';
+  const flagImg = rawCountry ? `<img class="flag" src="${DB.countryFlagSrc(flagFile)}" alt="${displayName}" onerror="this.remove()">` : '';
+
+  const teamLink = t ? `<a class="clean" href="equipo.html?slug=${encodeURIComponent(t.slug)}">${t.name}</a>` : 'Sin equipo';
+  const leagueLink = l ? `<a class="clean" href="liga.html?slug=${encodeURIComponent(l.slug)}">${l.name}</a>` : '—';
+
+  const pesUrl = p.pesmaster_url ? p.pesmaster_url.trim() : '';
+  const faceUrl = p.face_video_url ? p.face_video_url.trim() : '';
+
+  // YouTube ID
+  function ytId(u){
+    const m = (u||'').match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{6,})/);
+    return m? m[1] : '';
+  }
+  const yid = ytId(faceUrl);
+
+  $c.innerHTML = `
+    <div class="hero">
+      <div class="left-col">
+        <img class="photo" src="${p.photo||'img/jugadores/placeholder.png'}" alt="${full}" onerror="this.src='img/jugadores/placeholder.png'">
+        <div class="dial">${rating||'-'}</div>
+        ${pesUrl ? `<a class="big-btn stats" href="${pesUrl}" target="_blank" rel="noopener"><span class="ico"></span><span>Stats</span></a>` : ''}
+      </div>
+      <div>
+        <div class="name-line">
+          <h2 class="name">${full}</h2>
+          <span class="badge">${p.position||'-'}</span>
+        </div>
+        <div class="sub">
+          ${p.birth_date||'-'} ${isNaN(age)? '' : '('+age+' años)'} • ${displayName||'-'} ${flagImg}
+        </div>
+        <div class="video-box" style="display:${yid? 'block':'none'}">
+          <div class="video-head">
+            ${faceUrl ? `<a class="big-btn video" href="${faceUrl}" target="_blank" rel="noopener"><span class="ico"></span><span>Video</span></a>` : ''}
+          </div>
+          <div class="video-frame">
+            <iframe src="${yid? 'https://www.youtube.com/embed/'+yid+'?rel=0&modestbranding=1':''}" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card"><div class="lk">Equipo</div><div class="val">${teamLink}</div></div>
+      <div class="card"><div class="lk">Liga</div><div class="val">${leagueLink}</div></div>
+      <div class="card"><div class="lk">Posición</div><div class="val">${p.position||'-'}</div></div>
+      <div class="card"><div class="lk">Nacimiento</div><div class="val">${p.birth_date||'-'}</div></div>
+      <div class="card"><div class="lk">País</div><div class="val">${displayName||'-'}</div></div>
+      <div class="card"><div class="lk">Rating</div><div class="val">${rating||'-'}</div></div>
+    </div>
+  `;
+
+  // Ajustar dial
+  const dial = $c.querySelector('.dial');
+  if(dial && !isNaN(rating)) dial.style.setProperty('--r', rating);
+})();
+</script>
+</body>
+</html>

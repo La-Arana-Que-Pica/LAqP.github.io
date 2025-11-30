@@ -1,210 +1,611 @@
+<link rel="icon" href="img/Logo Web.png" type="image/png" sizes="32x32">
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Jugadores — La Araña Que Pica</title>
+  <title>Jugadores - LAqP</title>
   <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
   <style>
-    .filters{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
-    .filters input,.filters select{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);color:var(--muted)}
-    .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:10px}
-    .row{display:flex;gap:12px;align-items:center;background:linear-gradient(180deg,rgba(10,10,12,.96),rgba(20,16,24,.96));border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:12px}
-    .photo{width:64px;height:64px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
-    .flag{width:22px;height:16px;object-fit:cover;border-radius:2px;margin-left:6px;vertical-align:middle}
-    .meta{color:#cfecec;font-size:.9rem}
-    .badge{display:inline-block;border-radius:8px;padding:4px 8px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));color:#071014;font-weight:700;margin-left:6px}
-    .pager{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin:10px 0}
-    .btn{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);color:#fff;cursor:pointer}
-    a.clean{color:inherit;text-decoration:none}
+    :root{
+      --jg-bg:linear-gradient(180deg,rgba(16,18,28,.92),rgba(10,10,14,.94));
+      --jg-border:1px solid rgba(255,255,255,.06);
+      --jg-radius:18px;
+      --jg-shadow:0 18px 60px rgba(0,0,0,.60);
+      --jg-accent:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+      --select-bg:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      --select-bd:1px solid rgba(255,255,255,.18);
+      --select-focus:0 0 0 6px rgba(0,255,231,.22);
+      --field-bg:rgba(255,255,255,.05);
+    }
+
+    .filters-wrap{
+      background:linear-gradient(180deg,rgba(12,14,22,.85),rgba(8,8,12,.90));
+      border:var(--jg-border);
+      border-radius:22px;
+      padding:18px 20px 16px;
+      margin:22px 0 14px;
+      box-shadow:var(--jg-shadow);
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .filters-wrap::before{
+      content:"";
+      position:absolute;inset:0;
+      background:
+        radial-gradient(600px 220px at 120% -10%,rgba(0,255,231,.18),transparent 70%),
+        radial-gradient(600px 220px at -10% 120%,rgba(255,0,170,.14),transparent 70%);
+      mix-blend-mode:screen;
+      opacity:.5;
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .filters-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:14px 16px;
+      align-items:end;
+    }
+    .fg{display:flex;flex-direction:column;gap:6px;min-width:0}
+    .fg label{
+      font-family:'Press Start 2P';
+      font-size:.55rem;
+      letter-spacing:.85px;
+      font-weight:800;
+      color:#9ee1ef;
+      text-transform:uppercase;
+    }
+
+    .fg input,
+    .fg select{
+      padding:10px 12px 9px;
+      border-radius:12px;
+      color:#fff;
+      font-size:.75rem;
+      letter-spacing:.45px;
+      font-family:Roboto,Arial,sans-serif;
+      min-width:0;
+      background:var(--field-bg);
+      border:1px solid rgba(255,255,255,.14);
+      color-scheme: dark;
+    }
+    .fg input[type="number"]{
+      text-align:center;
+      width:100%;
+      max-width:110px;
+      background:var(--field-bg);
+    }
+    .fg input:focus{
+      outline:2px solid var(--neon-cyan);
+      box-shadow:0 0 0 4px rgba(0,255,231,.25);
+    }
+
+    .fg select{
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--select-bg);
+      border: var(--select-bd);
+      padding-right: 34px;
+      position: relative;
+      cursor: pointer;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23aefaff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 16px;
+    }
+    .fg select:focus{
+      outline:2px solid var(--neon-cyan);
+      box-shadow: var(--select-focus);
+      border-color: rgba(0,255,231,.45);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+    }
+    .fg select::-ms-expand{ display:none; }
+    .fg select option{
+      background:#12141b;
+      color:#e6f9f9;
+    }
+
+    .filters-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:2px}
+    .pill-btn{
+      padding:10px 16px 9px;border-radius:14px;background:var(--jg-accent);color:#071014;
+      font-family:'Press Start 2P';font-size:.58rem;letter-spacing:.85px;font-weight:800;text-decoration:none;border:none;cursor:pointer;
+      transition:.22s cubic-bezier(.2,.9,.3,1);display:inline-flex;align-items:center;gap:8px;position:relative;
+    }
+    .pill-btn.secondary{background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.16)}
+    .pill-btn:hover{transform:translateY(-5px);filter:saturate(1.12);box-shadow:0 20px 60px rgba(0,255,231,.30),0 10px 40px rgba(255,0,170,.24)}
+    .pill-btn.secondary:hover{background:rgba(255,255,255,.18);box-shadow:0 10px 36px rgba(0,0,0,.45)}
+
+    .view-switch{
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 80;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background: linear-gradient(180deg, rgba(12,14,22,.85), rgba(10,10,14,.92));
+      border: 1px solid rgba(0,255,231,.22);
+      border-radius: 999px;
+      padding: 10px 14px 9px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55), 0 0 30px rgba(0,255,231,.14);
+      backdrop-filter: blur(6px);
+    }
+    .view-switch .toggle{
+      background: var(--jg-accent);
+      color:#071014;
+      border:none;
+      border-radius: 999px;
+      font-family:'Press Start 2P';
+      font-size:.55rem;
+      letter-spacing:.8px;
+      font-weight:800;
+      padding:9px 12px 8px;
+      cursor:pointer;
+      transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+      min-width: 148px;
+      text-align:center;
+    }
+    .view-switch .toggle:hover{
+      transform: translateY(-3px);
+      filter: saturate(1.08);
+      box-shadow: 0 14px 40px rgba(0,255,231,.28), 0 10px 30px rgba(255,0,170,.22);
+    }
+    .view-switch .hint{
+      color:#9ee1ef;
+      font-family:'Press Start 2P';
+      font-size:.48rem;
+      letter-spacing:.7px;
+      opacity:.9;
+      display:none;
+    }
+    @media (max-width:720px){
+      .view-switch{right:14px;bottom:14px}
+      .view-switch .toggle{min-width:136px;font-size:.5rem;padding:8px 10px 7px}
+      .view-switch .hint{display:none}
+    }
+
+    .pager{
+      display:flex;justify-content:center;gap:14px;align-items:center;margin:16px 0 8px;flex-wrap:wrap;
+    }
+    .pager button{
+      padding:9px 14px 8px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);
+      color:#fff;font-family:'Press Start 2P';font-size:.58rem;letter-spacing:.7px;font-weight:800;cursor:pointer;transition:.2s;min-width:120px;
+    }
+    .pager button:hover:not(:disabled){background:var(--jg-accent);color:#071014;transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,255,231,.30),0 8px 34px rgba(255,0,170,.24)}
+    .pager button:disabled{opacity:.35;cursor:not-allowed}
+    #pageInfo{font-family:'Bungee';font-size:.75rem;letter-spacing:.4px;color:#9ee1ef}
+
+    .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:18px;margin-top:10px}
+    @media (max-width:960px){.list{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}}
+    @media (max-width:560px){.list{grid-template-columns:1fr}}
+
+    .player-card{
+      position:relative;display:flex;gap:14px;padding:16px 16px 60px;align-items:center;background:var(--jg-bg);border:var(--jg-border);
+      border-radius:22px;text-decoration:none;color:inherit;box-shadow:var(--jg-shadow);overflow:hidden;isolation:isolate;transition:.25s cubic-bezier(.2,.9,.3,1);min-height:132px;
+    }
+    .player-card::before{content:"";position:absolute;inset:0;background:
+      radial-gradient(520px 180px at 120% -10%,rgba(0,255,231,.16),transparent 70%),
+      radial-gradient(520px 180px at -10% 120%,rgba(255,0,170,.14),transparent 70%);mix-blend-mode:screen;opacity:.55;pointer-events:none;z-index:-1}
+    .player-card:hover{transform:translateY(-6px);box-shadow:0 32px 110px rgba(0,0,0,.7),0 0 28px rgba(0,255,231,.30),0 0 22px rgba(255,0,170,.28);border-color:rgba(0,255,231,.35)}
+
+    .player-photo{width:78px;height:78px;border-radius:18px;object-fit:cover;border:2px solid rgba(255,255,255,.10);background:#000;box-shadow:0 12px 34px rgba(0,0,0,.55);flex-shrink:0;transition:.25s}
+    .player-card:hover .player-photo{filter:brightness(1.07) contrast(1.05)}
+
+    .p-info{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
+    .p-name-line{font-family:'Bungee','Press Start 2P',monospace;font-size:1.05rem;color:#fff;letter-spacing:.55px;line-height:1.08;display:flex;flex-wrap:wrap;gap:10px}
+    .p-rating{display:inline-block;min-width:44px;text-align:center;padding:6px 10px 5px;border-radius:12px;background:var(--jg-accent);color:#071014;font-family:'Press Start 2P';font-size:.6rem;letter-spacing:.75px;font-weight:800;box-shadow:0 8px 26px rgba(0,255,231,.22),0 6px 22px rgba(255,0,170,.20)}
+    .p-meta{font-size:.68rem;color:#cfecec;letter-spacing:.45px;display:flex;flex-wrap:wrap;gap:6px 12px;line-height:1.25}
+    .p-meta span.label{font-weight:800;color:#9ee1ef}
+
+    .flag{width:26px;height:18px;object-fit:cover;border-radius:4px;border:1px solid rgba(255,255,255,.35);box-shadow:0 0 8px rgba(0,0,0,.45);vertical-align:middle}
+
+    /* Team logo (nuevo) */
+    .team-meta{display:inline-flex;align-items:center;gap:4px}
+    .team-logo{
+      width:26px;height:26px;object-fit:cover;border-radius:6px;
+      border:1px solid rgba(255,255,255,.35);
+      box-shadow:0 0 8px rgba(0,0,0,.45);
+      vertical-align:middle;
+    }
+
+    .card-actions{position:absolute;left:0;right:0;bottom:0;display:flex;gap:10px;padding:10px 14px 10px;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.85));backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.08)}
+    .act-btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 12px 8px;border-radius:12px;font-family:'Press Start 2P';font-size:.53rem;letter-spacing:.75px;font-weight:800;text-decoration:none;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.14);transition:.22s cubic-bezier(.2,.9,.3,1);position:relative;min-width:84px;text-align:center}
+    .act-btn.primary{background:var(--jg-accent);color:#071014;border:none;box-shadow:0 8px 26px rgba(0,255,231,.20),0 6px 20px rgba(255,0,170,.18)}
+    .act-btn:hover:not(.disabled){transform:translateY(-4px);filter:saturate(1.08);box-shadow:0 14px 40px rgba(0,255,231,.28),0 10px 30px rgba(255,0,170,.22)}
+    .act-btn.disabled{pointer-events:none;opacity:.35}
+
+    .no-results{grid-column:1/-1;padding:20px;background:linear-gradient(180deg,rgba(24,26,36,.85),rgba(12,12,16,.85));border:1px solid rgba(255,255,255,.06);border-radius:18px;font-size:.9rem;color:#dff;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.55)}
+
+    body.compact .player-card{padding:12px 12px 52px;min-height:110px;border-radius:18px}
+    body.compact .player-photo{width:60px;height:60px;border-radius:14px}
+    body.compact .p-name-line{font-size:.92rem;gap:6px}
+    body.compact .p-rating{min-width:40px;padding:4px 7px 3px;font-size:.5rem;letter-spacing:.6px}
+    body.compact .act-btn{font-size:.46rem;padding:7px 8px 6px;min-width:70px}
+
+    @media (max-width:680px){
+      .filters-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+      .player-card{padding:14px 14px 56px}
+      .player-photo{width:70px;height:70px}
+      .p-name-line{font-size:.95rem}
+      .card-actions{gap:8px;padding:8px 10px 8px}
+      .act-btn{font-size:.5rem;padding:8px 9px 7px}
+    }
+
+    .player-card:focus,
+    .pill-btn:focus,
+    .act-btn:focus,
+    .fg input:focus,
+    .fg select:focus,
+    .pager button:focus,
+    .view-switch .toggle:focus{
+      outline:2px solid var(--neon-cyan);
+      outline-offset:3px;
+      box-shadow:0 0 0 6px rgba(0,255,231,.25);
+    }
   </style>
 </head>
 <body>
+    <!-- Page background (blurred + darkened) - uses the image you uploaded at img/fondo -->
+  <div class="page-bg" aria-hidden="true"></div>
+  
   <div class="wrap">
     <header class="site-header" role="banner">
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
         <h1><a href="index.html" class="clean" style="color:inherit;text-decoration:none">LAqP</a></h1>
       </div>
-      <nav class="main-nav" role="navigation" aria-label="Menú principal">
+      <nav class="main-nav" role="navigation">
         <a href="ligas.html">Ligas</a>
         <a href="equipos.html">Equipos</a>
         <a href="jugadores.html" aria-current="page">Jugadores</a>
       </nav>
     </header>
 
-    <h2 class="page-title">Jugadores</h2>
+    <div class="page-title">Jugadores</div>
 
-    <section class="filters" aria-label="Filtros">
-      <input id="q" type="search" placeholder="Buscar nombre o apellido">
-      <select id="position">
-        <option value="">Todas las posiciones</option>
-        <option>Arquero</option>
-        <option>Defensor</option>
-        <option>Mediocampista</option>
-        <option>Delantero</option>
-      </select>
-      <select id="league"><option value="">Todas las ligas</option></select>
-      <select id="team"><option value="">Todos los equipos</option></select>
-      <select id="country"><option value="">Todos los países</option></select>
-
-      <label for="minR">Rating</label>
-      <input id="minR" type="number" min="40" max="99" value="40" style="width:76px">
-      <span>-</span>
-      <input id="maxR" type="number" min="40" max="99" value="99" style="width:76px">
-
-      <select id="sort">
-        <option value="rating_desc">Orden: Rating (desc)</option>
-        <option value="rating_asc">Rating (asc)</option>
-        <option value="name_asc">Nombre (A-Z)</option>
-        <option value="name_desc">Nombre (Z-A)</option>
-      </select>
+    <section class="filters-wrap" role="region" aria-label="Filtros de jugadores">
+      <div class="filters-grid">
+        <div class="fg">
+          <label for="q">Buscar</label>
+            <input id="q" type="search" placeholder="Nombre o apellido" autocomplete="off">
+        </div>
+        <div class="fg">
+          <label for="position">Posición</label>
+          <select id="position">
+            <option value="">Todas</option>
+            <option>Arquero</option>
+            <option>Defensor</option>
+            <option>Mediocampista</option>
+            <option>Delantero</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label for="league">Liga</label>
+          <select id="league"><option value="">Todas</option></select>
+        </div>
+        <div class="fg">
+          <label for="team">Equipo</label>
+          <select id="team"><option value="">Todos</option></select>
+        </div>
+        <div class="fg">
+          <label for="country">País</label>
+          <select id="country"><option value="">Todos</option></select>
+        </div>
+        <div class="fg">
+          <label for="minR">Rating mín.</label>
+          <input id="minR" type="number" min="40" max="99" value="40">
+        </div>
+        <div class="fg">
+          <label for="maxR">Rating máx.</label>
+          <input id="maxR" type="number" min="40" max="99" value="99">
+        </div>
+        <div class="fg">
+          <label for="sort">Orden</label>
+          <select id="sort">
+            <option value="rating_desc">Rating (desc)</option>
+            <option value="rating_asc">Rating (asc)</option>
+            <option value="name_asc">Nombre (A-Z)</option>
+            <option value="name_desc">Nombre (Z-A)</option>
+            <option value="age_young">Edad (joven primero)</option>
+            <option value="age_old">Edad (veterano primero)</option>
+          </select>
+        </div>
+      </div>
+      <div class="filters-actions">
+        <button class="pill-btn" id="applyFilters" type="button">APLICAR</button>
+        <button class="pill-btn secondary" id="resetFilters" type="button">RESET</button>
+      </div>
     </section>
 
     <div class="pager">
-      <button id="prev" class="btn">« Anterior</button>
-      <span id="pageInfo" class="meta"></span>
-      <button id="next" class="btn">Siguiente »</button>
+      <button id="prev" type="button">« Anterior</button>
+      <span id="pageInfo"></span>
+      <button id="next" type="button">Siguiente »</button>
     </div>
 
     <section id="list" class="list" aria-label="Listado de jugadores"></section>
+  
+    <!-- Pager inferior -->
+    <div class="pager" id="bottomPager">
+      <button id="prev2" type="button">« Anterior</button>
+      <span id="pageInfo2"></span>
+      <button id="next2" type="button">Siguiente »</button>
+    </div>
 
     <footer class="site-footer">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+
+  <div class="view-switch" role="region" aria-label="Vista de tarjetas">
+    <button id="compactToggle" class="toggle" type="button" aria-pressed="false" title="Alternar modo de vista">MODO COMPACTO</button>
+    <span class="hint" aria-hidden="true">Alterná la vista</span>
   </div>
 
   <script src="js/db.js"></script>
   <script>
     (async function(){
-      const $q = document.getElementById('q');
-      const $pos = document.getElementById('position');
-      const $league = document.getElementById('league');
-      const $team = document.getElementById('team');
-      const $country = document.getElementById('country');
-      const $minR = document.getElementById('minR');
-      const $maxR = document.getElementById('maxR');
-      const $sort = document.getElementById('sort');
-      const $list = document.getElementById('list');
-      const $prev = document.getElementById('prev');
-      const $next = document.getElementById('next');
+      const $q        = document.getElementById('q');
+      const $pos      = document.getElementById('position');
+      const $league   = document.getElementById('league');
+      const $team     = document.getElementById('team');
+      const $country  = document.getElementById('country');
+      const $minR     = document.getElementById('minR');
+      const $maxR     = document.getElementById('maxR');
+      const $sort     = document.getElementById('sort');
+      const $apply    = document.getElementById('applyFilters');
+      const $reset    = document.getElementById('resetFilters');
+      const $list     = document.getElementById('list');
+      const $prev     = document.getElementById('prev');
+      const $prev2     = document.getElementById('prev2');
+      const $next2     = document.getElementById('next2');
+      const $pageInfo2 = document.getElementById('pageInfo2');
+      const $next     = document.getElementById('next');
       const $pageInfo = document.getElementById('pageInfo');
+      const $compact  = document.getElementById('compactToggle');
 
-      const PAGE = 50;
-
+      const PAGE_SIZE = 40;
       let leagues, teams, players, maps;
-      try {
+
+      try{
         ({ leagues, teams, players, maps } = await DB.load({ leagues:true, teams:true, players:true }));
-      } catch (e) {
-        $list.innerHTML = '<div class="no-results">No se pudo cargar data/*.json. Ejecuta "python manage_db.py export" y serví la web por HTTP (python -m http.server).</div>';
+      }catch(e){
+        console.error(e);
+        $list.innerHTML='<div class="no-results">Error cargando data/*.json.</div>';
         return;
       }
 
-      // Filtros dependientes
+      // Mostrar edad
+      function age(birth){ return DB.ageFromBirthDate(birth); }
+
+      // País sin extensión (pero conservando acentos y ñ)
+      function sanitizeCountry(raw){
+        if(!raw) return '';
+        return raw.replace(/\.(png|jpe?g|webp|gif|svg)$/i,'').trim();
+      }
+
+      // Ruta bandera intentando primero nombre con acentos tal cual
+      function flagSrcWithAccents(country){
+        if(!country) return '';
+        const base = sanitizeCountry(country);
+        return `img/flags/${encodeURIComponent(base)}.png`;
+      }
+
+      // Poblar ligas
       leagues.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(l=>{
-        const opt=document.createElement('option'); opt.value=l.id; opt.textContent=l.name; $league.appendChild(opt);
+        const opt=document.createElement('option');
+        opt.value=l.id; opt.textContent=l.name;
+        $league.appendChild(opt);
       });
-      function updateTeamsOptions(){
-        const li = $league.value;
-        $team.innerHTML = '<option value="">Todos los equipos</option>';
-        let ts = teams.slice();
-        if(li){ ts = ts.filter(t => String(t.league_id)===String(li)); }
-        ts.sort((a,b)=>a.name.localeCompare(b.name)).forEach(t=>{
-          const opt=document.createElement('option'); opt.value=t.id; opt.textContent=t.name; $team.appendChild(opt);
+
+      function updateTeamsSelect(){
+        const lid=$league.value;
+        $team.innerHTML='<option value="">Todos</option>';
+        let subset=teams.slice();
+        if(lid) subset=subset.filter(t=>String(t.league_id)===String(lid));
+        subset.sort((a,b)=>a.name.localeCompare(b.name)).forEach(t=>{
+          const o=document.createElement('option');
+          o.value=t.id; o.textContent=t.name;
+          $team.appendChild(o);
         });
       }
-      updateTeamsOptions();
-      $league.addEventListener('change', ()=>{ updateTeamsOptions(); apply(true); });
+      updateTeamsSelect();
+      $league.addEventListener('change', ()=>{ updateTeamsSelect(); apply(true); });
 
-      // Países
-      const countries = Array.from(new Set(players.map(p=>p.country).filter(Boolean))).sort();
-      countries.forEach(c=>{ const opt=document.createElement('option'); opt.value=c; opt.textContent=c; $country.appendChild(opt); });
+      // Países para filtro (usar valor original sin normalizar)
+      const countrySet = new Set(players.map(p=>sanitizeCountry(p.country)).filter(Boolean));
+      Array.from(countrySet).sort((a,b)=>a.localeCompare(b,'es')).forEach(c=>{
+        const opt=document.createElement('option');
+        opt.value=c; opt.textContent=c;
+        $country.appendChild(opt);
+      });
 
-      let page = 1;
-      let current = players.slice();
+      let page=1;
+      let current=[];
 
-      function apply(resetPage=false){
-        if(resetPage) page = 1;
-        const q = $q.value.trim().toLowerCase();
-        const pos = $pos.value;
-        const li = $league.value;
-        const ti = $team.value;
-        const co = $country.value;
-        const minR = Math.max(40, Math.min(99, parseInt($minR.value || 40)));
-        const maxR = Math.max(40, Math.min(99, parseInt($maxR.value || 99)));
+      function apply(reset=false){
+        if(reset) page=1;
+        const q      = $q.value.trim().toLowerCase();
+        const pos    = $pos.value;
+        const lid    = $league.value;
+        const tid    = $team.value;
+        const co     = $country.value;
+        const minVal = Math.max(40,Math.min(99, parseInt($minR.value||40)));
+        const maxVal = Math.max(40,Math.min(99, parseInt($maxR.value||99)));
+        const order  = $sort.value;
+
         let items = players.slice();
-        if(q){
-          items = items.filter(p => (p.first_name+' '+p.last_name).toLowerCase().includes(q));
-        }
+
+        if(q){ items = items.filter(p => (p.first_name+' '+p.last_name).toLowerCase().includes(q)); }
         if(pos){ items = items.filter(p => p.position===pos); }
-        if(li){ items = items.filter(p => {
-          const t = maps.teamById[p.team_id]; if(!t) return false;
-          return String(t.league_id)===String(li);
-        });}
-        if(ti){ items = items.filter(p => String(p.team_id)===String(ti)); }
-        if(co){ items = items.filter(p => p.country===co); }
-        items = items.filter(p => {
-          const r = parseInt(p.rating||0);
-          return r>=minR && r<=maxR;
+        if(lid){
+          items = items.filter(p=>{
+            const t=maps.teamById[p.team_id];
+            return t && String(t.league_id)===String(lid);
+          });
+        }
+        if(tid){ items = items.filter(p => String(p.team_id)===String(tid)); }
+        if(co){ items = items.filter(p => sanitizeCountry(p.country)===co); }
+        items = items.filter(p=>{
+          const r=parseInt(p.rating||0);
+          return r>=minVal && r<=maxVal;
         });
 
-        // Orden
-        const s = $sort.value;
-        if(s==='rating_desc'){ items.sort((a,b)=> (b.rating||0)-(a.rating||0)); }
-        else if(s==='rating_asc'){ items.sort((a,b)=> (a.rating||0)-(b.rating||0)); }
-        else if(s==='name_asc'){ items.sort((a,b)=> (a.last_name+a.first_name).localeCompare(b.last_name+b.first_name)); }
-        else if(s==='name_desc'){ items.sort((a,b)=> (b.last_name+b.first_name).localeCompare(a.last_name+a.first_name)); }
+        if(order==='rating_desc'){
+          items.sort((a,b)=>(b.rating||0)-(a.rating||0));
+        }else if(order==='rating_asc'){
+          items.sort((a,b)=>(a.rating||0)-(b.rating||0));
+        }else if(order==='name_asc'){
+          items.sort((a,b)=> (a.last_name+a.first_name).localeCompare(b.last_name+b.first_name,'es'));
+        }else if(order==='name_desc'){
+          items.sort((a,b)=> (b.last_name+b.first_name).localeCompare(a.last_name+a.first_name,'es'));
+        }else if(order==='age_young'){
+          items.sort((a,b)=>{
+            const aa=age(a.birth_date), bb=age(b.birth_date);
+            if(isNaN(aa)&&isNaN(bb)) return 0;
+            if(isNaN(aa)) return 1;
+            if(isNaN(bb)) return -1;
+            return aa-bb;
+          });
+        }else if(order==='age_old'){
+          items.sort((a,b)=>{
+            const aa=age(a.birth_date), bb=age(b.birth_date);
+            if(isNaN(aa)&&isNaN(bb)) return 0;
+            if(isNaN(aa)) return 1;
+            if(isNaN(bb)) return -1;
+            return bb-aa;
+          });
+        }
 
-        current = items;
+        current=items;
         render();
       }
 
       function render(){
         $list.innerHTML='';
-        if(current.length===0){ $list.innerHTML='<div class="no-results">Sin resultados</div>'; $pageInfo.textContent=''; return;}
-        const totalPages = Math.max(1, Math.ceil(current.length / PAGE));
-        page = Math.max(1, Math.min(totalPages, page));
-        const start = (page-1)*PAGE;
-        const end = Math.min(page*PAGE, current.length);
+        if(current.length===0){
+          $list.innerHTML='<div class="no-results">Sin resultados</div>';
+          $pageInfo.textContent='';
+          $prev.disabled=true;$next.disabled=true;
+          return;
+        }
+        const totalPages = Math.ceil(current.length / PAGE_SIZE) || 1;
+        if(page>totalPages) page=totalPages;
 
-        for(const p of current.slice(start, end)){
+        const start=(page-1)*PAGE_SIZE;
+        const end=Math.min(page*PAGE_SIZE,current.length);
+
+        for(const p of current.slice(start,end)){
           const t = maps.teamById[p.team_id] || null;
-          const l = t ? maps.leagueById[t.league_id] || null : null;
-          const age = DB.ageFromBirthDate(p.birth_date);
+            const l = t ? maps.leagueById[t.league_id] || null : null;
+          const ag = age(p.birth_date);
           const full = `${p.first_name} ${p.last_name}`.trim();
-          const row = document.createElement('a');
-          row.className='row clean';
-          // Ahora apunta a la página estática generada
-          row.href = `players/${encodeURIComponent(p.slug)}.html`;
-          row.innerHTML = `
-            <img class="photo" src="${p.photo||'img/jugadores/placeholder.png'}" alt="${full}" onerror="this.src='img/jugadores/placeholder.png'">
-            <div style="flex:1">
-              <div style="font-family:'Bungee';color:#fff">${full}
-                <span class="badge">${p.rating||'-'}</span>
+          const countryClean = sanitizeCountry(p.country);
+          const statsUrl = (p.pesmaster_url||'').trim();
+          const faceUrl  = (p.face_video_url||'').trim();
+
+          const teamLogo = t ? t.logo || 'img/equipos/placeholder.png' : '';
+          const flagPrimary = flagSrcWithAccents(p.country);
+
+          const card=document.createElement('a');
+          card.className='player-card';
+          card.href=`players/${encodeURIComponent(p.slug)}.html`;
+          card.innerHTML=`
+            <img class="player-photo" src="${p.photo||'img/jugadores/placeholder.png'}" alt="${full}" onerror="this.src='img/jugadores/placeholder.png'">
+            <div class="p-info">
+              <div class="p-name-line">
+                <span>${full}</span>
+                <span class="p-rating">${p.rating||'-'}</span>
               </div>
-              <div class="meta">
-                ${t? t.name : 'Sin equipo'}${l? ' • '+l.name : ''}
-                ${p.country? `<img class="flag" src="${DB.countryFlagSrc(p.country)}" alt="${p.country}" onerror="this.style.display='none'">` : ''}
-                • ${p.position||'-'} • ${isNaN(age)? '' : (age+' años')}
+              <div class="p-meta">
+                <span class="label">${p.position||'-'}</span>
+                ${!isNaN(ag)? `<span>${ag} años</span>`:''}
+                ${t? `<span class="team-meta">
+                        <img class="team-logo" src="${teamLogo}" alt="${t.name}" onerror="this.style.display='none'">
+                        ${t.name}
+                      </span>`:''}
+                ${l? `<span>${l.name}</span>`:''}
+                ${countryClean? `<span>${countryClean}</span>
+                  <img class="flag"
+                       src="${flagPrimary}"
+                       alt="${countryClean}"
+                       onerror="if(!this.dataset.try2){this.dataset.try2=1;this.src='${DB.countryFlagSrc(p.country)}'}else{this.style.display='none'}">`:''}
               </div>
-            </div>`;
-          $list.appendChild(row);
+            </div>
+            <div class="card-actions">
+              <a class="act-btn ${statsUrl? '' : 'disabled'}" ${statsUrl? `href="${statsUrl}" target="_blank" rel="noopener"`:''}>Stats</a>
+              <a class="act-btn ${faceUrl? '' : 'disabled'}" ${faceUrl? `href="${faceUrl}" target="_blank" rel="noopener"`:''}>Cara</a>
+              <a class="act-btn primary" href="players/${encodeURIComponent(p.slug)}.html">Perfil</a>
+            </div>
+          `;
+          $list.appendChild(card);
         }
 
-        $pageInfo.textContent = `Mostrando ${start+1}-${end} de ${current.length}`;
-        $prev.disabled = page<=1; $next.disabled = page>=totalPages;
+        $pageInfo.textContent=`Página ${page}/${totalPages} · ${current.length} jugador(es)`;
+        $prev.disabled=page<=1;
+        $next.disabled=page>=totalPages;
       }
 
-      $q.addEventListener('input', DB.debounce(()=>apply(true), 150));
-      $pos.addEventListener('change', ()=>apply(true));
-      $team.addEventListener('change', ()=>apply(true));
-      $country.addEventListener('change', ()=>apply(true));
-      $minR.addEventListener('change', ()=>apply(true));
-      $maxR.addEventListener('change', ()=>apply(true));
-      $sort.addEventListener('change', ()=>apply(true));
+      // Eventos filtros
+      $apply.addEventListener('click', ()=>apply(true));
+      $reset.addEventListener('click', ()=>{
+        $q.value=''; $pos.value=''; $league.value='';
+        updateTeamsSelect(); $team.value='';
+        $country.value=''; $minR.value=40; $maxR.value=99;
+        $sort.value='rating_desc';
+        apply(true);
+      });
+
+      $q.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); apply(true); } });
+      $q.addEventListener('input', DB.debounce(()=>apply(true),200));
+      [$pos,$team,$country,$minR,$maxR,$sort].forEach(el=>el.addEventListener('change', ()=>apply(true)));
       $prev.addEventListener('click', ()=>{ page--; render(); });
       $next.addEventListener('click', ()=>{ page++; render(); });
 
-      $sort.value = 'rating_desc';
+      // Pager inferior (mismos handlers)
+      // Si querés que al cambiar de página desde abajo “suba” al principio del listado,
+      // descomentá el scrollTo de cada handler.
+      if ($prev2 && $next2) {
+        $prev2.addEventListener('click', ()=>{
+          page--;
+          render();
+          // window.scrollTo({ top: $list.offsetTop - 80, behavior: 'smooth' });
+        });
+        $next2.addEventListener('click', ()=>{
+          page++;
+          render();
+          // window.scrollTo({ top: $list.offsetTop - 80, behavior: 'smooth' });
+        });
+      }
+
+      // Atajo buscar
+      document.addEventListener('keydown', e=>{
+        if(e.key==='/' && document.activeElement!==$q){
+          e.preventDefault(); $q.focus();
+        }
+      });
+
+      // Modo compacto
+      let compact=false;
+      function updateToggleLabel(){
+        $compact.textContent = compact? 'VISTA COMPLETA' : 'MODO COMPACTO';
+        $compact.setAttribute('aria-pressed', compact? 'true':'false');
+      }
+      $compact.addEventListener('click', ()=>{
+        compact=!compact;
+        document.body.classList.toggle('compact', compact);
+        updateToggleLabel();
+      });
+      updateToggleLabel();
+
+      // Inicial
+      $sort.value='rating_desc';
       apply(true);
     })();
   </script>

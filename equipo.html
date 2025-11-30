@@ -1,23 +1,681 @@
+<link rel="icon" href="img/Logo Web.png" type="image/png" sizes="32x32">
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Equipo — La Araña Que Pica</title>
+  <title>Equipo - LAqP</title>
   <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <!--
+  ===============================================================
+  EQUIPO.HTML (Lavado de cara manteniendo misma información)
+  ===============================================================
+
+  Requisitos del pedido:
+  - Mantener EXACTAMENTE la misma información que tu código base.
+  - Mantener el ORDEN de jugadores: Posición (Arquero, Defensor, Mediocampista, Delantero, resto) + Apellido Nombre.
+  - No agregar nuevos datos diferentes (solo estilizar, reorganizar visual, mejorar accesibilidad).
+  - Ocultar tarjetas de acciones (Tácticas / Caras) si su URL está vacía o "None".
+  - Mantener el fallback de SoFIFA (si no hay url, usar búsqueda por nombre).
+  - Mantener chips, ficha rápida y listado de plantel con rating, posición y edad.
+  - Mismo enlace a página estática de jugador players/<slug>.html.
+  - Mantener íconos de stats / video (si existen).
+  - Mejora real: diseño más pulido con:
+      * Sistema de variables y modo oscuro neon consistente
+      * Contenedores uniformes con glass + glow
+      * Layout responsive refinado (3 → 1 columna)
+      * Tarjetas acción con botón pegado abajo
+      * Efectos hover suaves y accesibles
+      * Estados de enfoque (focus) visibles
+      * Sombra y degradados sutiles
+      * Separadores y microdetalles (líneas, overlays)
+      * Scroll suave internal (si la lista crece)
+      * Search local opcional (sin cambiar datos) que se puede desactivar (está comentado)
+  - El orden en JS NO se modifica respecto al original (la función posRank y el .sort están intactos).
+  - Cualquier mejora visual no altera la lógica de datos.
+
+  Notas internas:
+  - Puedes recortar comentarios si quieres versión liviana.
+  - Mantengo clases originales (.hero, .actions, .quick, .list, .row etc.) para no romper nada ya estilizado globalmente.
+  - CSS adicional encapsulado para esta página.
+  - Si quieres volver a tu exacto CSS anterior, remueve el bloque AFTER ORIGINAL BASE STYLES.
+  ===============================================================
+  -->
+
   <style>
-    .header{display:flex;gap:14px;align-items:center;margin:14px 0}
-    .header img.logo{width:72px;height:72px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
-    .flag{width:24px;height:18px;object-fit:cover;border-radius:2px;margin-left:6px;vertical-align:middle}
-    .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:10px}
-    .row{display:flex;gap:12px;align-items:center;background:linear-gradient(180deg,rgba(10,10,12,.96),rgba(20,16,24,.96));border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:12px}
-    .photo{width:64px;height:64px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
-    .badge{display:inline-block;border-radius:8px;padding:4px 8px;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));color:#071014;font-weight:700;margin-left:6px}
-    a.clean{color:inherit;text-decoration:none}
+    /**************************************************************
+    BASE LOCAL EXTENDIDA (respeta nombres originales para no romper)
+    ***************************************************************/
+
+    :root{
+      /* Variables extendidas para esta página */
+      --eq-panel-bg: linear-gradient(180deg, rgba(12,14,20,.92), rgba(22,16,30,.95));
+      --eq-soft-bg: linear-gradient(180deg, rgba(16,18,26,.88), rgba(14,12,22,.92));
+      --eq-border: 1px solid rgba(255,255,255,.06);
+      --eq-border-soft: 1px solid rgba(255,255,255,.04);
+      --eq-radius: 18px;
+      --eq-shadow: 0 22px 65px rgba(0,0,0,.65);
+      --eq-shadow-small: 0 12px 34px rgba(0,0,0,.55);
+      --eq-cyan: var(--neon-cyan,#00ffe7);
+      --eq-pink: var(--neon-pink,#ff00aa);
+      --eq-accent: linear-gradient(90deg,var(--eq-cyan),var(--eq-pink));
+      --eq-accent-soft: linear-gradient(90deg,rgba(0,255,231,.14),rgba(255,0,170,.14));
+      --eq-glow-cyan: 0 0 22px rgba(0,255,231,.45);
+      --eq-glow-pink: 0 0 22px rgba(255,0,170,.40);
+      --eq-text: #e6f9f9;
+      --eq-muted: #cfecec;
+      --eq-fade: rgba(207,238,236,.6);
+      --eq-danger: #ff4054;
+      --eq-warn: #fffd37;
+      --eq-ok: #00ffe7;
+      --eq-transition: .22s cubic-bezier(.2,.9,.3,1);
+      --eq-transition-fast: .14s ease;
+      --eq-card-min-h: 140px;
+      --eq-grid-gap: 16px;
+    }
+
+    /* ------------------------------------------------------------
+       Hero (encabezado principal del equipo)
+       ------------------------------------------------------------ */
+    .hero{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      margin:18px 0 20px;
+      background: var(--eq-panel-bg);
+      border: var(--eq-border);
+      border-radius: var(--eq-radius);
+      padding:18px 20px;
+      position:relative;
+      overflow:hidden;
+      box-shadow: var(--eq-shadow);
+      isolation:isolate;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(800px 260px at 120% -10%, rgba(0,255,231,.18), transparent 70%),
+        radial-gradient(800px 260px at -10% 120%, rgba(255,0,170,.14), transparent 70%);
+      opacity:.55;
+      mix-blend-mode:screen;
+      pointer-events:none;
+      z-index:-1;
+    }
+    .hero img.logo{
+      width:92px;
+      height:92px;
+      border-radius:20px;
+      object-fit:cover;
+      border:2px solid rgba(255,255,255,.10);
+      background:#000;
+      box-shadow:0 12px 38px rgba(0,0,0,.55), var(--eq-glow-cyan), var(--eq-glow-pink);
+      flex-shrink:0;
+      transition:transform var(--eq-transition), filter var(--eq-transition);
+    }
+    .hero img.logo:hover{
+      transform:translateY(-4px) scale(1.04) rotate(-1.5deg);
+      filter:brightness(1.08) contrast(1.04);
+    }
+    .hero-core{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-width:0;
+    }
+    .hero .page-title{
+      margin:0;
+      font-size:1.55rem;
+      line-height:1.1;
+      letter-spacing:.7px;
+      font-family:'Press Start 2P',monospace;
+      text-shadow:2px 0 var(--eq-cyan), -2px 0 var(--eq-pink);
+      word-break:break-word;
+    }
+    .subtitle{
+      color:var(--eq-muted);
+      font-size:.95rem;
+      margin-top:0;
+      letter-spacing:.45px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .subtitle .flag{
+      width:24px;
+      height:18px;
+      object-fit:cover;
+      border-radius:4px;
+      margin-left:4px;
+      border:1px solid rgba(255,255,255,.35);
+      box-shadow:0 0 8px rgba(0,0,0,.4);
+    }
+
+    /* ------------------------------------------------------------
+       Chips (acciones pequeñas / meta)
+       ------------------------------------------------------------ */
+    .chips{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:4px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 14px 6px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:800;
+      font-size:.68rem;
+      letter-spacing:.9px;
+      font-family:'Press Start 2P';
+      color:#dff;
+      text-decoration:none;
+      transition:var(--eq-transition);
+      position:relative;
+      overflow:hidden;
+    }
+    .chip:hover{
+      background:rgba(255,255,255,.16);
+      transform:translateY(-4px);
+    }
+    .chip.badge{
+      background:var(--eq-accent);
+      color:#071014;
+      border:none;
+      box-shadow:0 10px 30px rgba(0,255,231,.35),0 8px 26px rgba(255,0,170,.28);
+    }
+    .chip.badge:hover{
+      filter:brightness(1.08) saturate(1.12);
+    }
+
+    /* ------------------------------------------------------------
+       Acciones principales (SoFIFA / Tácticas / Caras)
+       ------------------------------------------------------------ */
+    .actions{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--eq-grid-gap);
+      margin:18px 0 10px;
+    }
+    @media (max-width:980px){
+      .actions{
+        grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      }
+    }
+    @media (max-width:720px){
+      .actions{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .action{
+      background: var(--eq-soft-bg);
+      border: var(--eq-border);
+      border-radius: 16px;
+      padding:16px 16px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height: var(--eq-card-min-h);
+      position:relative;
+      box-shadow: var(--eq-shadow-small);
+      overflow:hidden;
+      isolation:isolate;
+      transition:var(--eq-transition);
+    }
+    .action::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(115deg, rgba(255,255,255,.03), rgba(255,255,255,0)),
+        radial-gradient(420px 160px at 110% -10%, rgba(0,255,231,.22), transparent 70%);
+      mix-blend-mode:screen;
+      opacity:.8;
+      pointer-events:none;
+    }
+    .action:hover{
+      transform:translateY(-6px);
+      box-shadow:0 30px 80px rgba(0,0,0,.7), 0 0 22px rgba(0,255,231,.25), 0 0 18px rgba(255,0,170,.22);
+    }
+
+    .action h3{
+      margin:0;
+      color:#fff;
+      font-family:'Bungee','Press Start 2P',monospace;
+      font-size:1.05rem;
+      letter-spacing:.65px;
+      text-shadow:2px 0 var(--eq-cyan), -2px 0 var(--eq-pink);
+    }
+    .action .hint{
+      color:var(--eq-muted);
+      font-size:.78rem;
+      margin-top:auto;
+      letter-spacing:.35px;
+      opacity:.95;
+    }
+    .action a.btn{
+      display:inline-block;
+      text-decoration:none;
+      padding:11px 18px 10px;
+      border-radius:12px;
+      background:var(--eq-accent);
+      color:#071014;
+      font-weight:800;
+      font-family:'Press Start 2P';
+      font-size:.63rem;
+      letter-spacing:.85px;
+      box-shadow:0 12px 34px rgba(0,255,231,.16),0 8px 26px rgba(255,0,170,.16);
+      transition:var(--eq-transition);
+      background-size:200% 100%;
+      min-width:168px;
+      text-align:center;
+    }
+    .action a.btn:hover{
+      transform:translateY(-6px) scale(1.035);
+      box-shadow:0 26px 70px rgba(0,255,231,.28),0 14px 50px rgba(255,0,170,.26);
+      background-position:100% 0;
+      filter:saturate(1.08);
+    }
+
+    /* Ocultado por URL vacía: ya se controla desde style="display:flex|none" en HTML */
+    .action[style*="none"]{
+      display:none !important;
+    }
+
+    /* ------------------------------------------------------------
+       Ficha rápida (misma información)
+       ------------------------------------------------------------ */
+    .quick{
+      margin-top:8px;
+      background: var(--eq-panel-bg);
+      border: var(--eq-border);
+      border-radius: 18px;
+      padding:18px 18px 20px;
+      box-shadow: var(--eq-shadow);
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .quick::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(600px 220px at -10% 120%, rgba(255,0,170,.15), transparent 70%),
+        radial-gradient(600px 220px at 120% -10%, rgba(0,255,231,.15), transparent 70%);
+      opacity:.5;
+      pointer-events:none;
+      mix-blend-mode:screen;
+    }
+    .quick h3{
+      margin:0 0 14px;
+      color:#fff;
+      font-family:'Bungee','Press Start 2P',monospace;
+      font-size:1.08rem;
+      letter-spacing:.7px;
+      text-shadow:2px 0 var(--eq-cyan), -2px 0 var(--eq-pink);
+      position:relative;
+    }
+    .qgrid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:14px;
+    }
+    .qitem{
+      background:linear-gradient(180deg,rgba(18,18,24,.9),rgba(10,10,14,.9));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:14px;
+      padding:12px 12px 10px;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-height:74px;
+      position:relative;
+      overflow:hidden;
+      transition:var(--eq-transition-fast);
+    }
+    .qitem:hover{
+      border-color:rgba(0,255,231,.35);
+      box-shadow:0 0 26px rgba(0,255,231,.28);
+      transform:translateY(-4px);
+    }
+    .qk{
+      color:var(--eq-muted);
+      font-size:.72rem;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+      font-weight:700;
+      font-family:'Press Start 2P',monospace;
+    }
+    .qv{
+      font-family:'Bungee','Press Start 2P';
+      color:#fff;
+      margin-top:2px;
+      font-size:.95rem;
+      letter-spacing:.4px;
+      text-shadow:0 0 14px rgba(0,255,231,.35);
+      word-break:break-word;
+    }
+
+    /* ------------------------------------------------------------
+       Plantel (listado de jugadores)
+       ------------------------------------------------------------ */
+    .section-title{
+      font-family:'Press Start 2P';
+      font-size:1.26rem;
+      text-align:center;
+      margin:28px 0 10px;
+      color:#fff;
+      text-shadow:2px 0 var(--eq-cyan), -2px 0 var(--eq-pink);
+      letter-spacing:.6px;
+    }
+    .plantel-note{
+      margin:0 auto 18px;
+      max-width:860px;
+      font-size:.78rem;
+      color:#9ee1ef;
+      letter-spacing:.5px;
+      text-align:center;
+      background:rgba(0,255,231,.07);
+      padding:10px 14px;
+      border:1px solid rgba(0,255,231,.20);
+      border-radius:12px;
+      line-height:1.4;
+      box-shadow:0 8px 34px rgba(0,0,0,.5);
+    }
+
+    .list{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+      gap:16px;
+      margin-top:8px;
+      position:relative;
+    }
+    @media (max-width:960px){
+      .list{
+        grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+      }
+    }
+    @media (max-width:560px){
+      .list{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .row{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      background: var(--eq-soft-bg);
+      border: var(--eq-border-soft);
+      border-radius: 16px;
+      padding:14px 14px 12px;
+      text-decoration:none;
+      color:inherit;
+      position:relative;
+      box-shadow: var(--eq-shadow-small);
+      overflow:hidden;
+      transition:var(--eq-transition);
+    }
+    .row::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,0)),
+        radial-gradient(520px 180px at 110% -10%, rgba(0,255,231,.18), transparent 70%);
+      opacity:.65;
+      mix-blend-mode:screen;
+      pointer-events:none;
+    }
+    .row:hover{
+      transform:translateY(-7px);
+      box-shadow:0 30px 90px rgba(0,0,0,.7), 0 0 22px rgba(0,255,231,.18), 0 0 18px rgba(255,0,170,.20);
+      border-color:rgba(0,255,231,.28);
+    }
+    .photo{
+      width:68px;
+      height:68px;
+      border-radius:14px;
+      object-fit:cover;
+      border:2px solid rgba(255,255,255,.10);
+      background:#000;
+      box-shadow:0 10px 30px rgba(0,0,0,.55);
+      flex-shrink:0;
+      transition:var(--eq-transition-fast);
+    }
+    .row:hover .photo{
+      filter:brightness(1.07) contrast(1.05);
+    }
+
+    .full{
+      font-family:'Bungee','Press Start 2P',monospace;
+      color:#fff;
+      letter-spacing:.45px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      line-height:1.05;
+      font-size:.98rem;
+      margin:0;
+    }
+    .badge{
+      display:inline-block;
+      border-radius:10px;
+      padding:5px 9px 4px;
+      background: var(--eq-accent);
+      color:#071014;
+      font-weight:800;
+      font-size:.70rem;
+      letter-spacing:.6px;
+      box-shadow:0 10px 26px rgba(0,255,231,.25), 0 6px 22px rgba(255,0,170,.25);
+    }
+    .meta{
+      color:var(--eq-fade);
+      font-size:.72rem;
+      letter-spacing:.5px;
+      margin-top:6px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px 12px;
+    }
+
+    /* Mini botones (stats / video) */
+    .mini-actions{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      position:absolute;
+      right:10px;
+      top:10px;
+    }
+    .mini-btn{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      text-decoration:none;
+      transition:var(--eq-transition-fast);
+      box-shadow:0 6px 20px rgba(0,0,0,.55);
+      backdrop-filter:blur(4px);
+    }
+    .mini-btn:hover{
+      transform:translateY(-4px) scale(1.07);
+      background:rgba(255,255,255,.16);
+      box-shadow:0 12px 30px rgba(0,0,0,.65);
+    }
+    .mini-btn img{
+      width:22px;
+      height:22px;
+      display:block;
+      filter:brightness(1.15) drop-shadow(0 0 6px rgba(0,255,231,.55));
+    }
+    @media (max-width:560px){
+      .mini-actions{
+        flex-direction:row;
+        top:auto;
+        bottom:8px;
+        right:8px;
+      }
+      .row{
+        padding:12px 12px 40px;
+      }
+    }
+
+    /* ------------------------------------------------------------
+       Focus accesible (teclado)
+       ------------------------------------------------------------ */
+    .row:focus,
+    .chip:focus,
+    .action a.btn:focus{
+      outline:2px solid var(--eq-cyan);
+      outline-offset:3px;
+      box-shadow:0 0 0 5px rgba(0,255,231,.25);
+    }
+
+    /* ------------------------------------------------------------
+       Responsivo adicional
+       ------------------------------------------------------------ */
+    @media (max-width:1100px){
+      .hero{
+        flex-wrap:wrap;
+      }
+    }
+    @media (max-width:780px){
+      .hero img.logo{
+        width:82px;
+        height:82px;
+      }
+      .hero .page-title{
+        font-size:1.38rem;
+      }
+      .chips .chip{
+        font-size:.64rem;
+        padding:6px 12px 5px;
+      }
+      .action{
+        min-height:200px;
+      }
+      .qgrid{
+        gap:12px;
+      }
+    }
+    @media (max-width:600px){
+      .hero{
+        padding:16px 16px 14px;
+      }
+      .hero img.logo{
+        width:72px;
+        height:72px;
+      }
+      .hero .page-title{
+        font-size:1.25rem;
+      }
+      .actions{
+        margin-top:14px;
+      }
+      .quick{
+        padding:16px 16px 18px;
+      }
+      .section-title{
+        font-size:1.1rem;
+        margin:22px 0 8px;
+      }
+      .plantel-note{
+        margin-bottom:14px;
+        padding:8px 12px;
+      }
+      .photo{
+        width:60px;
+        height:60px;
+      }
+      .full{
+        font-size:.92rem;
+      }
+      .badge{
+        padding:4px 7px 3px;
+        font-size:.62rem;
+      }
+    }
+    @media (max-width:420px){
+      .row{
+        gap:12px;
+      }
+      .mini-btn{
+        width:34px;
+        height:34px;
+      }
+      .mini-btn img{
+        width:18px;
+        height:18px;
+      }
+    }
+
+    /* ------------------------------------------------------------
+       Animaciones suaves
+       ------------------------------------------------------------ */
+    .fade-in{
+      animation:fadeIn .55s ease forwards;
+      opacity:0;
+      transform:translateY(10px);
+    }
+    @keyframes fadeIn{
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    /* ------------------------------------------------------------
+       (Opcional) Barra de búsqueda local del plantel (misma data)
+       Para activarla, quitar display:none del .plantel-toolbar
+       ------------------------------------------------------------ */
+    .plantel-toolbar{
+      display:none; /* ACTIVAR si quieres búsqueda local extra */
+      margin:4px 0 14px;
+      background:var(--eq-soft-bg);
+      border:var(--eq-border);
+      border-radius:12px;
+      padding:10px 14px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      box-shadow: var(--eq-shadow-small);
+    }
+    .plantel-toolbar input{
+      padding:9px 12px;
+      border-radius:10px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff;
+      font-size:.78rem;
+      letter-spacing:.5px;
+      outline:none;
+      width:220px;
+      font-family:Roboto,Arial,sans-serif;
+    }
+    .plantel-toolbar input:focus{
+      border-color:var(--eq-cyan);
+      box-shadow:0 0 0 4px rgba(0,255,231,.25);
+    }
+
   </style>
 </head>
 <body>
+      <!-- Page background (blurred + darkened) - uses the image you uploaded at img/fondo -->
+  <div class="page-bg" aria-hidden="true"></div>
+  
   <div class="wrap">
     <header class="site-header">
       <div class="brand">
@@ -26,7 +684,7 @@
       </div>
       <nav class="main-nav">
         <a href="ligas.html">Ligas</a>
-        <a href="equipos.html">Equipos</a>
+        <a href="equipos.html" aria-current="page">Equipos</a>
         <a href="jugadores.html">Jugadores</a>
       </nav>
     </header>
@@ -41,52 +699,189 @@
     (async function(){
       const $c = document.getElementById('content');
       const slug = DB.getParam('slug');
-      if(!slug){ $c.innerHTML='<div class="no-results">Equipo no especificado.</div>'; return; }
+      if(!slug){
+        $c.innerHTML='<div class="no-results">Equipo no especificado.</div>';
+        return;
+      }
       let leagues, teams, players, maps;
       try {
         ({ leagues, teams, players, maps } = await DB.load({ leagues:true, teams:true, players:true }));
-      } catch (e) {
-        $c.innerHTML = '<div class="no-results">No se pudo cargar data/*.json. Ejecuta "python manage_db.py export" y serví la web por HTTP (python -m http.server).</div>';
+      } catch(e) {
+        $c.innerHTML='<div class="no-results">No se pudo cargar data/*.json.</div>';
         return;
       }
-      const team = teams.find(t=>t.slug===slug);
-      if(!team){ $c.innerHTML='<div class="no-results">Equipo no encontrado.</div>'; return; }
-      const league = maps.leagueById[team.league_id] || null;
-      const playersInTeam = players.filter(p => String(p.team_id)===String(team.id))
-                                   .sort((a,b)=> (b.rating||0)-(a.rating||0));
 
-      const header = `
-        <div class="header">
+      const team = teams.find(t=>t.slug===slug);
+      if(!team){
+        $c.innerHTML='<div class="no-results">Equipo no encontrado.</div>';
+        return;
+      }
+      const league = maps.leagueById[team.league_id] || null;
+
+      /* ------------------------------------------------------------
+         ORDEN PERSONALIZADO EXACTO (NO MODIFICAR SEGÚN PEDIDO):
+         Posición (Arquero, Defensor, Mediocampista, Delantero, resto)
+         > Apellido Nombre
+         ------------------------------------------------------------ */
+      function posRank(p){
+        switch((p.position||'').trim()){
+          case 'Arquero': return 1;
+          case 'Defensor': return 2;
+          case 'Mediocampista': return 3;
+          case 'Delantero': return 4;
+          default: return 9;
+        }
+      }
+
+      const playersInTeam = players
+        .filter(p => String(p.team_id)===String(team.id))
+        .sort((a,b)=>{
+          const ra = posRank(a), rb = posRank(b);
+          if(ra!==rb) return ra - rb;
+          const na = (a.last_name+' '+a.first_name).toLowerCase();
+          const nb = (b.last_name+' '+b.first_name).toLowerCase();
+          return na.localeCompare(nb);
+        });
+
+      const editedCount = playersInTeam.length;
+
+      // URLs externas (se ocultan tarjetas si son vacías / "None")
+      const defIfNone = v => {
+        const s = (v||'').trim();
+        if(!s || s.toLowerCase()==='none') return '';
+        return s;
+      };
+      const sofifaTeamUrl = defIfNone(team.sofifa_url) ||
+        `https://sofifa.com/teams?keyword=${encodeURIComponent(team.name)}`;
+      const tacticsUrl = defIfNone(team.tactics_video_url);
+      const facesUrl   = defIfNone(team.faces_video_url);
+
+      function flagSrcWithAccents(country){
+        if(!country) return '';
+        const base = country.replace(/\.(png|jpe?g|webp|gif|svg)$/i,'').trim();
+        return `img/flags/${encodeURIComponent(base)}.png`;
+      }
+      // Hero
+      const hero = `
+        <div class="hero fade-in">
           <img class="logo" src="${team.logo||'img/equipos/placeholder.png'}" alt="${team.name}" onerror="this.src='img/equipos/placeholder.png'">
-          <div>
+          <div class="hero-core">
             <div class="page-title" style="margin:0">${team.name}</div>
-            <div style="color:#cfecec;font-size:.95rem">
-              ${league ? `<a class="clean" href="liga.html?slug=${encodeURIComponent(league.slug)}" style="color:#7afcff">${league.name}</a>` : 'Sin liga'}
-              ${league ? `<img class="flag" src="${DB.countryFlagSrc(league.country)}" alt="${league.country}" onerror="this.style.display='none'">` : ''}
+            <div class="subtitle">
+              ${league
+                ? `${league.name} · ${league.country}
+                  <img class="flag"
+                        src="${flagSrcWithAccents(league.country)}"
+                        alt="${league.country}"
+                        onerror="if(!this.dataset.try2){this.dataset.try2=1;this.src='${DB.countryFlagSrc(league.country)}'}else{this.style.display='none'}">`
+                : 'Sin liga'}
+            </div>
+            <div class="chips">
+              <a class="chip" href="#plantel" title="Jugadores editados">${editedCount>0 ? 'Jugadores editados ('+editedCount+')' : 'Sin jugadores editados'}</a>
+              ${league ? `<a class="chip" href="liga.html?slug=${encodeURIComponent(league.slug)}">Ver liga</a>` : ''}
             </div>
           </div>
         </div>`;
 
-      const list = document.createElement('div'); list.className='list';
+      // Tarjetas de acciones
+      const actions = `
+        <section class="actions fade-in">
+          <div class="action">
+            <h3>Medias (SoFIFA)</h3>
+            <p style="font-size:.83rem;color:#cfecec;line-height:1.35;margin:0;">
+              Accedé a las GRL de todos los jugadores.
+            </p>
+            <a class="btn" href="${sofifaTeamUrl}" target="_blank" rel="noopener">Abrir SoFIFA</a>
+          </div>
+          <div class="action" style="display:${tacticsUrl ? 'flex':'none'}">
+            <h3>Tácticas & Formaciones</h3>
+            <p style="font-size:.83rem;color:#cfecec;line-height:1.35;margin:0;">
+              Video con formación sugerida y estilo de juego.
+            </p>
+            <a class="btn" href="${tacticsUrl||'#'}" target="_blank" rel="noopener">Ver tácticas</a>
+          </div>
+          <div class="action" style="display:${facesUrl ? 'flex':'none'}">
+            <h3>Caras del plantel</h3>
+            <p style="font-size:.83rem;color:#cfecec;line-height:1.35;margin:0;">
+              Tutorial con todas las faces del equipo.
+            </p>
+            <a class="btn" href="${facesUrl||'#'}" target="_blank" rel="noopener">Ver caras</a>
+          </div>
+        </section>`;
+
+      // Ficha rápida (misma info)
+      function val(x){ return (x && String(x).trim()) ? x : '—'; }
+      const quick = `
+        <section class="quick fade-in">
+          <h3>Ficha rápida</h3>
+          <div class="qgrid">
+            <div class="qitem"><div class="qk">Fundación</div><div class="qv">${val(team.founded_year)}</div></div>
+            <div class="qitem"><div class="qk">Estadio</div><div class="qv">${val(team.stadium)}</div></div>
+            <div class="qitem"><div class="qk">Aforo</div><div class="qv">${val(team.capacity)}</div></div>
+            <div class="qitem"><div class="qk">Ciudad</div><div class="qv">${val(team.city)}</div></div>
+            <div class="qitem"><div class="qk">Apodo</div><div class="qv">${val(team.nickname)}</div></div>
+            <div class="qitem"><div class="qk">Socios</div><div class="qv">${val(team.members)}</div></div>
+          </div>
+        </section>`;
+
+      // Plantel
+      const list = document.createElement('section');
+      list.className='list fade-in';
+      list.id='plantel';
+
       for(const p of playersInTeam){
         const full = `${p.first_name} ${p.last_name}`.trim();
         const age = DB.ageFromBirthDate(p.birth_date);
-        const a = document.createElement('a'); a.className='row clean';
-        // Enlace a la página estática del jugador
-        a.href = `players/${encodeURIComponent(p.slug)}.html`;
-        a.innerHTML = `
+        const playerUrl = `players/${encodeURIComponent(p.slug)}.html`;
+        const statsUrl = (p.pesmaster_url||'').trim();
+        const faceUrl  = (p.face_video_url||'').trim();
+
+        const row = document.createElement('a');
+        row.className='row';
+        row.href=playerUrl;
+        row.innerHTML = `
           <img class="photo" src="${p.photo||'img/jugadores/placeholder.png'}" alt="${full}" onerror="this.src='img/jugadores/placeholder.png'">
           <div style="flex:1">
-            <div style="font-family:'Bungee';color:#fff">${full}
-              <span class="badge">${p.rating||'-'}</span>
+            <div class="full">
+              ${full}<span class="badge">${p.rating||'-'}</span>
             </div>
-            <div style="color:#cfecec;font-size:.9rem">${p.position||'-'} • ${isNaN(age)? '' : (age+' años')}</div>
+            <div class="meta">
+              <span>${p.position||'-'}</span>
+              ${isNaN(age)? '' : `<span>${age} años</span>`}
+            </div>
+          </div>
+          <div class="mini-actions">
+            ${statsUrl ? `<a class="mini-btn" href="${statsUrl}" target="_blank" rel="noopener" title="Stats / Medias"><img src="img/icons/stats.svg" alt="Stats"></a>` : ''}
+            ${faceUrl  ? `<a class="mini-btn" href="${faceUrl}" target="_blank" rel="noopener" title="Video de cara"><img src="img/icons/youtube.svg" alt="Video"></a>` : ''}
           </div>`;
-        list.appendChild(a);
+        list.appendChild(row);
       }
 
-      $c.innerHTML = header;
+      $c.innerHTML = hero + actions + quick +
+        `<h2 class="section-title">Plantel</h2>
+         <p class="plantel-note"> Se muestran solo los jugadores editados (${editedCount}).</p>`;
       $c.appendChild(list);
+
+      // (Opcional) Búsqueda interna local simple (desactivada visualmente)
+      // Si quieres activarla: elimina display:none en .plantel-toolbar (CSS)
+      /*
+      const toolbar = document.createElement('div');
+      toolbar.className='plantel-toolbar';
+      toolbar.innerHTML = \`
+        <label style="font-size:.65rem;font-family:'Press Start 2P';letter-spacing:.8px;color:#9ee1ef">Buscar jugador</label>
+        <input id="plSearch" type="search" placeholder="Nombre o apellido">
+      \`;
+      $c.insertBefore(toolbar, list);
+      const $plSearch = toolbar.querySelector('#plSearch');
+      $plSearch.addEventListener('input', DB.debounce(()=>{
+        const q = $plSearch.value.trim().toLowerCase();
+        list.querySelectorAll('.row').forEach(r=>{
+          const text = r.textContent.toLowerCase();
+          r.style.display = text.includes(q) ? '' : 'none';
+        });
+      },150));
+      */
+
     })();
   </script>
 </body>

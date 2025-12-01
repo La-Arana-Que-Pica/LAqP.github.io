@@ -1,0 +1,121 @@
+[
+  {
+    "id": 7,
+    "name": "Brasileirão Betano",
+    "country": "Brasil",
+    "logo": "img/ligas/Brasileirao Betano.png",
+    "slug": "brasileirao-betano"
+  },
+  {
+    "id": 6,
+    "name": "Bundesliga",
+    "country": "Alemania",
+    "logo": "img/ligas/Bundesliga.png",
+    "slug": "bundesliga"
+  },
+  {
+    "id": 13,
+    "name": "Copa de Primera Tigo",
+    "country": "Paraguay",
+    "logo": "img/ligas/Copa de Primera Tigo – ueno bank.png",
+    "slug": "copa-de-primera-tigo"
+  },
+  {
+    "id": 5,
+    "name": "LaLiga",
+    "country": "España",
+    "logo": "img/ligas/LaLiga.png",
+    "slug": "laliga"
+  },
+  {
+    "id": 14,
+    "name": "Liga 1",
+    "country": "Perú",
+    "logo": "img/ligas/Liga1PeruW.png",
+    "slug": "liga-1"
+  },
+  {
+    "id": 15,
+    "name": "Liga AUF Uruguay",
+    "country": "Uruguay",
+    "logo": "img/ligas/Liga AUF Uruguay.png",
+    "slug": "liga-auf-uruguay"
+  },
+  {
+    "id": 11,
+    "name": "Liga Betplay Dimayor",
+    "country": "Colombia",
+    "logo": "img/ligas/Liga BetPlay.png",
+    "slug": "liga-betplay-dimayor"
+  },
+  {
+    "id": 8,
+    "name": "Liga de Primera Itaú",
+    "country": "Chile",
+    "logo": "img/ligas/Liga de Primera Itaú.png",
+    "slug": "liga-de-primera-itau"
+  },
+  {
+    "id": 16,
+    "name": "Liga FUTVE Banco",
+    "country": "Venezuela",
+    "logo": "img/ligas/Liga FUTVE.png",
+    "slug": "liga-futve-banco"
+  },
+  {
+    "id": 12,
+    "name": "LigaPro Ecuabet",
+    "country": "Ecuador",
+    "logo": "img/ligas/LigaPro Ecuabet.png",
+    "slug": "ligapro-ecuabet"
+  },
+  {
+    "id": 3,
+    "name": "Ligue 1 McDonald's",
+    "country": "Francia",
+    "logo": "img/ligas/Ligue1.png",
+    "slug": "ligue-1"
+  },
+  {
+    "id": 9,
+    "name": "Major League Soccer",
+    "country": "Estados Unidos",
+    "logo": "img/ligas/MLS.png",
+    "slug": "major-league-soccer"
+  },
+  {
+    "id": 2,
+    "name": "Premier League",
+    "country": "Inglaterra",
+    "logo": "img/ligas/Premier League.png",
+    "slug": "premier-league"
+  },
+  {
+    "id": 17,
+    "name": "Saudi Pro League",
+    "country": "Arabia Saudita",
+    "logo": "img/ligas/Roshn Saudi League256x.png",
+    "slug": "saudi-pro-league"
+  },
+  {
+    "id": 4,
+    "name": "Serie A",
+    "country": "Italia",
+    "logo": "img/ligas/Serie A.png",
+    "slug": "serie-a"
+  },
+  {
+    "id": 1,
+    "name": "Torneo Betano",
+    "country": "Argentina",
+    "logo": "img/ligas/Logo_TB.png",
+    "slug": "torneo-betano"
+  },
+  {
+    "id": 10,
+    "name": "Torneo Clausura Bolivia",
+    "country": "Bolivia",
+    "logo": "img/ligas/BOL.png",
+    "slug": "torneo-clausura-bolivia"
+  }
+]

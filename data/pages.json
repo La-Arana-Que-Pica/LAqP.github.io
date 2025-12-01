@@ -1,0 +1,43 @@
+{
+  "pages": [
+    {
+      "id": 1,
+      "title": "Noticias: Data Pack 6.0",
+      "slug": "news-dp6",
+      "category": "Noticias",
+      "description": "Resumen de cambios del Data Pack 6.0 para eFootball/PES.",
+      "thumb": "img/news/dp6.png",
+      "cta_text": "Leer",
+      "href": "pages/noticias/dp6.html",
+      "target": "_self",
+      "featured": 1,
+      "sort_order": 10
+    },
+    {
+      "id": 2,
+      "title": "Descargas: Option File Temporada 25/26",
+      "slug": "descargas-of-2526",
+      "category": "Descargas",
+      "description": "Paquete completo para PS4/PS5/PC.",
+      "thumb": "img/descargas/of-2526.png",
+      "cta_text": "Descargar",
+      "href": "pages/descargas/of-2526.html",
+      "target": "_self",
+      "featured": 1,
+      "sort_order": 20
+    },
+    {
+      "id": 3,
+      "title": "Guías: Instalación en PS5",
+      "slug": "guias-ps5",
+      "category": "Guías",
+      "description": "Paso a paso con soluciones comunes.",
+      "thumb": "img/guias/ps5.png",
+      "cta_text": "Ver guía",
+      "href": "pages/guias/ps5.html",
+      "target": "_self",
+      "featured": 1,
+      "sort_order": 30
+    }
+  ]
+}

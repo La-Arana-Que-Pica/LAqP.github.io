@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cómo descargar e instalar PES 2018 para PC (Tutorial)</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- CSS global (estamos dentro de /pages/) -->
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="../img/Logo Web.png" type="image/png" sizes="32x32">
+
+  <meta name="description" content="Tutorial paso a paso para descargar e instalar PES 2018 en PC — Versión 1.05.02 + Data Pack 4.01. Incluye uso de DP File List y verificación al inicio.">
+
+  <!-- Estilos locales -->
+  <style>
+    .blog-single{display:block;margin-top:18px}
+    .blog-single .hero-feature{padding:24px;margin-bottom:18px;min-height:auto}
+    .content-block{max-width:980px;margin:0 auto}
+
+    .neon-btn{
+      --btn-grad:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+      position:relative;display:inline-flex;align-items:center;justify-content:center;
+      gap:10px;padding:14px 24px 13px;border-radius:18px;min-width:230px;
+      font-family:'Press Start 2P',monospace;font-size:.63rem;letter-spacing:1px;font-weight:800;
+      text-decoration:none;color:#071014;background:var(--btn-grad);background-size:220% 100%;
+      box-shadow:0 16px 46px rgba(0,255,231,.30),0 10px 34px rgba(255,0,170,.25),0 0 0 1px rgba(255,255,255,.08) inset;
+      filter:saturate(1.05);
+      transition:background-position .65s cubic-bezier(.2,.9,.3,1),transform .25s cubic-bezier(.2,.9,.3,1),box-shadow .25s ease,filter .25s ease;
+      isolation:isolate;overflow:hidden;text-align:center;
+    }
+    .neon-btn::before{
+      content:"";position:absolute;inset:-3px;padding:3px;border-radius:22px;
+      background:conic-gradient(from 0deg,var(--neon-cyan),var(--neon-pink),var(--neon-cyan));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+              mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;mask-composite:exclude;
+      opacity:.55;filter:blur(4px);animation:edgeRoll 6s linear infinite;pointer-events:none;
+    }
+    @keyframes edgeRoll{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+    .neon-btn:hover{
+      transform:translateY(-8px) scale(1.05);background-position:100% 0;
+      box-shadow:0 28px 80px rgba(0,255,231,.40),0 16px 60px rgba(255,0,170,.35),0 0 0 2px rgba(0,0,0,.55) inset;
+      filter:saturate(1.14) brightness(1.04);
+    }
+    .neon-btn:active{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 50px rgba(0,255,231,.28),0 12px 40px rgba(255,0,170,.25)}
+    .neon-btn:focus-visible{
+      outline:none;box-shadow:0 0 0 4px rgba(0,255,231,.60),0 0 0 8px rgba(255,0,170,.45),0 12px 40px rgba(0,0,0,.55);
+      transform:translateY(-6px);
+    }
+
+    .content-block p{color:#cfecec;letter-spacing:.4px;line-height:1.55;margin:0 0 14px}
+    .content-block ul{
+      color:#dffbfb;letter-spacing:.4px;line-height:1.55;
+      margin:0 0 16px 0;padding-left:20px;
+    }
+    .content-block h2,.content-block h3{
+      font-family:'Press Start 2P';letter-spacing:.8px;margin:22px 0 10px;color:#fff;
+    }
+    @media (max-width:560px){
+      .neon-btn{font-size:.56rem;padding:12px 18px 11px;min-width:185px;border-radius:16px}
+      .neon-btn::before{inset:-2px;padding:2px;border-radius:18px}
+      .content-block h2,.content-block h3{margin:18px 0 8px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="wrap">
+
+    <!-- Header dinámico -->
+    <header id="shared-header"></header>
+
+    <!-- Título -->
+    <div class="page-title" role="heading" aria-level="1">
+      Cómo descargar e instalar PES 2018 para PC (Tutorial)
+    </div>
+
+    <!-- Miniatura / imagen principal -->
+    <section class="hero-feature" role="img" aria-label="Miniatura Tutorial PES 2018 PC">
+      <div class="db-frame" aria-hidden="true"></div>
+      <div class="db-pill">
+        <!-- Ajusta la ruta si tu imagen se llama distinto -->
+        <img class="db-pill-img" src="../img/Option Files/Descargar PES 2018.png" alt="Portada tutorial descarga e instalación PES 2018 PC">
+        <span class="db-label">TUTORIAL PES 2018 PC</span>
+      </div>
+    </section>
+
+    <!-- Contenido -->
+    <article class="hero blog-single" role="article" aria-label="Tutorial PES 2018 PC">
+      <div class="hero-feature">
+        <div class="content-block">
+
+          <p>
+            En este tutorial se muestra cómo descargar e instalar PES 2018 para PC en su versión final
+            <strong>1.05.02</strong> con el paquete de datos <strong>4.01</strong>, todo funcionando sin errores.
+          </p>
+
+          <h3>El video explica:</h3>
+          <ul>
+            <li>Dónde descargar el juego y la actualización.</li>
+            <li>Cómo extraer los archivos.</li>
+            <li>Cómo instalar la versión base.</li>
+            <li>Cómo aplicar los datapacks.</li>
+            <li>Cómo usar DP File List.</li>
+            <li>Cómo configurar el juego y comprobar que inicia correctamente.</li>
+          </ul>
+
+            <p>
+              Es una guía simple y paso a paso para dejar el PES 2018 listo para jugar.
+            </p>
+
+          <h3>📺 Video del tutorial (descarga + instalación)</h3>
+          <p>👉 Pulsa el botón para ver el tutorial completo.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:6px">
+            <a id="video-link-btn" href="#" target="_blank" rel="noopener" class="neon-btn">VER VIDEO / DESCARGA</a>
+          </div>
+
+        </div>
+      </div>
+    </article>
+
+    <footer class="site-footer" role="contentinfo">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+
+  <!-- Script: clonar header y normalizar rutas -->
+  <script>
+    (async function initBlog(){
+      const headerTarget = document.getElementById('shared-header');
+
+      // 1) Clonar header desde la raíz
+      try{
+        const res = await fetch('../index.html',{method:'GET'});
+        if(!res.ok) throw new Error('No se pudo leer ../index.html');
+        const html = await res.text();
+        const doc  = new DOMParser().parseFromString(html,'text/html');
+        const hdr  = doc.querySelector('header.site-header');
+        headerTarget.innerHTML = hdr ? hdr.outerHTML :
+          '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+      }catch(e){
+        console.warn('Header fallback:', e);
+        headerTarget.innerHTML =
+          '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+      }
+
+      // 2) Ajustar href internos para contexto /pages/
+      const nav = headerTarget.querySelector('.main-nav');
+      if(nav){
+        nav.querySelectorAll('a[href]').forEach(a=>{
+          const href = a.getAttribute('href') || '';
+          const isAbs=/^https?:\/\//i.test(href);
+          const isRoot=href.startsWith('/');
+          const isHash=href.startsWith('#');
+          const text=a.textContent.trim().toLowerCase();
+          if(text==='inicio'||href==='#'){a.setAttribute('href','../index.html');return;}
+          if(!isAbs && !isRoot && !isHash){
+            a.setAttribute('href','../'+href.replace(/^\.\//,''));
+          }
+        });
+      }
+
+      // 3) Dropdowns
+      (function(){
+        const OPEN_DELAY=80,CLOSE_DELAY=220;
+        const dropdowns=headerTarget.querySelectorAll('.dropdown');
+        dropdowns.forEach(dd=>{
+          let ot=null,ct=null;
+          const btn=dd.querySelector('.dropbtn');
+          const menu=dd.querySelector('.dropdown-menu');
+          function open(){if(ct){clearTimeout(ct);ct=null;}dd.classList.add('open');btn&&btn.setAttribute('aria-expanded','true')}
+          function close(){if(ot){clearTimeout(ot);ot=null;}dd.classList.remove('open');btn&&btn.setAttribute('aria-expanded','false')}
+          dd.addEventListener('mouseenter',()=>{if(ct)clearTimeout(ct);ot=setTimeout(open,OPEN_DELAY)});
+          dd.addEventListener('mouseleave',()=>{if(ot)clearTimeout(ot);ct=setTimeout(close,CLOSE_DELAY)});
+          if(menu){
+            menu.addEventListener('click',e=>{
+              const act=e.target.closest('a,button,[role="menuitem"]');
+              if(act){close();return;}
+              const sum=e.target.closest('summary');
+              if(sum){setTimeout(close,0);}
+            });
+            menu.addEventListener('mouseleave',()=>{ct=setTimeout(close,CLOSE_DELAY)});
+          }
+          if(btn){
+            btn.addEventListener('click',e=>{
+              e.preventDefault();
+              dd.classList.contains('open')?close():open();
+            });
+            btn.addEventListener('keydown',e=>{
+              if(['Enter',' '].includes(e.key)){e.preventDefault();dd.classList.contains('open')?close():open();}
+              else if(e.key==='Escape'){close();btn.focus();}
+              else if(e.key==='ArrowDown'){open();const first=menu?.querySelector('a,summary,[role="menuitem"]');first&&first.focus();}
+            });
+            btn.addEventListener('click',()=>{
+              dropdowns.forEach(o=>{
+                if(o!==dd){
+                  o.classList.remove('open');
+                  const b=o.querySelector('.dropbtn');b&&b.setAttribute('aria-expanded','false');
+                }
+              });
+            });
+          }
+          document.addEventListener('click',e=>{if(!dd.contains(e.target))close();});
+        });
+        document.addEventListener('keydown',e=>{
+          if(e.key==='Escape'){
+            headerTarget.querySelectorAll('.dropdown.open').forEach(d=>{
+              d.classList.remove('open');
+              const b=d.querySelector('.dropbtn');b&&b.setAttribute('aria-expanded','false');
+            });
+          }
+        });
+      })();
+
+      // 4) Configurar enlace del video (EDITA ESTA CONSTANTE)
+      const VIDEO_URL = 'https://youtu.be/vzbt7uz0N6Q?si=rOglRWWculRjhwgd'; // Reemplaza con tu link real
+      const videoBtn = document.getElementById('video-link-btn');
+      if(VIDEO_URL && VIDEO_URL !== '#'){ videoBtn.href = VIDEO_URL; }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JD PATCH 6.2 – PES 2013 (Contenido + Descarga)</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" href="../img/Logo Web.png" type="image/png" sizes="32x32">
+  <meta name="description" content="JD Patch 6.2 para PES 2013 (Temporada 2025): contenido y enlaces. Incluye actualización total, kits, plantillas, facepack, estadios y más. Tutorial y links de descarga.">
+
+  <style>
+    .blog-single{display:block;margin-top:18px}
+    .blog-single .hero-feature{padding:24px;margin-bottom:18px;min-height:auto}
+    .content-block{max-width:1000px;margin:0 auto}
+
+    .section-head{
+      font-family:'Press Start 2P';
+      font-size:1.05rem;
+      letter-spacing:.75px;
+      margin:28px 0 12px;
+      color:#fff;
+      text-shadow:2px 0 var(--neon-cyan), -2px 0 var(--neon-pink);
+    }
+
+    .neon-btn{
+      --grad:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px 22px 13px;
+      border-radius:18px;
+      font-family:'Press Start 2P',monospace;
+      font-size:.60rem;
+      letter-spacing:.85px;
+      font-weight:800;
+      text-decoration:none;
+      color:#071014;
+      background:var(--grad);
+      background-size:220% 100%;
+      min-width:220px;
+      box-shadow:0 18px 54px rgba(0,255,231,.30),0 12px 42px rgba(255,0,170,.28),0 0 0 1px rgba(255,255,255,.10) inset;
+      filter:saturate(1.05);
+      transition:background-position .65s cubic-bezier(.2,.9,.3,1),
+                 transform .25s cubic-bezier(.2,.9,.3,1),
+                 box-shadow .25s ease,
+                 filter .25s ease;
+      isolation:isolate;
+      overflow:hidden;
+      text-align:center;
+    }
+    .neon-btn::before{
+      content:"";
+      position:absolute;
+      inset:-3px;
+      padding:3px;
+      border-radius:22px;
+      background:conic-gradient(from 0deg,var(--neon-cyan),var(--neon-pink),var(--neon-cyan));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+              mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+              mask-composite:exclude;
+      opacity:.55;
+      filter:blur(4px);
+      animation:spinEdge 6s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes spinEdge{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+    .neon-btn:hover{
+      transform:translateY(-8px) scale(1.045);
+      background-position:100% 0;
+      box-shadow:0 32px 90px rgba(0,255,231,.40),0 20px 70px rgba(255,0,170,.36),0 0 0 2px rgba(0,0,0,.55) inset;
+      filter:saturate(1.18) brightness(1.05);
+    }
+    .neon-btn:active{transform:translateY(-3px) scale(1.02)}
+    .neon-btn:focus-visible{
+      outline:none;
+      box-shadow:0 0 0 4px rgba(0,255,231,.60),
+                 0 0 0 8px rgba(255,0,170,.45),
+                 0 14px 48px rgba(0,0,0,.55);
+      transform:translateY(-6px);
+    }
+
+    .btn-row{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 6px}
+
+    .content-block p{color:#cfecec;letter-spacing:.4px;line-height:1.55;margin:0 0 14px}
+    .content-block ul,.content-block ol{
+      color:#dffbfb;letter-spacing:.4px;line-height:1.55;
+      margin:0 0 16px 0;
+      padding-left:20px;
+    }
+
+    .dl-box{
+      background:linear-gradient(180deg,rgba(16,18,26,.88),rgba(10,10,14,.92));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:18px 20px 20px;
+      box-shadow:0 18px 60px rgba(0,0,0,.62);
+      margin:24px 0 8px;
+    }
+    .dl-box h3{margin:0 0 12px;font-family:'Press Start 2P';letter-spacing:.7px;font-size:.95rem;color:#fff}
+    .dl-box p.small{font-size:.70rem;color:#9ee1ef;margin:6px 0 0;letter-spacing:.5px}
+
+    /* (Opcional) Enlaces individuales – ocultables */
+    .parts-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:10px;
+      margin-top:12px;
+    }
+    .part-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 12px 9px;
+      border-radius:12px;
+      font-family:'Press Start 2P';
+      font-size:.50rem;
+      letter-spacing:.7px;
+      font-weight:800;
+      text-decoration:none;
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.14);
+      transition:.22s cubic-bezier(.2,.9,.3,1);
+      text-align:center;
+    }
+    .part-link:hover{
+      transform:translateY(-4px);
+      background:var(--gradient-neon);
+      color:#071014;
+      box-shadow:0 14px 40px rgba(0,255,231,.25),0 10px 30px rgba(255,0,170,.22);
+    }
+
+    @media (max-width:560px){
+      .neon-btn{font-size:.54rem;padding:12px 18px 11px;border-radius:16px;min-width:180px}
+      .neon-btn::before{inset:-2px;padding:2px;border-radius:18px}
+      .section-head{font-size:.95rem;margin:22px 0 10px}
+      .part-link{font-size:.46rem;padding:9px 10px 8px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <header id="shared-header"></header>
+
+    <div class="page-title" role="heading" aria-level="1">
+      JD PATCH 6.2 – PES 2013
+    </div>
+
+    <section class="hero-feature" role="img" aria-label="Portada JD Patch 6.2 PES 2013">
+      <div class="db-frame" aria-hidden="true"></div>
+      <div class="db-pill">
+        <img class="db-pill-img" src="../img/Option Files/JD Patch.jpg" alt="Miniatura JD Patch 6.2 PES 2013">
+        <span class="db-label">JD PATCH 6.2</span>
+      </div>
+    </section>
+
+    <article class="hero blog-single" role="article" aria-label="Detalle JD Patch 6.2">
+      <div class="hero-feature">
+        <div class="content-block">
+
+          <p>El JD Patch 2025 para PES 2013 ya está disponible e incluye una actualización completa para la temporada 2025. Aquí tenés el contenido y los enlaces para descargarlo.</p>
+
+          <h3 class="section-head">🔥 Contenido principal</h3>
+          <ul>
+            <li>Kits actualizados 2024/2025.</li>
+            <li>Ligas principales: Premier, Bundesliga, LaLiga, Serie A, Ligue 1, Argentina, Brasil, México, MLS, Colombia, Perú, etc.</li>
+            <li>Plantillas al día (transferencias y orden de equipos).</li>
+            <li>Facepack renovado (caras nuevas, jóvenes añadidos, modelos corregidos).</li>
+            <li>Champions & Europa League con formato nuevo de 36 equipos.</li>
+            <li>Estadios internos mejorados y optimizados.</li>
+            <li>Balones, botas y detalles visuales extra.</li>
+            <li>Compatible con Liga Master, Ser una Leyenda y copas.</li>
+          </ul>
+
+          <h3 class="section-head">📥 Instalación muy resumida</h3>
+          <ol>
+            <li>Descargar las partes y el archivo KONAMI (ver enlaces de descarga).</li>
+            <li>Poner todas las partes en una misma carpeta.</li>
+            <li>Clic derecho a la Parte 1 → “Extraer aquí” (descomprime el resto automático).</li>
+            <li>Copiar la carpeta KONAMI extraída a: <code>Documentos → KONAMI → Pro Evolution Soccer 2013</code> (reemplazar si pide).</li>
+            <li>Iniciar el juego y comprobar que carga sin errores.</li>
+          </ol>
+
+          <h3 class="section-head">🎬 Tutorial y enlaces</h3>
+          <p>Tenés dos accesos: uno al video del tutorial y otro a la página/listado donde están los links de todas las partes (los mismos que figuran en la descripción del video).</p>
+
+          <div class="btn-row">
+            <a id="tutorial-btn" href="#" target="_blank" rel="noopener" class="neon-btn">VER TUTORIAL</a>
+            <a id="links-btn" href="#" target="_blank" rel="noopener" class="neon-btn">CREADOR DEL PARCHE</a>
+          </div>
+
+          <div class="dl-box">
+            <h3>Opción rápida (enlaces individuales Mediafire)</h3>
+            <p class="small">Si preferís tenerlos visibles acá, se mantienen (pueden quedar desactualizados si después cambias las partes).</p>
+            <div class="parts-grid">
+              <a class="part-link" href="https://ouo.io/WE4yl4"   target="_blank" rel="noopener">PARTE 1</a>
+              <a class="part-link" href="https://ouo.io/z6X8qF"   target="_blank" rel="noopener">PARTE 2</a>
+              <a class="part-link" href="https://ouo.io/G9spTkL"  target="_blank" rel="noopener">PARTE 3</a>
+              <a class="part-link" href="https://ouo.io/NUBGID2"  target="_blank" rel="noopener">PARTE 4</a>
+              <a class="part-link" href="https://ouo.io/yBsL6Ix"  target="_blank" rel="noopener">PARTE 5</a>
+              <a class="part-link" href="https://ouo.io/QWLODZ"   target="_blank" rel="noopener">PARTE 6</a>
+              <a class="part-link" href="https://ouo.io/uXUFIn"   target="_blank" rel="noopener">PARTE 7</a>
+              <a class="part-link" href="https://ouo.io/xMSLaG"   target="_blank" rel="noopener">PARTE 8</a>
+              <a class="part-link" href="https://ouo.io/PRcWf9r"  target="_blank" rel="noopener">PARTE 9</a>
+              <a class="part-link" href="https://ouo.io/hS0nqm"   target="_blank" rel="noopener">PARTE 10</a>
+              <a class="part-link" href="https://ouo.io/t4JHbG"   target="_blank" rel="noopener">PARTE 11</a>
+              <a class="part-link" href="https://ouo.io/70tDlW"   target="_blank" rel="noopener">PARTE 12</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </article>
+
+    <footer class="site-footer" role="contentinfo">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+
+  <script>
+    (async function initBlog(){
+      const headerTarget = document.getElementById('shared-header');
+      // Clonar header raíz
+      try{
+        const res = await fetch('../index.html');
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html,'text/html');
+        const hdr = doc.querySelector('header.site-header');
+        headerTarget.innerHTML = hdr ? hdr.outerHTML :
+          '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+      }catch(e){
+        headerTarget.innerHTML =
+          '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+      }
+
+      // Normalizar hrefs para /pages/
+      const nav = headerTarget.querySelector('.main-nav');
+      if(nav){
+        nav.querySelectorAll('a[href]').forEach(a=>{
+          const href=a.getAttribute('href')||'';
+          const abs=/^https?:\/\//i.test(href);
+          const root=href.startsWith('/');
+          const hash=href.startsWith('#');
+          if(a.textContent.trim().toLowerCase()==='inicio'){a.href='../index.html';return;}
+          if(!abs && !root && !hash){a.href='../'+href.replace(/^\.\//,'');}
+        });
+      }
+
+      // Dropdown reactivación
+      (function(){
+        const OPEN=80,CLOSE=220;
+        const dds=headerTarget.querySelectorAll('.dropdown');
+        dds.forEach(dd=>{
+          let ot=null,ct=null;
+            const btn=dd.querySelector('.dropbtn');
+            const menu=dd.querySelector('.dropdown-menu');
+            function open(){if(ct){clearTimeout(ct);ct=null;}dd.classList.add('open');btn&&btn.setAttribute('aria-expanded','true');}
+            function close(){if(ot){clearTimeout(ot);ot=null;}dd.classList.remove('open');btn&&btn.setAttribute('aria-expanded','false');}
+            dd.addEventListener('mouseenter',()=>{if(ct)clearTimeout(ct);ot=setTimeout(open,OPEN);});
+            dd.addEventListener('mouseleave',()=>{if(ot)clearTimeout(ot);ct=setTimeout(close,CLOSE);});
+            if(menu){
+              menu.addEventListener('click',e=>{
+                const act=e.target.closest('a,button,[role="menuitem"]');
+                if(act){close();return;}
+                const sum=e.target.closest('summary');
+                if(sum){setTimeout(close,0);}
+              });
+            }
+            if(btn){
+              btn.addEventListener('click',e=>{
+                e.preventDefault();
+                dd.classList.contains('open')?close():open();
+                if(dd.classList.contains('open')){
+                  dds.forEach(o=>{
+                    if(o!==dd){
+                      o.classList.remove('open');
+                      const b=o.querySelector('.dropbtn');b&&b.setAttribute('aria-expanded','false');
+                    }
+                  });
+                }
+              });
+              btn.addEventListener('keydown',e=>{
+                if(['Enter',' '].includes(e.key)){e.preventDefault();dd.classList.contains('open')?close():open();}
+                else if(e.key==='Escape'){close();btn.focus();}
+                else if(e.key==='ArrowDown'){open();const first=menu?.querySelector('a,[role="menuitem"],summary');first&&first.focus();}
+              });
+            }
+            document.addEventListener('click',e=>{if(!dd.contains(e.target))close();});
+        });
+        document.addEventListener('keydown',e=>{
+          if(e.key==='Escape'){
+            headerTarget.querySelectorAll('.dropdown.open').forEach(d=>{
+              d.classList.remove('open');
+              const b=d.querySelector('.dropbtn');b&&b.setAttribute('aria-expanded','false');
+            });
+          }
+        });
+      })();
+
+      // Configurar enlaces (EDITA SOLO ESTAS DOS CONSTANTES)
+      const TUTORIAL_URL = 'https://youtu.be/6BukiHeXnFo?si=H0TKhqHnHWHlwLtE';    // Link al video tutorial
+      const LINKS_URL    = 'https://www.youtube.com/@deimerking8945';          // Página/listado con todos los links (o mismo video)
+
+      const tutorialBtn = document.getElementById('tutorial-btn');
+      const linksBtn    = document.getElementById('links-btn');
+      if(tutorialBtn && TUTORIAL_URL && TUTORIAL_URL!=='#') tutorialBtn.href = TUTORIAL_URL;
+      if(linksBtn && LINKS_URL && LINKS_URL!=='#') linksBtn.href = LINKS_URL;
+    })();
+  </script>
+</body>
+</html>

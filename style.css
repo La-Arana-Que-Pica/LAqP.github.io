@@ -839,3 +839,13 @@ body.player-compact .rating-dial{width:100px;height:100px;font-size:1.9rem}
   box-shadow:0 0 8px rgba(0,0,0,.45);
   vertical-align:middle;
 }
+/* Overrides para eliminar el recuadro tenue alrededor del cartel de BASE DE DATOS */
+.hero-feature{
+  border: none !important;        /* quita el borde del contenedor grande */
+  box-shadow: none !important;    /* opcional: si querés también sin sombra externa */
+  background: transparent !important; /* opcional: si no querés fondo del contenedor */
+}
+
+.db-frame{
+  display: none !important;       /* oculta el marco interior tenue */
+}

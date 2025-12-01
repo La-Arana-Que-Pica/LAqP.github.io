@@ -7,20 +7,127 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LAqP - Principal</title>
 
-  <!-- Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- Estilos -->
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Hero solo con el cartel arriba */
+    .hero{grid-template-columns:1fr}
+
+    /* Ocultar el marco y el contenedor anterior del cartel para no interferir */
+    .db-frame{display:none!important}
+    .db-pill{display:none!important}
+
+    /* Cartel "Base de Datos" con el mismo diseño que las preview-card, pero más grande */
+    .db-link{
+      display:block;
+      width:100%;
+      max-width: 900px;                 /* ancho máximo del cartel */
+      margin: 0 auto;                   /* centrar */
+      text-decoration:none;
+      color:inherit;
+
+      /* Mismo estilo base que .preview-card */
+      background:linear-gradient(180deg,rgba(18,18,24,.9),rgba(10,10,14,.9));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:14px;
+      padding:12px;
+      box-shadow:0 12px 40px rgba(0,0,0,.55);
+      transition:.22s cubic-bezier(.2,.9,.3,1);
+      position:relative;
+      overflow:hidden;
+    }
+    .db-link:hover{
+      transform:translateY(-6px);
+      box-shadow:0 26px 90px rgba(0,0,0,.7),0 0 24px rgba(0,255,231,.30),0 0 18px rgba(255,0,170,.26);
+      border-color:rgba(0,255,231,.28);
+    }
+
+    /* Imagen dentro del cartel (igual que .preview-thumb, pero más alta) */
+    .db-link .db-thumb{
+      width:100%;
+      aspect-ratio: 16/7;               /* más alto que las miniaturas normales */
+      border-radius:12px;
+      object-fit:cover;
+      background:#000;
+      border:1px solid rgba(255,255,255,.08);
+      display:block;
+    }
+
+    /* Título (igual que .preview-title, más grande) */
+    .db-link .db-title{
+      margin:10px 6px 4px;
+      font-family:'Bungee','Press Start 2P',monospace;
+      font-size:1.4rem;                  /* más grande que las tarjetas normales */
+      color:#fff;
+      letter-spacing:.65px;
+      text-align:left;
+    }
+
+    /* Que ocupe aprox. 3/4 del ancho del contenedor en pantallas grandes */
+    @media (min-width: 1100px){
+      .db-link{ max-width: calc(0.75 * var(--container)); }  /* ~3/4 del ancho del sitio */
+    }
+    @media (max-width: 900px){
+      .db-link{ max-width: 100%; }
+      .db-link .db-title{ font-size:1.2rem; }
+      .db-link .db-thumb{ aspect-ratio: 16/8; }
+    }
+    @media (max-width: 560px){
+      .db-link .db-title{ font-size:1rem; }
+      .db-link .db-thumb{ aspect-ratio: 16/9; }
+    }
+
+    /* Secciones nuevas (previews) (sin cambios) */
+    .section-block{
+      margin-top:24px;
+      background:linear-gradient(180deg,rgba(14,16,24,.92),rgba(10,10,14,.94));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      padding:18px 18px 20px;
+      box-shadow:0 18px 60px rgba(0,0,0,.60);
+    }
+    .section-head{
+      margin:0 0 12px;color:#fff;font-family:'Press Start 2P';
+      font-size:1.05rem;letter-spacing:.85px;
+      text-shadow:2px 0 var(--neon-cyan),-2px 0 var(--neon-pink);
+    }
+    .preview-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px;
+    }
+    .preview-card{
+      display:flex;flex-direction:column;gap:10px;
+      background:linear-gradient(180deg,rgba(18,18,24,.9),rgba(10,10,14,.9));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:14px;padding:12px;
+      box-shadow:0 12px 40px rgba(0,0,0,.55);
+      text-decoration:none;color:inherit;
+      transition:.22s cubic-bezier(.2,.9,.3,1);
+    }
+    .preview-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 26px 90px rgba(0,0,0,.7),0 0 24px rgba(0,255,231,.30),0 0 18px rgba(255,0,170,.26);
+      border-color:rgba(0,255,231,.28);
+    }
+    .preview-thumb{
+      width:100%;aspect-ratio:16/9;border-radius:12px;object-fit:cover;
+      background:#000;border:1px solid rgba(255,255,255,.08);
+    }
+    .preview-title{
+      margin:0;font-family:'Bungee','Press Start 2P',monospace;
+      font-size:.98rem;color:#fff;letter-spacing:.55px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Fondo -->
   <div class="page-bg" aria-hidden="true"></div>
 
   <div class="wrap">
 
-    <!-- Header -->
+    <!-- Header (enlaces conservados) -->
     <header class="site-header" role="banner" aria-label="Cabecera del sitio">
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
@@ -30,7 +137,6 @@
       <nav class="main-nav" role="navigation" aria-label="Menú principal">
         <a href="../index.html">Inicio</a>
 
-        <!-- Menú Descargar (versión neon mejorada con <details>) -->
         <div class="dropdown descargar-dropdown neon-download" id="dd-descargar">
           <button class="dropbtn" aria-haspopup="true" aria-expanded="false" aria-controls="menu-descargar">Option Files (PS4/PS5) ▾</button>
           <div id="menu-descargar" class="dropdown-menu dl-surface" role="menu" aria-label="Descargas por juego">
@@ -40,8 +146,8 @@
                 <span class="game-title">PES 2018</span>
               </summary>
               <ul class="submenu-list" aria-label="Opciones PES 2018">
-                <li><a href="../pages/PES 2018 al 2025.html" target="_blank" rel="noopener">OF LAqP</a></li>
-                <li><a href="../pages/OF Complemento PES 2018.html" target="_blank" rel="noopener">Licencias de equipos restantes</a></li>
+                <li><a href="../pages/PES 2018 al 2025.html">OF LAqP</a></li>
+                <li><a href="../pages/OF Complemento PES 2018.html">Licencias de equipos restantes</a></li>
               </ul>
             </details>
             <details class="game-block" data-game="pes2021">
@@ -56,7 +162,6 @@
           </div>
         </div>
 
-        <!-- Otros menús -->
         <div class="dropdown parches-dropdown neon-download" id="dd-parches">
           <button class="dropbtn" aria-haspopup="true" aria-expanded="false" aria-controls="menu-parches">Parches (PC) ▾</button>
           <div id="menu-parches" class="dropdown-menu dl-surface" role="menu" aria-label="Descargas por juego">
@@ -66,8 +171,8 @@
                 <span class="game-title">PES 2013</span>
               </summary>
               <ul class="submenu-list" aria-label="Opciones PES 2013">
-                <li><a href="descargar uv.html" target="_blank" rel="noopener">JD Patch</a></li>
-                <li><a href="https://laqpofpes2018al2025ovr.blogspot.com/2025/10/descarga-el-complemento.html" target="_blank" rel="noopener">Profootball 26</a></li>
+                <li><a href="../pages/JD PATCh.html">JD Patch</a></li>
+                <li><a href="../pages/Profootball 25.html">Profootball 25</a></li>
               </ul>
             </details>
             <details class="game-block" data-game="pes2021">
@@ -82,130 +187,111 @@
           </div>
         </div>
 
-        <div class="dropdown" id="dd-descargar juegos">
-          <button class="dropbtn" aria-haspopup="true" aria-expanded="false" aria-controls="menu-descargar juegos">Descargar juegos (PC) ▾</button>
-          <div id="menu-descargar juegos" class="dropdown-menu" role="menu" aria-label="Comunidad">
-            <a role="menuitem" href="" target="_blank" rel="noopener">PES 2018</a>
+        <div class="dropdown" id="dd-descargar-juegos">
+          <button class="dropbtn" aria-haspopup="true" aria-expanded="false" aria-controls="menu-descargar-juegos">Descargar juegos (PC) ▾</button>
+          <div id="menu-descargar-juegos" class="dropdown-menu" role="menu" aria-label="Descargar">
+            <a role="menuitem" href="../pages/Descargar PES 2018.html">PES 2018</a>
           </div>
         </div>
 
-        <a href="../ligas.html" target="_blank" rel="noopener">BASE DE DATOS</a>
+        <a href="../ligas.html">BASE DE DATOS</a>
       </nav>
     </header>
 
     <div class="page-title" role="heading" aria-level="1">La Araña Que Pica — Página Oficial</div>
 
-    <!-- HERO -->
-    <section class="hero" role="region" aria-label="Contenido destacado">
-      <!-- Cartel principal -->
+    <!-- HERO: solo Base de Datos (cartel con estilo de preview-card, pero más grande) -->
+    <section class="hero" role="region" aria-label="Base de datos">
       <article class="hero-feature" role="main" aria-labelledby="db-title">
-        <div class="db-frame" aria-hidden="true"></div>
+        <!-- Usamos el enlace directo con imagen y título, estilo preview-card -->
         <a class="db-link" href="ligas.html" id="db-link" aria-labelledby="db-title">
-          <div class="db-pill" role="img" aria-label="Base de Datos — vista previa">
-            <img class="db-pill-img" src="img/Base de datos.png" alt="Base de Datos — vista previa">
-            <span class="db-label" id="db-title">BASE DE DATOS</span>
-          </div>
+          <img class="db-thumb" src="img/Base de datos-small.png" alt="Base de Datos — vista previa">
+          <h2 class="db-title" id="db-title">BASE DE DATOS</h2>
         </a>
       </article>
+    </section>
 
-      <!-- Tarjetas laterales -->
-      <aside class="hero-grid" aria-label="Accesos rápidos">
-        <div class="small-card" role="article" aria-labelledby="mini-1">
-          <div class="thumb" style="background-image:url('img/OF COMPLEMENTO.png');" aria-hidden="true"></div>
-          <div class="content">
-            <div id="mini-1" class="meta">OF complemento</div>
-            <p class="desc">Complementos y kits para completar el Option File.</p>
-            <a class="btn" href="https://laqpofpes2018al2025ovr.blogspot.com/2025/10/descarga-el-complemento.html" target="_blank" rel="noopener">Descargar complemento</a>
-          </div>
-        </div>
+    <!-- Sección 1: Mi contenido (las 3 tarjetas) -->
+    <section class="section-block" aria-label="Mi contenido">
+      <h2 class="section-head">Mi contenido</h2>
+      <div class="preview-grid">
+        <a class="preview-card" href="pages/PES 2018 al 2025.html">
+          <img class="preview-thumb" src="img/Option Files/OF 2025 V4.png" alt="Option File V4" onerror="this.src='img/ligas/placeholder.png'">
+          <h3 class="preview-title">OF PES 2018 al 2025</h3>
+        </a>
+        <a class="preview-card" href="pages/OF Complemento PES 2018.html">
+          <img class="preview-thumb" src="img/Option Files/OF COMPLEMENTO.png" alt="OF complemento" onerror="this.src='img/ligas/placeholder.png'">
+          <h3 class="preview-title">OF Complemento</h3>
+        </a>
+        <a class="preview-card" href="pages/Descargar PES 2018.html">
+          <img class="preview-thumb" src="img/Option Files/Descargar PES 2018.png" alt="Instalar PES 2018 en PC" onerror="this.src='img/ligas/placeholder.png'">
+          <h3 class="preview-title">Instalar PES 2018 (PC)</h3>
+        </a>
+      </div>
+    </section>
 
-        <div class="small-card" role="article" aria-labelledby="mini-2">
-          <div class="thumb" style="background-image:url('img/OF 2025 V2 Portada.png');" aria-hidden="true"></div>
-          <div class="content">
-            <div id="mini-2" class="meta">Instalar PES 2018 en PC</div>
-            <p class="desc">Guía paso a paso para instalar PES2018 correctamente en Windows.</p>
-            <a class="btn" href="https://youtu.be/snXuQh4NLxI?si=CkkveEz58CfUOAeU" target="_blank" rel="noopener">Ver Tutorial</a>
-          </div>
-        </div>
-
-        <div class="small-card" role="article" aria-labelledby="mini-3">
-          <div class="thumb" style="background-image:url('img/OF 2025 V4.png');" aria-hidden="true"></div>
-          <div class="content">
-            <div id="mini-3" class="meta">Option File V4</div>
-            <p class="desc">Option File PES 2018 al 2025 V4 — Premier League actualizada.</p>
-            <a class="btn" href="descargar uv.html" target="_blank" rel="noopener">Descargar V4</a>
-          </div>
-        </div>
-      </aside>
+    <!-- Sección 2: Otros creadores (parches y OF) -->
+    <section class="section-block" aria-label="Parches y Option Files de otros creadores">
+      <h2 class="section-head">Parches y Option Files (otros creadores)</h2>
+      <div class="preview-grid">
+        <a class="preview-card" href="../pages/JD PATCh.html">
+          <img class="preview-thumb" src="img/Option Files/JD Patch.jpg" alt="JD Patch 6.2 PES 2013" onerror="this.src='img/ligas/placeholder.png'">
+          <h3 class="preview-title">JD Patch 6.2 (PES 2013)</h3>
+        </a>
+        <a class="preview-card" href="../pages/Profootball 25.html">
+          <img class="preview-thumb" src="img/Option Files/Profootball 25.png" alt="ProFootball 25 PES 2013" onerror="this.src='img/ligas/placeholder.png'">
+          <h3 class="preview-title">ProFootball 25 (PES 2013)</h3>
+        </a>
+        <a class="preview-card" href="../pages/SP Football Life 2026.html">
+          <img class="preview-thumb" src="img/Option Files/FL 26.jpg" alt="SP Football Life 2026" onerror="this.src='img/ligas/placeholder.png'">
+          <h3 class="preview-title">Football Life 2026 (PES 2021)</h3>
+        </a>
+        <a class="preview-card" href="../pages/OF Juan Denize PES 2021.html">
+          <img class="preview-thumb" src="img/Option Files/Juan Denize PES 2021 25-26.jpg" alt="OF Juan Denize PES 2021" onerror="this.src='img/ligas/placeholder.png'">
+          <h3 class="preview-title">OF Juan Denize (PES 2021)</h3>
+        </a>
+      </div>
     </section>
 
     <footer class="site-footer" role="contentinfo">© La Araña Que Pica — Página Oficial</footer>
   </div>
 
-  <!-- Script dropdown genérico -->
+  <!-- Script dropdown genérico (sin cambios) -->
   <script>
     (function(){
-      const OPEN_DELAY = 80;
-      const CLOSE_DELAY = 220;
-      const dropdowns = document.querySelectorAll('.dropdown');
-
+      const OPEN_DELAY=80,CLOSE_DELAY=220;
+      const dropdowns=document.querySelectorAll('.dropdown');
       dropdowns.forEach(dd=>{
-        let openT=null, closeT=null;
+        let ot=null,ct=null;
         const btn=dd.querySelector('.dropbtn');
-
-        function open(){
-          if(closeT){clearTimeout(closeT);closeT=null;}
-          dd.classList.add('open');
-          btn && btn.setAttribute('aria-expanded','true');
-        }
-        function close(){
-          if(openT){clearTimeout(openT);openT=null;}
-          dd.classList.remove('open');
-          btn && btn.setAttribute('aria-expanded','false');
-        }
-
-        dd.addEventListener('mouseenter',()=>{ if(closeT) clearTimeout(closeT); openT=setTimeout(open,OPEN_DELAY); });
-        dd.addEventListener('mouseleave',()=>{ if(openT) clearTimeout(openT); closeT=setTimeout(close,CLOSE_DELAY); });
-
+        const menu=dd.querySelector('.dropdown-menu');
+        function open(){if(ct){clearTimeout(ct);ct=null;}dd.classList.add('open');btn&&btn.setAttribute('aria-expanded','true')}
+        function close(){if(ot){clearTimeout(ot);ot=null;}dd.classList.remove('open');btn&&btn.setAttribute('aria-expanded','false')}
+        dd.addEventListener('mouseenter',()=>{if(ct)clearTimeout(ct);ot=setTimeout(open,OPEN_DELAY)});
+        dd.addEventListener('mouseleave',()=>{if(ot)clearTimeout(ot);ct=setTimeout(close,CLOSE_DELAY)});
         if(btn){
-          btn.addEventListener('click',e=>{
-            e.preventDefault();
-            dd.classList.contains('open') ? close() : open();
-          });
+          btn.addEventListener('click',e=>{e.preventDefault();dd.classList.contains('open')?close():open()});
           btn.addEventListener('keydown',e=>{
-            if(['Enter',' '].includes(e.key)){
-              e.preventDefault();
-              dd.classList.contains('open') ? close() : open();
-            }else if(e.key==='Escape'){
-              close(); btn.focus();
-            }else if(e.key==='ArrowDown'){
-              open();
-              const first=dd.querySelector('.dropdown-menu a, .dropdown-menu summary');
-              first && first.focus();
-            }
+            if(['Enter',' '].includes(e.key)){e.preventDefault();dd.classList.contains('open')?close():open();}
+            else if(e.key==='Escape'){close();btn.focus();}
+            else if(e.key==='ArrowDown'){open();const first=menu?.querySelector('[role="menuitem"]');first&&first.focus();}
           });
           btn.addEventListener('click',()=>{
             dropdowns.forEach(o=>{
               if(o!==dd){
                 o.classList.remove('open');
-                const b=o.querySelector('.dropbtn');
-                b && b.setAttribute('aria-expanded','false');
+                const b=o.querySelector('.dropbtn');b&&b.setAttribute('aria-expanded','false');
               }
             });
           });
         }
-
-        document.addEventListener('click',e=>{
-          if(!dd.contains(e.target)) close();
-        });
+        document.addEventListener('click',e=>{if(!dd.contains(e.target))close()});
       });
-
       document.addEventListener('keydown',e=>{
         if(e.key==='Escape'){
           document.querySelectorAll('.dropdown.open').forEach(d=>{
             d.classList.remove('open');
-            const b=d.querySelector('.dropbtn');
-            b && b.setAttribute('aria-expanded','false');
+            const b=d.querySelector('.dropbtn');b&&b.setAttribute('aria-expanded','false');
           });
         }
       });

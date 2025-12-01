@@ -206,60 +206,91 @@
   <script>
     (async function initBlog(){
       const headerTarget = document.getElementById('shared-header');
-      // Replicar header del index
+      // 1) Clonar el header desde el index (este archivo vive en /pages/)
       try{
-        const res = await fetch('../index.html');
+        const res = await fetch('../index.html', { method: 'GET' });
+        if (!res.ok) throw new Error('No se pudo leer ../index.html');
         const html = await res.text();
-        const doc = new DOMParser().parseFromString(html,'text/html');
-        const hdr = doc.querySelector('header.site-header');
-        headerTarget.innerHTML = hdr ? hdr.outerHTML : '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const originalHeader = doc.querySelector('header.site-header');
+        headerTarget.innerHTML = originalHeader ? originalHeader.outerHTML
+          : '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
       }catch(e){
+        console.warn('Header fallback:', e);
         headerTarget.innerHTML = '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
       }
 
-      // Reactivar dropdowns
-      (function(){
-        const OPEN_DELAY=80,CLOSE_DELAY=220;
-        const dds=headerTarget.querySelectorAll('.dropdown');
-        dds.forEach(dd=>{
-          let ot=null, ct=null;
-          const btn=dd.querySelector('.dropbtn');
-          const menu=dd.querySelector('.dropdown-menu');
-          function open(){ if(ct){clearTimeout(ct);ct=null;} dd.classList.add('open'); btn&&btn.setAttribute('aria-expanded','true'); }
-          function close(){ if(ot){clearTimeout(ot);ot=null;} dd.classList.remove('open'); btn&&btn.setAttribute('aria-expanded','false'); }
-          dd.addEventListener('mouseenter',()=>{ if(ct) clearTimeout(ct); ot=setTimeout(open,OPEN_DELAY); });
-          dd.addEventListener('mouseleave',()=>{ if(ot) clearTimeout(ot); ct=setTimeout(close,CLOSE_DELAY); });
-          if(menu){
-            menu.addEventListener('click',e=>{
-              const act=e.target.closest('a,button,[role="menuitem"]');
-              if(act){ close(); }
-              const sum=e.target.closest('summary');
-              if(sum){ setTimeout(close,0); }
-            });
+      // 2) Arreglar hrefs del header clonado para que funcionen desde /pages/
+      const nav = headerTarget.querySelector('.main-nav');
+      if (nav){
+        nav.querySelectorAll('a[href]').forEach(a=>{
+          const href = a.getAttribute('href') || '';
+          const isAbs  = /^https?:\/\//i.test(href);
+          const isRoot = href.startsWith('/');
+          const isHash = href.startsWith('#');
+          const text   = a.textContent.trim().toLowerCase();
+
+          if (text === 'inicio' || href === '#') {
+            a.setAttribute('href','../index.html');
+            return;
           }
-          if(btn){
-            btn.addEventListener('click',e=>{
-              e.preventDefault();
-              dd.classList.contains('open')? close():open();
-              if(dd.classList.contains('open')){
-                dds.forEach(o=>{
-                  if(o!==dd){ o.classList.remove('open'); const b=o.querySelector('.dropbtn'); b&&b.setAttribute('aria-expanded','false'); }
-                });
-              }
+          if (!isAbs && !isRoot && !isHash) {
+            a.setAttribute('href', `../${href}`);
+          }
+        });
+      }
+
+      // 3) Reactivar dropdowns del header inyectado y cerrar al click
+      (function(){
+        const OPEN_DELAY = 80, CLOSE_DELAY = 220;
+        const dropdowns = headerTarget.querySelectorAll('.dropdown');
+
+        dropdowns.forEach(dd=>{
+          let openT=null, closeT=null;
+          const btn  = dd.querySelector('.dropbtn');
+          const menu = dd.querySelector('.dropdown-menu');
+
+          function open(){ if(closeT){clearTimeout(closeT);closeT=null;} dd.classList.add('open'); btn && btn.setAttribute('aria-expanded','true'); }
+          function close(){ if(openT){clearTimeout(openT);openT=null;} dd.classList.remove('open'); btn && btn.setAttribute('aria-expanded','false'); }
+
+          dd.addEventListener('mouseenter',()=>{ if(closeT) clearTimeout(closeT); openT=setTimeout(open,OPEN_DELAY); });
+          dd.addEventListener('mouseleave',()=>{ if(openT) clearTimeout(openT); closeT=setTimeout(close,CLOSE_DELAY); });
+
+          if (menu){
+            menu.addEventListener('click',(e)=>{
+              const act = e.target.closest('a, button, [role="menuitem"]');
+              if (act){ close(); return; }
+              const sum = e.target.closest('summary');
+              if (sum){ setTimeout(close,0); }
             });
-            btn.addEventListener('keydown',e=>{
-              if(['Enter',' '].includes(e.key)){ e.preventDefault(); dd.classList.contains('open')? close():open(); }
+            menu.addEventListener('mouseleave',()=>{ closeT=setTimeout(close,CLOSE_DELAY); });
+          }
+
+          if (btn){
+            btn.addEventListener('click',(e)=>{ e.preventDefault(); dd.classList.contains('open') ? close() : open(); });
+            btn.addEventListener('keydown',(e)=>{
+              if(['Enter',' '].includes(e.key)){ e.preventDefault(); dd.classList.contains('open') ? close() : open(); }
               else if(e.key==='Escape'){ close(); btn.focus(); }
               else if(e.key==='ArrowDown'){ open(); const first=menu?.querySelector('a,summary,[role="menuitem"]'); first&&first.focus(); }
             });
+            btn.addEventListener('click',()=>{
+              dropdowns.forEach(o=>{
+                if(o!==dd){
+                  o.classList.remove('open');
+                  const b=o.querySelector('.dropbtn'); b && b.setAttribute('aria-expanded','false');
+                }
+              });
+            });
           }
-          document.addEventListener('click',e=>{ if(!dd.contains(e.target)) close(); });
+
+          document.addEventListener('click',(e)=>{ if(!dd.contains(e.target)) close(); });
         });
-        document.addEventListener('keydown',e=>{
+
+        document.addEventListener('keydown',(e)=>{
           if(e.key==='Escape'){
             headerTarget.querySelectorAll('.dropdown.open').forEach(d=>{
               d.classList.remove('open');
-              const b=d.querySelector('.dropbtn'); b&&b.setAttribute('aria-expanded','false');
+              const b=d.querySelector('.dropbtn'); b && b.setAttribute('aria-expanded','false');
             });
           }
         });
@@ -272,4 +303,5 @@
     })();
   </script>
 </body>
+
 </html>

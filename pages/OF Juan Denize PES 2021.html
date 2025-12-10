@@ -1,8 +1,3 @@
-<!-- Favicon (redundante + cache-bust) -->
-<link rel="icon" type="image/png" sizes="32x32" href="img/Logo Web.png?v=1">
-<link rel="icon" type="image/png" sizes="16x16" href="img/Logo Web.png?v=1">
-<link rel="shortcut icon" href="img/Logo Web.png?v=1">
-<link rel="apple-touch-icon" href="img/Logo Web.png?v=1">
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,9 +10,8 @@
   <link rel="icon" href="../img/Logo Web.png" type="image/png" sizes="32x32">
   <meta name="description" content="Option File PES 2021 PS4/PS5 (Temporada 2025/2026) de Juan Denize — contenido, instalación y enlace original.">
 
-  <!-- Estilos específicos del botón vistoso -->
+  <!-- Botón neón (mismo diseño original) -->
   <style>
-    /* Botón neón vistoso exclusivo del blog */
     .download-neon-btn{
       --btn-grad:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
       position:relative;
@@ -46,7 +40,6 @@
       overflow:hidden;
     }
     .download-neon-btn::before{
-      /* Borde animado difuminado */
       content:"";
       position:absolute;
       inset:-3px;
@@ -71,7 +64,6 @@
       100%{transform:rotate(360deg)}
     }
     .download-neon-btn::after{
-      /* brillo interno pulsante */
       content:"";
       position:absolute;
       inset:0;
@@ -110,7 +102,6 @@
         0 12px 40px rgba(0,0,0,.55);
       transform:translateY(-6px);
     }
-    /* Variante secundaria (fondo oscuro + borde neón) */
     .download-neon-btn.secondary{
       background:linear-gradient(180deg,rgba(18,20,28,.92),rgba(10,10,14,.95));
       color:#dffbfb;
@@ -163,44 +154,99 @@
     <article class="hero blog-single" role="article" aria-label="Detalle Option File">
       <div class="hero-feature" style="padding:24px;min-height:auto">
         <div class="content-block" style="max-width:900px;margin:0 auto">
-          <h2 style="margin-top:0;font-family:'Bungee','Press Start 2P';letter-spacing:.6px">Resumen</h2>
-          <p style="color:#cfecec;letter-spacing:.4px">
-            Este Option File para eFootball PES 2021 (PS4/PS5) actualiza por completo el juego a la temporada 2025/2026,
-            ofreciendo una experiencia renovada para quienes buscan mantener PES al día con las plantillas y elementos más recientes.
-          </p>
 
-            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">Contenido destacado</h3>
+          <!-- Bloque principal: título + CTA -->
+          <header style="margin-bottom:20px">
+            <h2 style="margin-top:0;font-family:'Bungee','Press Start 2P';letter-spacing:.6px">
+              Option File Juan Denize – PES 2021 Temporada 2025/2026
+            </h2>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Option File para <strong>eFootball PES 2021</strong> en <strong>PS4/PS5</strong>,
+              centrado en actualizar por completo el juego a la temporada
+              <strong>2025/2026</strong>. Esta ficha resume el contenido, explica cómo
+              instalarlo y enlaza al material original del creador.
+            </p>
+
+            <!-- Llamada a la acción principal -->
+            <div style="margin-top:12px;margin-bottom:8px">
+              <p style="color:#cfecec;letter-spacing:.4px;margin:0 0 6px">
+                El link de descarga está en el <strong>comentario fijado</strong> del video original:
+              </p>
+              <a id="of-link-btn" href="#" target="_blank" rel="noopener" class="download-neon-btn">
+                ABRIR VIDEO (COMENTARIO FIJADO CON LINK)
+              </a>
+            </div>
+          </header>
+
+          <!-- Resumen -->
+          <section aria-label="Resumen del Option File" style="margin-top:8px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Resumen
+            </h3>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Este Option File para <strong>eFootball PES 2021 (PS4/PS5)</strong> actualiza
+              el juego a la temporada <strong>2025/2026</strong>, ofreciendo una experiencia
+              renovada para quienes buscan mantener PES al día con las plantillas y
+              elementos más recientes.
+            </p>
+          </section>
+
+          <!-- Contenido destacado -->
+          <section aria-label="Contenido incluido" style="margin-top:18px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Contenido destacado
+            </h3>
             <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
-              <li>Plantillas totalmente actualizadas a la temporada 25/26</li>
-              <li>Kits 2025/2026 para clubes y selecciones</li>
-              <li>Caras mejoradas y corregidas</li>
-              <li>Alineaciones, tácticas y dorsales actualizados</li>
-              <li>Correcciones generales en nombres, equipos y competiciones</li>
-              <li>Compatible con versiones de PS4 y PS5</li>
+              <li>Plantillas totalmente actualizadas a la temporada 25/26.</li>
+              <li>Kits 2025/2026 para clubes y selecciones.</li>
+              <li>Caras mejoradas y corregidas.</li>
+              <li>Alineaciones, tácticas y dorsales actualizados.</li>
+              <li>Correcciones generales en nombres, equipos y competiciones.</li>
+              <li>Incluye bastantes <strong>copias base</strong> (caras creadas usando jugadores escaneados parecidos).</li>
+              <li>Compatible con versiones de PS4 y PS5.</li>
             </ul>
+          </section>
 
-            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">Notas</h3>
+          <!-- Notas -->
+          <section aria-label="Notas sobre el contenido" style="margin-top:18px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Notas
+            </h3>
             <ul style="color:#cfecec;letter-spacing:.4px;line-height:1.6">
               <li>Este Option File fue creado por su autor original.</li>
               <li>Este post tiene como objetivo solo mostrar y difundir el contenido, sin fines promocionales.</li>
             </ul>
+          </section>
 
-            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">Instalación (PS4/PS5)</h3>
+          <!-- Instalación -->
+          <section aria-label="Instalación en PS4 y PS5" style="margin-top:18px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Instalación en PS4/PS5
+            </h3>
             <ol style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li>Entrar al video original y seguir el link de descarga que está en el comentario fijado.</li>
               <li>Descargar el archivo del creador original.</li>
-              <li>Copiar la carpeta WEPES en una memoria USB.</li>
-              <li>En PES 2021 ingresar a: Editar → Importar/Exportar → Importar equipos/competiciones.</li>
+              <li><strong>Extraer</strong> el contenido del archivo descargado.</li>
+              <li>Copiar la carpeta <code>WEPES</code> en una memoria USB.</li>
+              <li>En PES 2021 ingresar a: <strong>Editar → Importar/Exportar → Importar equipos/competiciones</strong>.</li>
               <li>Seleccionar todos los archivos y activar las casillas recomendadas.</li>
               <li>Guardar los cambios antes de salir.</li>
             </ol>
+          </section>
 
-            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">Enlace al contenido original y descarga</h3>
-            <p style="color:#cfecec;letter-spacing:.4px;margin:0 0 18px">
-              🔗 Video y Option File original:
+          <!-- Acceso rápido al enlace (segundo botón) -->
+          <section aria-label="Acceso rápido al enlace original" style="margin-top:18px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Enlace original y descarga
+            </h3>
+            <p style="color:#cfecec;letter-spacing:.4px;margin:0 0 10px">
+              Recordá: el link está en el <strong>comentario fijado</strong> del video. Podés ir directo desde acá:
             </p>
-            <a id="of-link-btn" href="#" target="_blank" rel="noopener" class="download-neon-btn">
-              ABRIR DESCARGA / VIDEO
+            <a href="#" id="of-link-btn-dup" target="_blank" rel="noopener" class="download-neon-btn secondary">
+              IR AL VIDEO (BUSCAR COMENTARIO FIJADO)
             </a>
+          </section>
+
         </div>
       </div>
     </article>
@@ -272,42 +318,59 @@
           }
 
           if (btn){
-            btn.addEventListener('click',(e)=>{ e.preventDefault(); dd.classList.contains('open') ? close() : open(); });
+            btn.addEventListener('click',(e)=>{
+              e.preventDefault();
+              dd.classList.contains('open') ? close() : open();
+            });
             btn.addEventListener('keydown',(e)=>{
-              if(['Enter',' '].includes(e.key)){ e.preventDefault(); dd.classList.contains('open') ? close() : open(); }
-              else if(e.key==='Escape'){ close(); btn.focus(); }
-              else if(e.key==='ArrowDown'){ open(); const first=menu?.querySelector('a,summary,[role="menuitem"]'); first&&first.focus(); }
+              if(['Enter',' '].includes(e.key)){
+                e.preventDefault();
+                dd.classList.contains('open') ? close() : open();
+              } else if(e.key==='Escape'){
+                close();
+                btn.focus();
+              } else if(e.key==='ArrowDown'){
+                open();
+                const first=menu?.querySelector('a,summary,[role="menuitem"]');
+                first && first.focus();
+              }
             });
             btn.addEventListener('click',()=>{
               dropdowns.forEach(o=>{
                 if(o!==dd){
                   o.classList.remove('open');
-                  const b=o.querySelector('.dropbtn'); b && b.setAttribute('aria-expanded','false');
+                  const b=o.querySelector('.dropbtn');
+                  b && b.setAttribute('aria-expanded','false');
                 }
               });
             });
           }
 
-          document.addEventListener('click',(e)=>{ if(!dd.contains(e.target)) close(); });
+          document.addEventListener('click',(e)=>{
+            if(!dd.contains(e.target)) close();
+          });
         });
 
         document.addEventListener('keydown',(e)=>{
           if(e.key==='Escape'){
             headerTarget.querySelectorAll('.dropdown.open').forEach(d=>{
               d.classList.remove('open');
-              const b=d.querySelector('.dropbtn'); b && b.setAttribute('aria-expanded','false');
+              const b=d.querySelector('.dropbtn');
+              b && b.setAttribute('aria-expanded','false');
             });
           }
         });
       })();
 
-      // Configurar enlace original (modifica solo esta constante)
+      // 4) Configurar enlace original
       const LINK_ORIGINAL='https://youtu.be/LiW1-oMVA1M?si=5Lrb5n9HSrKMauVJ';
-      const btn=document.getElementById('of-link-btn');
-      if(LINK_ORIGINAL && LINK_ORIGINAL!=='#'){ btn.href=LINK_ORIGINAL; }
+      const btn    = document.getElementById('of-link-btn');
+      const btnDup = document.getElementById('of-link-btn-dup');
+      if(LINK_ORIGINAL && LINK_ORIGINAL!=='#'){
+        if(btn)    btn.href    = LINK_ORIGINAL;
+        if(btnDup) btnDup.href = LINK_ORIGINAL;
+      }
     })();
   </script>
 </body>
-
 </html>
-

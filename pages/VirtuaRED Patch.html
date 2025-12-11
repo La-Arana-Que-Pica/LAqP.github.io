@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VirtuaRED Patch v10 – PES 2021 PC (Resumen e Instalación)</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" href="../img/Logo Web.png" type="image/png" sizes="32x32">
+  <meta name="description" content="Resumen rápido del VirtuaRED.com Patch v10 para PES 2021 PC: contenido principal, descargas y pasos básicos de instalación.">
+
+  <!-- Botón neón reutilizado -->
+  <style>
+    .download-neon-btn{
+      --btn-grad:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+      position:relative;
+      display:inline-block;
+      padding:14px 26px 13px;
+      border-radius:18px;
+      font-family:'Press Start 2P',monospace;
+      font-size:.66rem;
+      letter-spacing:1px;
+      font-weight:800;
+      text-decoration:none;
+      color:#071014;
+      background:var(--btn-grad);
+      background-size:220% 100%;
+      box-shadow:
+        0 16px 46px rgba(0,255,231,.30),
+        0 10px 34px rgba(255,0,170,.25),
+        0 0 0 1px rgba(255,255,255,.08) inset;
+      filter:saturate(1.05);
+      transition:
+        background-position .65s cubic-bezier(.2,.9,.3,1),
+        transform .25s cubic-bezier(.2,.9,.3,1),
+        box-shadow .25s ease,
+        filter .25s ease;
+      isolation:isolate;
+      overflow:hidden;
+    }
+    .download-neon-btn::before{
+      content:"";
+      position:absolute;
+      inset:-3px;
+      padding:3px;
+      border-radius:22px;
+      background:conic-gradient(from 0deg,var(--neon-cyan),var(--neon-pink),var(--neon-cyan));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+              mask-composite:exclude;
+      opacity:.55;
+      filter:blur(4px);
+      animation:edgeRoll 6s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes edgeRoll{
+      0%{transform:rotate(0deg)}
+      100%{transform:rotate(360deg)}
+    }
+    .download-neon-btn::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:18px;
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 60%);
+      mix-blend-mode:overlay;
+      opacity:.25;
+      animation:innerPulse 4.2s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes innerPulse{
+      0%,100%{opacity:.25}
+      50%{opacity:.45}
+    }
+    .download-neon-btn:hover{
+      transform:translateY(-8px) scale(1.05);
+      background-position:100% 0;
+      box-shadow:
+        0 28px 80px rgba(0,255,231,.40),
+        0 16px 60px rgba(255,0,170,.35),
+        0 0 0 2px rgba(0,0,0,.55) inset;
+      filter:saturate(1.14) brightness(1.04);
+    }
+    .download-neon-btn:active{
+      transform:translateY(-3px) scale(1.02);
+      box-shadow:
+        0 18px 50px rgba(0,255,231,.28),
+        0 12px 40px rgba(255,0,170,.25);
+    }
+    .download-neon-btn:focus-visible{
+      outline:none;
+      box-shadow:
+        0 0 0 4px rgba(0,255,231,.60),
+        0 0 0 8px rgba(255,0,170,.45),
+        0 12px 40px rgba(0,0,0,.55);
+      transform:translateY(-6px);
+    }
+    .download-neon-btn.secondary{
+      background:linear-gradient(180deg,rgba(18,20,28,.92),rgba(10,10,14,.95));
+      color:#dffbfb;
+      box-shadow:
+        0 12px 34px rgba(0,0,0,.65),
+        0 0 0 1px rgba(255,255,255,.10) inset;
+    }
+    .download-neon-btn.secondary::before{
+      background:conic-gradient(from 0deg, var(--neon-cyan), var(--neon-pink), var(--neon-cyan));
+      filter:blur(5px);
+      opacity:.45;
+    }
+    .download-neon-btn.secondary:hover{
+      filter:saturate(1.25) brightness(1.08);
+      box-shadow:
+        0 26px 70px rgba(0,0,0,.75),
+        0 0 30px rgba(0,255,231,.35),
+        0 0 26px rgba(255,0,170,.30);
+      color:#fff;
+    }
+    @media (max-width:560px){
+      .download-neon-btn{
+        font-size:.58rem;
+        padding:12px 18px 11px;
+        border-radius:16px;
+      }
+      .download-neon-btn::before{inset:-2px;padding:2px;border-radius:18px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="wrap">
+
+    <header id="shared-header"></header>
+
+    <div class="page-title" role="heading" aria-level="1">
+      VirtuaRED Patch v10 – PES 2021 PC
+    </div>
+
+    <section class="hero-feature" role="img" aria-label="Miniatura VirtuaRED v10">
+      <div class="db-frame" aria-hidden="true"></div>
+      <div class="db-pill">
+        <!-- Cambiá la ruta cuando tengas la miniatura local -->
+        <img class="db-pill-img" src="../img/Option Files/VirtuaRED.jpg" alt="Miniatura VirtuaRED Patch v10 para PES 2021">
+        <span class="db-label">VIRTUARED v10</span>
+      </div>
+    </section>
+
+    <article class="hero blog-single" role="article" aria-label="VirtuaRED Patch v10 Resumen e Instalación">
+      <div class="hero-feature" style="padding:24px;min-height:auto">
+        <div class="content-block" style="max-width:900px;margin:0 auto">
+
+          <!-- Encabezado + CTA -->
+          <header style="margin-bottom:16px">
+            <h2 style="margin-top:0;font-family:'Bungee','Press Start 2P';letter-spacing:.6px">
+              VirtuaRED.com Patch v10 – PES 2021 (PC)
+            </h2>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Parche <strong>completo (AIO)</strong> para <strong>eFootball PES 2021 – PC</strong>.
+              Actualiza ligas, equipos, stats, estadios, gráficos, audio y más, con
+              contenido hasta la temporada <strong>25/26</strong>.
+            </p>
+
+            <div style="margin-top:10px;margin-bottom:6px">
+              <p style="color:#cfecec;letter-spacing:.4px;margin:0 0 6px">
+                Desde esta página solo se enlaza al <strong>hilo / post oficial</strong> de VirtuaRED,
+                donde están todas las <strong>partes de descarga</strong> (directo y torrent).
+              </p>
+              <a id="vr-link-btn" href="#" target="_blank" rel="noopener" class="download-neon-btn">
+                ABRIR POST OFICIAL DE VIRTUARED v10
+              </a>
+            </div>
+          </header>
+
+          <!-- Resumen muy corto -->
+          <section aria-label="Resumen del parche" style="margin-top:8px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              ¿Qué es la V10?
+            </h3>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Es un <strong>mega parche AIO</strong> (todo en uno) para PES 2021 PC que incluye:
+            </p>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li>Base de datos actualizada (ligas, equipos, plantillas y entrenadores).</li>
+              <li>Miles de <strong>faces, minifaces, kits, balones, botines y guantes</strong>.</li>
+              <li>Más de mil <strong>estadios</strong> con servidores de adboards, redes, banderines, etc.</li>
+              <li>Intros, cánticos, himnos, soundtrack y muchas mejoras de audio.</li>
+              <li>Mod de inmersión, nuevas cámaras, entradas y pequeños detalles visuales.</li>
+            </ul>
+          </section>
+
+          <!-- Descargas (resumen de qué necesitas) -->
+          <section aria-label="Descargas necesarias" style="margin-top:14px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Descargas necesarias (desde el post oficial)
+            </h3>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li><strong>Patch v10 (AIO)</strong> – dividido en <strong>30 partes</strong> (descarga directa y torrent). Tamaño aproximado: <strong>175 GB descomprimido</strong>.</li>
+              <li><strong>Edit</strong> – archivo EDIT separado (<strong>~10,5 MB</strong>) con la base de datos final.</li>
+              <li><strong>Stadiums v9 (AIO)</strong> – pack de estadios en <strong>17 partes</strong> (descarga directa y torrent). Tamaño aproximado: <strong>332 GB descomprimido</strong>.</li>
+            </ul>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Todos los enlaces están claramente listados en el hilo oficial de VirtuaRED.
+            </p>
+          </section>
+
+          <!-- Instalación simplificada -->
+          <section aria-label="Instalación simplificada" style="margin-top:14px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Instalación rápida (resumen)
+            </h3>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Antes de instalar, recomiendan tener una copia <strong>limpia y original</strong> de
+              eFootball PES 2021 (Steam, sin versiones LITE ni CPY) y borrar la carpeta
+              <code>livecpk</code> de tu instalación anterior.
+            </p>
+            <ol style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li>Descargar las <strong>30 partes</strong> del <strong>Patch v10 (AIO)</strong> desde el post oficial.</li>
+              <li>Ejecutar el instalador <strong>VirtuaRED.com Patch v10.exe</strong> y apuntar a la carpeta correcta de PES 2021 (por defecto algo como <code>C:\Program Files (x86)\Steam\steamapps\common\eFootball PES 2021</code>). Asegurarse de que no cree una subcarpeta extra.</li>
+              <li>Descargar las <strong>17 partes</strong> del pack de <strong>Stadiums v9 (AIO)</strong>.</li>
+              <li>Descomprimir el <strong>stadium-server</strong> dentro de la carpeta <code>content</code> de tu PES 2021 (por defecto <code>...\eFootball PES 2021\content</code>).</li>
+              <li>Descargar el <strong>Edit</strong> y descomprimirlo.</li>
+              <li>Copiar el archivo <strong>EDIT00000000</strong> a tu carpeta de saves de PES 2021 (algo como <code>C:\Users\{USUARIO}\Documents\KONAMI\eFootball PES 2021 SEASON UPDATE\{NÚMERO}\save</code>) y reemplazar el existente.</li>
+              <li>Usar el acceso directo <strong>VirtuaRED.com Patch 2021</strong> que se crea en el Escritorio para iniciar el juego junto con <strong>Sider</strong>.</li>
+            </ol>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Si tenés dudas o errores, en el post oficial hay un <strong>FAQ</strong> y una
+              sección de soporte donde responden problemas frecuentes.
+            </p>
+          </section>
+
+          <!-- Contenido: resumen por bloques (muy corto) -->
+          <section aria-label="Contenido del parche" style="margin-top:14px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Contenido principal del parche
+            </h3>
+
+            <h4 style="color:#dffbfb;letter-spacing:.6px;margin:10px 0 4px;font-family:'Roboto',sans-serif">
+              Base de datos y ligas
+            </h4>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6;margin-bottom:8px">
+              <li>Equipos de <strong>Primera y Segunda de España, Premier League, Serie A, Ligue 1, Bundesliga, Primeira Liga</strong> actualizados a la temporada <strong>25/26</strong> (plantillas, dorsales, tácticas, etc.).</li>
+              <li>Resto de equipos actualizados hasta la temporada <strong>24/25</strong> (se irán completando).</li>
+              <li>Todos los equipos, selecciones y competiciones <strong>con nombre real y licenciados</strong>.</li>
+              <li>Ligas añadidas: <strong>Bundesliga, J1 League, Liga MX, Primera División del Perú (Switch)</strong>.</li>
+              <li>Muchos clubes nuevos en “Other Clubs” (Europa, Latinoamérica y África) y nuevas selecciones (por ejemplo: <strong>RD Congo, Gabón, Canadá</strong>).</li>
+              <li>Equipos clásicos y leyendas (clubes históricos y combinados de PES Legends).</li>
+              <li>94 nuevos <strong>entrenadores de Liga Máster</strong> entre managers reales y clásicos.</li>
+            </ul>
+
+            <h4 style="color:#dffbfb;letter-spacing:.6px;margin:10px 0 4px;font-family:'Roboto',sans-serif">
+              Faces, minifaces y entrenadores
+            </h4>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6;margin-bottom:8px">
+              <li>Colección enorme de <strong>más de 12.000 faces</strong> con piel y cabeza ajustadas una por una.</li>
+              <li>Más de <strong>31.000 minifaces</strong> para jugadores.</li>
+              <li>Faces/minifaces para todos los nuevos entrenadores de Liga Máster.</li>
+              <li>Fotos para <strong>761 entrenadores</strong>.</li>
+            </ul>
+
+            <h4 style="color:#dffbfb;letter-spacing:.6px;margin:10px 0 4px;font-family:'Roboto',sans-serif">
+              Kits, balones, botines y guantes
+            </h4>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6;margin-bottom:8px">
+              <li>Servidor de <strong>kits</strong> con camisetas actualizadas <strong>25/26</strong> para casi todos los equipos del parche.</li>
+              <li>Kits exclusivos, parches de mangas para todas las competiciones y servidor de kits de árbitros con muchas ligas cubiertas.</li>
+              <li>Servidor de <strong>balones</strong> (Hawke v57 extendido): ~<strong>1396 balones</strong> asignados a más de 30 competiciones.</li>
+              <li>Pack combinado de <strong>botines y guantes</strong>, con más de 100 boots y 30 guantes visibles (y muchos ocultos) con asignaciones a jugadores y leyendas.</li>
+            </ul>
+
+            <h4 style="color:#dffbfb;letter-spacing:.6px;margin:10px 0 4px;font-family:'Roboto',sans-serif">
+              Gráficos y HUD
+            </h4>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6;margin-bottom:8px">
+              <li>Logos reales en alta calidad para todos los equipos y torneos.</li>
+              <li>Botones de mando estilo <strong>PS4</strong>.</li>
+              <li>Scoreboard server con más de <strong>280 marcadores TV-style</strong> y menús de pausa personalizados para muchísimas competiciones.</li>
+              <li>Marcadores, tableros de cambio, trofeos y branding real en menús y escenas de copas.</li>
+              <li>Mod de menús y detalles visuales (suciedad en camisetas, accesorios, grip socks, etc.).</li>
+            </ul>
+
+            <h4 style="color:#dffbfb;letter-spacing:.6px;margin:10px 0 4px;font-family:'Roboto',sans-serif">
+              Estadios
+            </h4>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6;margin-bottom:8px">
+              <li><strong>1147 estadios</strong> incluidos, muchos exclusivos del parche.</li>
+              <li>Asignados a sus equipos y finales de competiciones, con iluminación, atardeceres y vistas aéreas.</li>
+              <li>Branding específico para UCL, UEL, Libertadores, adboards reales para todas las competiciones y muchos equipos.</li>
+              <li>Servidor de banderines, redes, túneles, porterías, ballboys, pantallas de estadio y más.</li>
+              <li>Fan server con coreografías y bufandas para más de <strong>185 equipos</strong>.</li>
+            </ul>
+
+            <h4 style="color:#dffbfb;letter-spacing:.6px;margin:10px 0 4px;font-family:'Roboto',sans-serif">
+              Audio y escenas
+            </h4>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6;margin-bottom:8px">
+              <li>Goal songs para <strong>383 equipos/competiciones</strong> y nueva banda sonora (32 temas).</li>
+              <li>Servidor de intros (56 intros) y packs de cánticos, himnos nacionales (227 selecciones) y anthems de torneos.</li>
+              <li>Anthems para muchas ligas y copas (Champions, Europa League, Libertadores, ligas europeas y latinoamericanas, etc.).</li>
+              <li>Mod de inmersión con nuevas cinemáticas, celebraciones, cámaras y entradas para más de 60 competiciones.</li>
+            </ul>
+          </section>
+
+          <!-- Notas y soporte -->
+          <section aria-label="Notas importantes y soporte" style="margin-top:14px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Notas importantes
+            </h3>
+            <ul style="color:#cfecec;letter-spacing:.4px;line-height:1.6">
+              <li>Todos los <strong>créditos detallados</strong> están en el <strong>hilo oficial</strong> de VirtuaRED.</li>
+              <li>Se puede compartir el parche, pero recomiendan <strong>respetar los links originales</strong>.</li>
+              <li>Si tenés problemas, primero revisar el <strong>FAQ oficial</strong> y luego preguntar en el hilo, comprobando antes que tu duda no haya sido respondida.</li>
+              <li>VirtuaRED publica novedades y avisos en sus <strong>redes sociales</strong> (Twitter, WhatsApp, etc.).</li>
+            </ul>
+          </section>
+
+        </div>
+      </div>
+    </article>
+
+    <footer class="site-footer" role="contentinfo">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+
+  <script>
+    (async function initBlog(){
+      const headerTarget = document.getElementById('shared-header');
+      // 1) Clonar el header desde el index (este archivo vive en /pages/)
+      try{
+        const res = await fetch('../index.html', { method: 'GET' });
+        if (!res.ok) throw new Error('No se pudo leer ../index.html');
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const originalHeader = doc.querySelector('header.site-header');
+        headerTarget.innerHTML = originalHeader ? originalHeader.outerHTML
+          : '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+      }catch(e){
+        console.warn('Header fallback:', e);
+        headerTarget.innerHTML = '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+      }
+
+      // 2) Arreglar hrefs del header clonado para que funcionen desde /pages/
+      const nav = headerTarget.querySelector('.main-nav');
+      if (nav){
+        nav.querySelectorAll('a[href]').forEach(a=>{
+          const href = a.getAttribute('href') || '';
+          const isAbs  = /^https?:\/\//i.test(href);
+          const isRoot = href.startsWith('/');
+          const isHash = href.startsWith('#');
+          const text   = a.textContent.trim().toLowerCase();
+
+          if (text === 'inicio' || href === '#') {
+            a.setAttribute('href','../index.html');
+            return;
+          }
+          if (!isAbs && !isRoot && !isHash) {
+            a.setAttribute('href', `../${href}`);
+          }
+        });
+      }
+
+      // 3) Reactivar dropdowns del header inyectado y cerrar al click
+      (function(){
+        const OPEN_DELAY = 80, CLOSE_DELAY = 220;
+        const dropdowns = headerTarget.querySelectorAll('.dropdown');
+
+        dropdowns.forEach(dd=>{
+          let openT=null, closeT=null;
+          const btn  = dd.querySelector('.dropbtn');
+          const menu = dd.querySelector('.dropdown-menu');
+
+          function open(){ if(closeT){clearTimeout(closeT);closeT=null;} dd.classList.add('open'); btn && btn.setAttribute('aria-expanded','true'); }
+          function close(){ if(openT){clearTimeout(openT);openT=null;} dd.classList.remove('open'); btn && btn.setAttribute('aria-expanded','false'); }
+
+          dd.addEventListener('mouseenter',()=>{ if(closeT) clearTimeout(closeT); openT=setTimeout(open,OPEN_DELAY); });
+          dd.addEventListener('mouseleave',()=>{ if(openT) clearTimeout(openT); closeT=setTimeout(close,CLOSE_DELAY); });
+
+          if (menu){
+            menu.addEventListener('click',(e)=>{
+              const act = e.target.closest('a, button, [role="menuitem"]');
+              if (act){ close(); return; }
+              const sum = e.target.closest('summary');
+              if (sum){ setTimeout(close,0); }
+            });
+            menu.addEventListener('mouseleave',()=>{ closeT=setTimeout(close,CLOSE_DELAY); });
+          }
+
+          if (btn){
+            btn.addEventListener('click',(e)=>{
+              e.preventDefault();
+              dd.classList.contains('open') ? close() : open();
+            });
+            btn.addEventListener('keydown',(e)=>{
+              if(['Enter',' '].includes(e.key)){
+                e.preventDefault();
+                dd.classList.contains('open') ? close() : open();
+              } else if(e.key==='Escape'){
+                close();
+                btn.focus();
+              } else if(e.key==='ArrowDown'){
+                open();
+                const first=menu?.querySelector('a,summary,[role="menuitem"]');
+                first && first.focus();
+              }
+            });
+            btn.addEventListener('click',()=>{
+              dropdowns.forEach(o=>{
+                if(o!==dd){
+                  o.classList.remove('open');
+                  const b=o.querySelector('.dropbtn');
+                  b && b.setAttribute('aria-expanded','false');
+                }
+              });
+            });
+          }
+
+          document.addEventListener('click',(e)=>{
+            if(!dd.contains(e.target)) close();
+          });
+        });
+
+        document.addEventListener('keydown',(e)=>{
+          if(e.key==='Escape'){
+            headerTarget.querySelectorAll('.dropdown.open').forEach(d=>{
+              d.classList.remove('open');
+              const b=d.querySelector('.dropbtn');
+              b && b.setAttribute('aria-expanded','false');
+            });
+          }
+        });
+      })();
+
+      // 4) Configurar enlace al post oficial de VirtuaRED v10 (reemplazar por la URL real)
+      const LINK_VIRTUARED = 'https://www.virtuared.com/foro/viewtopic.php?t=18813&sid=80ecc386fd17017ba4fcfd4174db22cd'; 
+      const btn = document.getElementById('vr-link-btn');
+      if(LINK_VIRTUARED && LINK_VIRTUARED !== '#'){
+        if(btn) btn.href = LINK_VIRTUARED;
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PES 2021 PS4/PS5 Option File – General 2025 (Editemos PES)</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" href="../img/Logo Web.png" type="image/png" sizes="32x32">
+  <meta name="description" content="Option File General 2025 para PES 2021 (Editemos PES) con ligas europeas, selecciones y clubes internacionales actualizados, más compatibilidades y licencia Creative Commons.">
+
+  <!-- Botón neón reutilizado -->
+  <style>
+    .download-neon-btn{
+      --btn-grad:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+      position:relative;
+      display:inline-block;
+      padding:14px 26px 13px;
+      border-radius:18px;
+      font-family:'Press Start 2P',monospace;
+      font-size:.66rem;
+      letter-spacing:1px;
+      font-weight:800;
+      text-decoration:none;
+      color:#071014;
+      background:var(--btn-grad);
+      background-size:220% 100%;
+      box-shadow:
+        0 16px 46px rgba(0,255,231,.30),
+        0 10px 34px rgba(255,0,170,.25),
+        0 0 0 1px rgba(255,255,255,.08) inset;
+      filter:saturate(1.05);
+      transition:
+        background-position .65s cubic-bezier(.2,.9,.3,1),
+        transform .25s cubic-bezier(.2,.9,.3,1),
+        box-shadow .25s ease,
+        filter .25s ease;
+      isolation:isolate;
+      overflow:hidden;
+    }
+    .download-neon-btn::before{
+      content:"";
+      position:absolute;
+      inset:-3px;
+      padding:3px;
+      border-radius:22px;
+      background:conic-gradient(from 0deg,var(--neon-cyan),var(--neon-pink),var(--neon-cyan));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+              mask-composite:exclude;
+      opacity:.55;
+      filter:blur(4px);
+      animation:edgeRoll 6s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes edgeRoll{
+      0%{transform:rotate(0deg)}
+      100%{transform:rotate(360deg)}
+    }
+    .download-neon-btn::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:18px;
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 60%);
+      mix-blend-mode:overlay;
+      opacity:.25;
+      animation:innerPulse 4.2s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes innerPulse{
+      0%,100%{opacity:.25}
+      50%{opacity:.45}
+    }
+    .download-neon-btn:hover{
+      transform:translateY(-8px) scale(1.05);
+      background-position:100% 0;
+      box-shadow:
+        0 28px 80px rgba(0,255,231,.40),
+        0 16px 60px rgba(255,0,170,.35),
+        0 0 0 2px rgba(0,0,0,.55) inset;
+      filter:saturate(1.14) brightness(1.04);
+    }
+    .download-neon-btn:active{
+      transform:translateY(-3px) scale(1.02);
+      box-shadow:
+        0 18px 50px rgba(0,255,231,.28),
+        0 12px 40px rgba(255,0,170,.25);
+    }
+    .download-neon-btn:focus-visible{
+      outline:none;
+      box-shadow:
+        0 0 0 4px rgba(0,255,231,.60),
+        0 0 0 8px rgba(255,0,170,.45),
+        0 12px 40px rgba(0,0,0,.55);
+      transform:translateY(-6px);
+    }
+    .download-neon-btn.secondary{
+      background:linear-gradient(180deg,rgba(18,20,28,.92),rgba(10,10,14,.95));
+      color:#dffbfb;
+      box-shadow:
+        0 12px 34px rgba(0,0,0,.65),
+        0 0 0 1px rgba(255,255,255,.10) inset;
+    }
+    .download-neon-btn.secondary::before{
+      background:conic-gradient(from 0deg, var(--neon-cyan), var(--neon-pink), var(--neon-cyan));
+      filter:blur(5px);
+      opacity:.45;
+    }
+    .download-neon-btn.secondary:hover{
+      filter:saturate(1.25) brightness(1.08);
+      box-shadow:
+        0 26px 70px rgba(0,0,0,.75),
+        0 0 30px rgba(0,255,231,.35),
+        0 0 26px rgba(255,0,170,.30);
+      color:#fff;
+    }
+    @media (max-width:560px){
+      .download-neon-btn{
+        font-size:.58rem;
+        padding:12px 18px 11px;
+        border-radius:16px;
+      }
+      .download-neon-btn::before{inset:-2px;padding:2px;border-radius:18px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="wrap">
+
+    <header id="shared-header"></header>
+
+    <div class="page-title" role="heading" aria-level="1">
+      PES 2021 PS4/PS5 Option File – General 2025 (Editemos PES)
+    </div>
+
+    <section class="hero-feature" role="img" aria-label="Miniatura Option File General 2025">
+      <div class="db-frame" aria-hidden="true"></div>
+      <div class="db-pill">
+        <img class="db-pill-img" src="../img/Option Files/OF Gral Editemos PES.png" alt="Miniatura Option File General 2025 para PES 2021 de Editemos PES">
+        <span class="db-label">GENERAL 2025</span>
+      </div>
+    </section>
+
+    <article class="hero blog-single" role="article" aria-label="Detalle Option File General 2025">
+      <div class="hero-feature" style="padding:24px;min-height:auto">
+        <div class="content-block" style="max-width:900px;margin:0 auto">
+
+          <!-- Encabezado + CTA -->
+          <header style="margin-bottom:16px">
+            <h2 style="margin-top:0;font-family:'Bungee','Press Start 2P';letter-spacing:.6px">
+              Option File General 2025 – PES 2021 (Editemos PES)
+            </h2>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Option File <strong>General 2025</strong> para <strong>PES 2021</strong>,
+              creado por <strong>Editemos PES</strong>, con ligas europeas, selecciones
+              y clubes internacionales actualizados para esta temporada.
+            </p>
+
+            <div style="margin-top:10px;margin-bottom:6px">
+              <p style="color:#cfecec;letter-spacing:.4px;margin:0 0 6px">
+                El botón abre el <strong>blog oficial de Editemos PES</strong>.
+                Los <strong>links de descarga</strong> están al <strong>final del artículo</strong>.
+              </p>
+              <a id="of-link-btn" href="#" target="_blank" rel="noopener" class="download-neon-btn">
+                ABRIR BLOG DE EDITEMOS PES (LINK AL FINAL)
+              </a>
+            </div>
+          </header>
+
+          <!-- Contenido resumido -->
+          <section aria-label="Contenido principal" style="margin-top:8px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Contenido
+            </h3>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              El Option File General 2025 se centra en ofrecer una experiencia
+              actualizada y realista con:
+            </p>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li>
+                <strong>Ligas europeas principales</strong> (Premier League,
+                Championship, Serie A, Serie B, Ligue 1, Ligue 2, La Liga EA Sports,
+                Liga Hypermotion) con kits, plantillas y muchos rostros actualizados.
+              </li>
+              <li>
+                Otras ligas europeas con plantillas revisadas y mejoras visuales
+                (Eredivisie, Scottish Premiership, Liga Portugal, Süper Lig, Russian
+                Premier League, Jupiler Pro League, 3F Superliga, Raiffeisen Super League).
+              </li>
+              <li>
+                <strong>Competiciones internacionales de clubes</strong> como el
+                Mundial de Clubes 2025 y equipos destacados de la AFC Champions League
+                (Arabia Saudita y Japón).
+              </li>
+              <li>
+                <strong>Selecciones nacionales</strong> de Sudamérica, CONCACAF y
+                algunas europeas con nóminas actualizadas.
+              </li>
+              <li>
+                Nuevas apariencias para jugadores importantes como
+                <strong>Lionel Messi, Cristiano Ronaldo y Memphis Depay</strong>.
+              </li>
+              <li>
+                Inclusión parcial de la <strong>Liga Profesional Argentina</strong>
+                (equipos con plantillas, kits y rostros editados, en desarrollo).
+              </li>
+            </ul>
+          </section>
+
+          <!-- Compatibilidades básicas -->
+          <section aria-label="Compatibilidad con otros Option Files" style="margin-top:14px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Compatibilidad
+            </h3>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              El Option File General 2025 fue pensado para combinarse con otros OF
+              de Editemos PES sin conflictos. Es compatible, entre otros, con:
+            </p>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li>Brasileirão 2025 (Serie A de Brasil).</li>
+              <li>Ligas de Perú 2025 (Liga 1 y Liga 2).</li>
+              <li>Liga BetPlay Dimayor 2025 (Colombia).</li>
+              <li>Saudi Pro League 2025.</li>
+              <li>Liga Uruguaya 2025.</li>
+              <li>Liga Chilena Itaú 2025.</li>
+            </ul>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Actualmente no es compatible con la <strong>J.League (Liga Japonesa)</strong>
+              ni con la <strong>Liga Boliviana</strong>.
+            </p>
+          </section>
+
+          <!-- Instalación muy resumida -->
+          <section aria-label="Instalación básica" style="margin-top:14px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Instalación básica (PES 2021)
+            </h3>
+            <ol style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li>Abrir el <strong>blog oficial de Editemos PES</strong> desde el botón de esta página.</li>
+              <li>Ir hasta el <strong>final del post</strong> y descargar las partes indicadas del Option File General 2025.</li>
+              <li><strong>Extraer</strong> el contenido de los archivos descargados.</li>
+              <li>Copiar la carpeta <code>WEPES</code> a un USB en formato FAT32 (para PS4/PS5).</li>
+              <li>En PES 2021, ir a <strong>Editar → Importar/Exportar</strong> y seguir los pasos que explican en el propio blog.</li>
+            </ol>
+          </section>
+
+          <!-- Recordatorio de enlace -->
+          <section aria-label="Enlace al blog y descarga" style="margin-top:14px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Blog y descarga
+            </h3>
+            <p style="color:#cfecec;letter-spacing:.4px;margin:0 0 8px">
+              Esta página solo redirige al <strong>post oficial</strong> de Editemos PES.
+              Los enlaces de descarga están al <strong>final del artículo</strong>.
+            </p>
+            <a href="#" id="of-link-btn-dup" target="_blank" rel="noopener" class="download-neon-btn secondary">
+              IR AL BLOG OFICIAL (BUSCAR LINK AL FINAL)
+            </a>
+          </section>
+        </div>
+      </div>
+    </article>
+
+    <footer class="site-footer" role="contentinfo">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+
+  <script>
+    (async function initBlog(){
+      const headerTarget = document.getElementById('shared-header');
+      // 1) Clonar el header desde el index (este archivo vive en /pages/)
+      try{
+        const res = await fetch('../index.html', { method: 'GET' });
+        if (!res.ok) throw new Error('No se pudo leer ../index.html');
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const originalHeader = doc.querySelector('header.site-header');
+        headerTarget.innerHTML = originalHeader ? originalHeader.outerHTML
+          : '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+      }catch(e){
+        console.warn('Header fallback:', e);
+        headerTarget.innerHTML = '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+      }
+
+      // 2) Arreglar hrefs del header clonado para que funcionen desde /pages/
+      const nav = headerTarget.querySelector('.main-nav');
+      if (nav){
+        nav.querySelectorAll('a[href]').forEach(a=>{
+          const href = a.getAttribute('href') || '';
+          const isAbs  = /^https?:\/\//i.test(href);
+          const isRoot = href.startsWith('/');
+          const isHash = href.startsWith('#');
+          const text   = a.textContent.trim().toLowerCase();
+
+          if (text === 'inicio' || href === '#') {
+            a.setAttribute('href','../index.html');
+            return;
+          }
+          if (!isAbs && !isRoot && !isHash) {
+            a.setAttribute('href', `../${href}`);
+          }
+        });
+      }
+
+      // 3) Reactivar dropdowns del header inyectado y cerrar al click
+      (function(){
+        const OPEN_DELAY = 80, CLOSE_DELAY = 220;
+        const dropdowns = headerTarget.querySelectorAll('.dropdown');
+
+        dropdowns.forEach(dd=>{
+          let openT=null, closeT=null;
+          const btn  = dd.querySelector('.dropbtn');
+          const menu = dd.querySelector('.dropdown-menu');
+
+          function open(){ if(closeT){clearTimeout(closeT);closeT=null;} dd.classList.add('open'); btn && btn.setAttribute('aria-expanded','true'); }
+          function close(){ if(openT){clearTimeout(openT);openT=null;} dd.classList.remove('open'); btn && btn.setAttribute('aria-expanded','false'); }
+
+          dd.addEventListener('mouseenter',()=>{ if(closeT) clearTimeout(closeT); openT=setTimeout(open,OPEN_DELAY); });
+          dd.addEventListener('mouseleave',()=>{ if(openT) clearTimeout(openT); closeT=setTimeout(close,CLOSE_DELAY); });
+
+          if (menu){
+            menu.addEventListener('click',(e)=>{
+              const act = e.target.closest('a, button, [role="menuitem"]');
+              if (act){ close(); return; }
+              const sum = e.target.closest('summary');
+              if (sum){ setTimeout(close,0); }
+            });
+            menu.addEventListener('mouseleave',()=>{ closeT=setTimeout(close,CLOSE_DELAY); });
+          }
+
+          if (btn){
+            btn.addEventListener('click',(e)=>{
+              e.preventDefault();
+              dd.classList.contains('open') ? close() : open();
+            });
+            btn.addEventListener('keydown',(e)=>{
+              if(['Enter',' '].includes(e.key)){
+                e.preventDefault();
+                dd.classList.contains('open') ? close() : open();
+              } else if(e.key==='Escape'){
+                close();
+                btn.focus();
+              } else if(e.key==='ArrowDown'){
+                open();
+                const first=menu?.querySelector('a,summary,[role="menuitem"]');
+                first && first.focus();
+              }
+            });
+            btn.addEventListener('click',()=>{
+              dropdowns.forEach(o=>{
+                if(o!==dd){
+                  o.classList.remove('open');
+                  const b=o.querySelector('.dropbtn');
+                  b && b.setAttribute('aria-expanded','false');
+                }
+              });
+            });
+          }
+
+          document.addEventListener('click',(e)=>{
+            if(!dd.contains(e.target)) close();
+          });
+        });
+
+        document.addEventListener('keydown',(e)=>{
+          if(e.key==='Escape'){
+            headerTarget.querySelectorAll('.dropdown.open').forEach(d=>{
+              d.classList.remove('open');
+              const b=d.querySelector('.dropbtn');
+              b && b.setAttribute('aria-expanded','false');
+            });
+          }
+        });
+      })();
+
+      // 4) Configurar enlace al blog de Editemos PES
+      const LINK_BLOG='https://editemospes.com/2021/option-file-general-2025'; // Reemplazar por la URL real del artículo
+      const btn    = document.getElementById('of-link-btn');
+      const btnDup = document.getElementById('of-link-btn-dup');
+      if(LINK_BLOG && LINK_BLOG!=='#'){
+        if(btn)    btn.href    = LINK_BLOG;
+        if(btnDup) btnDup.href = LINK_BLOG;
+      }
+    })();
+  </script>
+</body>
+</html>

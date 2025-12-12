@@ -1,0 +1,466 @@
+<!-- Favicon (igual que el resto del sitio) -->
+<link rel="icon" type="image/png" sizes="32x32" href="img/Logo Web.png?v=1">
+<link rel="icon" type="image/png" sizes="16x16" href="img/Logo Web.png?v=1">
+<link rel="shortcut icon" href="img/Logo Web.png?v=1">
+<link rel="apple-touch-icon" href="img/Logo Web.png?v=1">
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Política de Privacidad - LAqP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .legal-page{
+      margin-top: 22px;
+      background: linear-gradient(180deg, rgba(16,18,28,.94), rgba(8,8,12,.96));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 22px;
+      padding: 22px 20px 24px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.7);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .legal-page::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(800px 260px at 120% -10%, rgba(0,255,231,.16), transparent 70%),
+        radial-gradient(800px 260px at -10% 120%, rgba(255,0,170,.14), transparent 70%);
+      opacity:.6;
+      mix-blend-mode:screen;
+      pointer-events:none;
+      z-index:-1;
+    }
+    .legal-title{
+      font-family:'Press Start 2P',monospace;
+      font-size:1.15rem;
+      letter-spacing:.8px;
+      color:#fff;
+      margin:0 0 12px;
+      text-shadow:2px 0 var(--neon-cyan), -2px 0 var(--neon-pink);
+    }
+    .legal-subtitle{
+      font-family:'Bungee','Press Start 2P',monospace;
+      font-size:.9rem;
+      letter-spacing:.5px;
+      color:#9ee1ef;
+      margin:0 0 18px;
+    }
+    .legal-section-title{
+      font-family:'Press Start 2P',monospace;
+      font-size:.75rem;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+      color:#aefaff;
+      margin:18px 0 8px;
+    }
+    .legal-text{
+      font-family:Roboto,Arial,sans-serif;
+      font-size:.9rem;
+      line-height:1.6;
+      color:#e6f9f9;
+      margin:0 0 10px;
+    }
+    .legal-list{
+      font-family:Roboto,Arial,sans-serif;
+      font-size:.9rem;
+      line-height:1.6;
+      color:#e6f9f9;
+      padding-left:20px;
+      margin:0 0 10px;
+    }
+    .legal-list li{
+      margin-bottom:4px;
+    }
+    .legal-note{
+      font-size:.8rem;
+      color:#9ee1ef;
+      margin-top:10px;
+    }
+    .legal-highlight{
+      background:rgba(0,255,231,.10);
+      border-radius:10px;
+      padding:10px 12px;
+      border:1px solid rgba(0,255,231,.25);
+      box-shadow:0 10px 34px rgba(0,0,0,.6);
+      margin:6px 0 12px;
+    }
+
+    @media (max-width:600px){
+      .legal-page{
+        padding:18px 14px 20px;
+        border-radius:18px;
+      }
+      .legal-title{
+        font-size:1rem;
+      }
+      .legal-subtitle{
+        font-size:.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Fondo general, igual que ligas/jugadores/blog -->
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <!-- Header compartido (se inyecta desde index.html igual que en los blogs de pages) -->
+    <header id="shared-header"></header>
+
+    <div class="page-title">Política de Privacidad</div>
+
+    <main class="legal-page" role="main">
+      <h2 class="legal-title">Política de Privacidad de La Araña Que Pica</h2>
+      <p class="legal-subtitle">
+        Sitio web oficial de Option Files, parches y base de datos de PES — <strong>laqp.website</strong>
+      </p>
+
+      <!-- 1. Introducción -->
+      <h3 class="legal-section-title">1. Introducción</h3>
+      <p class="legal-text">
+        La presente Política de Privacidad establece los términos en que <strong>La Araña Que Pica</strong> (en adelante, “LAqP”)
+        usa y protege la información que es proporcionada por los usuarios al momento de utilizar el sitio web
+        accesible en <strong>laqp.website</strong> (en adelante, el “Sitio Web”).
+      </p>
+      <p class="legal-text">
+        El Sitio Web está dedicado a la publicación de <strong>Option Files y parches para PES/eFootball</strong>, así como
+        a una <strong>base de datos consultable de ligas, equipos y jugadores</strong> para ayudar a la comunidad a editar
+        y gestionar su contenido del juego.
+      </p>
+      <p class="legal-text">
+        LAqP está comprometida con la seguridad de los datos de sus usuarios. Cuando le pedimos rellenar campos de
+        información personal con la cual usted pueda ser identificado, lo hacemos asegurando que sólo se empleará
+        de acuerdo con los términos de este documento.
+      </p>
+      <p class="legal-text">
+        Esta Política de Privacidad puede actualizarse con el tiempo. Se recomienda revisar periódicamente esta
+        página para asegurarse de que está de acuerdo con los cambios que puedan producirse.
+      </p>
+
+      <!-- 2. Información que es recogida -->
+      <h3 class="legal-section-title">2. Información que es recogida</h3>
+      <p class="legal-text">
+        El Sitio Web <strong>no realiza ventas online</strong> ni procesa compras, pedidos, envíos ni facturación.
+        Por tanto, <strong>no se recopilan datos de pago</strong> (como números de tarjeta o cuentas bancarias)
+        ni direcciones postales con esos fines.
+      </p>
+      <p class="legal-text">
+        La información personal que puede recogerse es limitada y se produce únicamente cuando el usuario la
+        proporciona de forma voluntaria, por ejemplo:
+      </p>
+      <ul class="legal-list">
+        <li>
+          Sistemas de <strong>comentarios</strong> u otros formularios que puedan habilitarse en el Sitio Web:
+          nombre o alias, dirección de correo electrónico (si se solicita) y el contenido del comentario u opinión
+          que el usuario decida publicar.
+        </li>
+        <li>
+          Comunicaciones directas por <strong>correo electrónico u otros medios de contacto</strong>:
+          cualquier dato personal que el usuario incluya voluntariamente en su mensaje (nombre, correo de respuesta,
+          etc.).
+        </li>
+      </ul>
+      <p class="legal-text">
+        Además, de forma automática se pueden recopilar algunos datos técnicos y de uso, como:
+      </p>
+      <ul class="legal-list">
+        <li>Dirección IP y tipo de navegador utilizado.</li>
+        <li>Sistema operativo y tipo de dispositivo.</li>
+        <li>Páginas visitadas dentro del Sitio Web y tiempo aproximado de navegación.</li>
+        <li>
+          Datos estadísticos generales de uso y rendimiento de la web, de forma agregada y anónima siempre
+          que sea posible.
+        </li>
+      </ul>
+
+      <!-- 3. Uso de la información -->
+      <h3 class="legal-section-title">3. Uso de la información recogida</h3>
+      <p class="legal-text">
+        La información personal que los usuarios proporcionan de forma voluntaria puede utilizarse para:
+      </p>
+      <ul class="legal-list">
+        <li>
+          <strong>Gestionar y moderar comentarios</strong> u otros contenidos enviados por los usuarios, evitando
+          spam, contenido ofensivo o ilícito y manteniendo un entorno adecuado para la comunidad.
+        </li>
+        <li>
+          <strong>Responder a consultas</strong> o solicitudes que el usuario envíe a través de formularios
+          de contacto o correo electrónico.
+        </li>
+      </ul>
+      <p class="legal-text">
+        Los datos técnicos y de uso del Sitio Web se emplean para:
+      </p>
+      <ul class="legal-list">
+        <li>Mejorar el diseño, rendimiento y contenido de la web.</li>
+        <li>Detectar posibles errores técnicos o usos indebidos.</li>
+        <li>
+          Analizar de forma agregada qué secciones se utilizan más (por ejemplo, páginas de ligas, equipos
+          o jugadores).
+        </li>
+      </ul>
+      <p class="legal-text">
+        LAqP no utiliza la información recopilada para realizar perfiles comerciales complejos propios ni para
+        enviar campañas masivas de publicidad en nombre de terceros.
+      </p>
+
+      <!-- 4. Cookies y tecnologías similares -->
+      <h3 class="legal-section-title">4. Cookies y tecnologías similares</h3>
+      <p class="legal-text">
+        El Sitio Web puede utilizar cookies y tecnologías similares con fines relacionados con el
+        funcionamiento, análisis y mejora del servicio, así como para mostrar publicidad.
+      </p>
+
+      <div class="legal-highlight">
+        <p class="legal-text">
+          En particular, el Sitio Web integra <strong>Google AdSense</strong> (anuncios), lo que supone el uso de cookies
+          y tecnologías similares por parte de Google para mostrar anuncios relevantes, medir su rendimiento
+          y prevenir fraude.
+        </p>
+      </div>
+
+      <p class="legal-text">
+        Además, algunas secciones pueden enlazar o integrar contenidos de terceros (por ejemplo, vídeos de YouTube),
+        que también pueden utilizar cookies al ser visitados o reproducidos.
+      </p>
+
+      <p class="legal-text">
+        Usted puede configurar su navegador para aceptar o rechazar cookies, así como para eliminar las ya
+        almacenadas. Sin embargo, desactivar ciertas cookies podría afectar al funcionamiento adecuado de
+        algunas partes del Sitio Web (como la visualización de anuncios u otros elementos integrados).
+      </p>
+
+      <!-- 5. Enlaces y servicios de terceros -->
+      <h3 class="legal-section-title">5. Enlaces y contenidos de terceros</h3>
+      <p class="legal-text">
+        El Sitio Web incluye numerosos enlaces a páginas de terceros y, en algunos casos, integra o remite a servicios externos,
+        entre otros:
+      </p>
+      <ul class="legal-list">
+        <li>
+          Sitios de estadísticas y bases de datos como <strong>SoFIFA</strong>, <strong>PESMaster</strong> u otros.
+        </li>
+        <li>
+          Plataformas de vídeo como <strong>YouTube</strong>, utilizadas para mostrar tácticas, caras de jugadores
+          o guías relacionadas con PES.
+        </li>
+        <li>
+          Páginas de descarga de Option Files, parches u otros contenidos creados por terceros.
+        </li>
+        <li>
+          Redes sociales u otros sitios relacionados con la comunidad de PES.
+        </li>
+      </ul>
+      <p class="legal-text">
+        Una vez que el usuario hace clic en estos enlaces o accede a contenidos embebidos y abandona el Sitio Web
+        o interactúa con dichos servicios, <strong>LAqP no tiene control</strong> sobre las páginas o plataformas externas y
+        no es responsable de sus políticas de privacidad, términos y condiciones, ni del modo en que esos terceros
+        tratan los datos personales o utilizan cookies.
+      </p>
+      <p class="legal-text">
+        Es recomendable que el usuario consulte las políticas de privacidad de estos sitios de terceros para confirmar
+        que está de acuerdo con ellas.
+      </p>
+
+      <!-- 6. Comentarios y contenido aportado por el usuario -->
+      <h3 class="legal-section-title">6. Comentarios y contenido aportado por el usuario</h3>
+      <p class="legal-text">
+        En aquellas secciones donde se permitan <strong>comentarios</strong> u otras formas de participación,
+        el usuario debe tener en cuenta que cualquier dato personal que publique (por ejemplo, nombre completo,
+        redes sociales, correo u otra información) lo hace de forma <strong>voluntaria y bajo su propia responsabilidad</strong>.
+      </p>
+      <p class="legal-text">
+        LAqP se reserva el derecho de <strong>moderar, editar o eliminar</strong> comentarios que considere inapropiados,
+        ofensivos, publicitarios, que vulneren derechos de terceros o que no guarden relación con el contenido de la web.
+      </p>
+      <p class="legal-text">
+        El contenido publicado podrá permanecer visible mientras el sitio exista, salvo que:
+      </p>
+      <ul class="legal-list">
+        <li>El usuario solicite su eliminación y sea posible identificarlo y atender su petición.</li>
+        <li>
+          LAqP decida eliminarlo por razones técnicas, legales o de moderación.
+        </li>
+      </ul>
+
+      <!-- 7. Control de su información personal -->
+      <h3 class="legal-section-title">7. Control de su información personal</h3>
+      <p class="legal-text">
+        En cualquier momento, el usuario puede solicitar información sobre el tratamiento de sus datos personales
+        facilitados a través del Sitio Web, así como pedir su <strong>modificación o eliminación</strong>, siempre que:
+      </p>
+      <ul class="legal-list">
+        <li>Sea técnicamente posible y razonable identificar dichos datos.</li>
+        <li>No exista obligación legal de conservarlos durante un determinado plazo.</li>
+      </ul>
+      <p class="legal-text">
+        En caso de que en el futuro se habiliten envíos de <strong>boletines o newsletters</strong>, el usuario podrá
+        aceptar o rechazar la recepción de dichas comunicaciones y darse de baja en cualquier momento siguiendo
+        las instrucciones de cada mensaje o contactando con LAqP.
+      </p>
+      <p class="legal-text">
+        LAqP <strong>no venderá, cederá ni distribuirá</strong> la información personal recopilada sin el consentimiento
+        del usuario, salvo que sea requerido por una autoridad competente y de conformidad con la legislación aplicable.
+      </p>
+
+      <!-- 8. Cambios en la política -->
+      <h3 class="legal-section-title">8. Cambios en esta Política de Privacidad</h3>
+      <p class="legal-text">
+        LAqP se reserva el derecho de modificar en cualquier momento los términos de la presente Política de Privacidad.
+        Cualquier cambio relevante se publicará en esta misma página.
+      </p>
+      <p class="legal-text">
+        El uso continuado del Sitio Web tras la publicación de cambios implica la aceptación de la Política de Privacidad
+        actualizada.
+      </p>
+
+      <p class="legal-note">
+        Última actualización: [indica aquí la fecha en que publiques o actualices esta política]
+      </p>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      © La Araña Que Pica — Página Oficial
+    </footer>
+  </div>
+
+  <script>
+    (async function initHeader(){
+      const headerTarget = document.getElementById('shared-header');
+
+      // 1) Clonar el header desde index.html (igual que en tus páginas de blog)
+      try{
+        const res = await fetch('index.html', { method: 'GET' });
+        if (!res.ok) throw new Error('No se pudo leer index.html');
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const originalHeader = doc.querySelector('header.site-header');
+        headerTarget.innerHTML = originalHeader ? originalHeader.outerHTML
+          : '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="index.html">Inicio</a></nav></header>';
+      }catch(e){
+        console.warn('Header fallback:', e);
+        headerTarget.innerHTML = '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="index.html">Inicio</a></nav></header>';
+      }
+
+      // 2) Ajustar los enlaces para que funcionen desde la raíz (privacidad.html está en /)
+      const nav = headerTarget.querySelector('.main-nav');
+      if (nav){
+        nav.querySelectorAll('a[href]').forEach(a=>{
+          const href = a.getAttribute('href') || '';
+          const isAbs  = /^https?:\/\//i.test(href);
+          const isRoot = href.startsWith('/');
+          const isHash = href.startsWith('#');
+
+          // En privacidad.html no hay que subir de carpeta, solo mantener rutas relativas tal cual
+          if (!isAbs && !isRoot && !isHash) {
+            a.setAttribute('href', href);
+          }
+        });
+
+        // 3) Marcar "Privacidad" como activo si existe en el menú
+        nav.querySelectorAll('a[href]').forEach(a=>{
+          const text = (a.textContent || '').trim().toLowerCase();
+          const href = a.getAttribute('href') || '';
+          if (text.includes('privacidad') || href === 'privacidad.html'){
+            a.setAttribute('aria-current','page');
+          }
+        });
+      }
+
+      // 4) Reactivar dropdowns del header inyectado (mismo patrón que en tu página de ejemplo)
+      (function(){
+        const OPEN_DELAY = 80, CLOSE_DELAY = 220;
+        const dropdowns = headerTarget.querySelectorAll('.dropdown');
+
+        dropdowns.forEach(dd=>{
+          let openT=null, closeT=null;
+          const btn  = dd.querySelector('.dropbtn');
+          const menu = dd.querySelector('.dropdown-menu');
+
+          function open(){
+            if(closeT){clearTimeout(closeT);closeT=null;}
+            dd.classList.add('open');
+            btn && btn.setAttribute('aria-expanded','true');
+          }
+          function close(){
+            if(openT){clearTimeout(openT);openT=null;}
+            dd.classList.remove('open');
+            btn && btn.setAttribute('aria-expanded','false');
+          }
+
+          dd.addEventListener('mouseenter',()=>{
+            if(closeT) clearTimeout(closeT);
+            openT = setTimeout(open, OPEN_DELAY);
+          });
+          dd.addEventListener('mouseleave',()=>{
+            if(openT) clearTimeout(openT);
+            closeT = setTimeout(close, CLOSE_DELAY);
+          });
+
+          if (menu){
+            menu.addEventListener('click',(e)=>{
+              const act = e.target.closest('a, button, [role="menuitem"]');
+              if (act){ close(); return; }
+              const sum = e.target.closest('summary');
+              if (sum){ setTimeout(close,0); }
+            });
+            menu.addEventListener('mouseleave',()=>{
+              closeT=setTimeout(close,CLOSE_DELAY);
+            });
+          }
+
+          if (btn){
+            btn.addEventListener('click',(e)=>{
+              e.preventDefault();
+              dd.classList.contains('open') ? close() : open();
+            });
+            btn.addEventListener('keydown',(e)=>{
+              if(['Enter',' '].includes(e.key)){
+                e.preventDefault();
+                dd.classList.contains('open') ? close() : open();
+              } else if(e.key==='Escape'){
+                close();
+                btn.focus();
+              } else if(e.key==='ArrowDown'){
+                open();
+                const first=menu?.querySelector('a,summary,[role="menuitem"]');
+                first && first.focus();
+              }
+            });
+            btn.addEventListener('click',()=>{
+              dropdowns.forEach(o=>{
+                if(o!==dd){
+                  o.classList.remove('open');
+                  const b=o.querySelector('.dropbtn');
+                  b && b.setAttribute('aria-expanded','false');
+                }
+              });
+            });
+          }
+
+          document.addEventListener('click',(e)=>{
+            if(!dd.contains(e.target)) close();
+          });
+        });
+
+        document.addEventListener('keydown',(e)=>{
+          if(e.key==='Escape'){
+            headerTarget.querySelectorAll('.dropdown.open').forEach(d=>{
+              d.classList.remove('open');
+              const b=d.querySelector('.dropbtn');
+              b && b.setAttribute('aria-expanded','false');
+            });
+          }
+        });
+      })();
+    })();
+  </script>
+</body>
+</html>

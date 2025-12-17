@@ -19,7 +19,7 @@
         - Cartel Stats: botón hacia PES MASTER (u otro enlace de stats). Si no existe, se oculta.
      3. Finalmente la grilla con el resto de tarjetas (equipo, liga, posición, nacimiento, país, rating).
      4. Reutilizar placeholders generados por manage_db.py: Conan Ledesma, 13/02/1993, (32 años),
-        Argentina.png, <img class='flag' src='../img/flags/argentinapng.png' alt='Argentina' onerror="this.style.display='none'">, img/jugadores/Conan Ledesma.png, 77, Arquero, <a class='clean' href='../equipo.html?slug=river-plate'>River Plate</a>, <a class='clean' href='../liga.html?slug=torneo-betano'>Torneo Betano</a>,
+        Argentina.png, <img class='flag' src='../img/flags/argentinapng.png' alt='Argentina' onerror="this.style.display='none'">, img/jugadores/Conan Ledesma.png, 76, Arquero, <a class='clean' href='../equipo.html?slug=river-plate'>River Plate</a>, <a class='clean' href='../liga.html?slug=torneo-betano'>Torneo Betano</a>,
         <a href='https://www.pesmaster.com/es/jeremias-ledesma/efootball-2022/player/60360/' target='_blank' rel='noopener'>PES MASTER</a>, <a href='https://youtu.be/LMRFGhu12dU?si=spzRpLoTxGKT8jL0' target='_blank' rel='noopener'>YouTube</a>.
      5. JS convierte <a href='https://www.pesmaster.com/es/jeremias-ledesma/efootball-2022/player/60360/' target='_blank' rel='noopener'>PES MASTER</a> y <a href='https://youtu.be/LMRFGhu12dU?si=spzRpLoTxGKT8jL0' target='_blank' rel='noopener'>YouTube</a> en botones y arma el preview.
      6. Mínimo 500 líneas de código (se agregan comentarios extendidos para documentación futura).
@@ -179,7 +179,7 @@
 
 /* Dial circular (rating) */
 .rating-dial{
-  --r:77;
+  --r:76;
   width:140px;
   height:140px;
   border-radius:50%;
@@ -471,7 +471,7 @@
    Comentarios adicionales para documentación prolongada y cumplir el mínimo de líneas:
    - Este template es expansible: se pueden añadir más tarjetas en .duo-cards si hubiera otras fuentes
      (por ejemplo, estadísticas avanzadas, comparaciones, historial de clubes del jugador, etc.).
-   - El dial usa conic-gradient y variable --r. manage_db.py reemplaza 77 en HTML y nosotros
+   - El dial usa conic-gradient y variable --r. manage_db.py reemplaza 76 en HTML y nosotros
      forzamos la variable con JS para seguridad.
    - country normalization: algunos registros pueden tener "Argentina.png" como country en CSV; se
      limpia mostrando solo "Argentina".
@@ -534,7 +534,7 @@
     </div>
 
     <div class="hero-right">
-      <div class="rating-dial" id="ratingDial">77</div>
+      <div class="rating-dial" id="ratingDial">76</div>
       <div class="rating-bar"><span id="ratingBarFill"></span></div>
     </div>
 
@@ -563,7 +563,7 @@
   <div class="stats-inner">
     <h3 class="player-card-title stats-title">ESTADÍSTICAS (PES MASTER)</h3>
 
-    <div class="stats-big-rating">77</div>
+    <div class="stats-big-rating">76</div>
 
     <ul class="stats-lines">
       <li><span class="k">Posición</span><span class="v">Arquero</span></li>

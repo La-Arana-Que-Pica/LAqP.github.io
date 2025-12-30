@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Option File V5 – PES 2018 (PS4/PS5 & PC)</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" href="../img/Logo Web.png?v=1" type="image/png" sizes="32x32">
+  <meta name="description" content="Option File V5 para PES 2018, compatible con PS4/PS5 y PC. Ligas principales actualizadas, stats, caras creadas con editor interno y versión especial para PC. Contraseña del RAR: LAqP.">
+
+  <style>
+    .download-neon-btn{
+      --btn-grad:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      padding:11px 22px 10px;
+      border-radius:999px;
+      font-family:'Press Start 2P',monospace;
+      font-size:.6rem;
+      letter-spacing:1px;
+      font-weight:800;
+      text-decoration:none;
+      color:#071014;
+      background:var(--btn-grad);
+      background-size:220% 100%;
+      box-shadow:
+        0 14px 40px rgba(0,255,231,.32),
+        0 10px 30px rgba(255,0,170,.26),
+        0 0 0 1px rgba(255,255,255,.08) inset;
+      filter:saturate(1.06);
+      transition:
+        background-position .65s cubic-bezier(.2,.9,.3,1),
+        transform .22s cubic-bezier(.2,.9,.3,1),
+        box-shadow .22s ease,
+        filter .22s ease;
+      isolation:isolate;
+      overflow:hidden;
+      white-space:nowrap;
+    }
+    .download-neon-btn::before{
+      content:"";
+      position:absolute;
+      inset:-3px;
+      padding:3px;
+      border-radius:999px;
+      background:conic-gradient(from 0deg,var(--neon-cyan),var(--neon-pink),var(--neon-cyan));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+              mask-composite:exclude;
+      opacity:.55;
+      filter:blur(4px);
+      animation:edgeRoll 6s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes edgeRoll{
+      0%{transform:rotate(0deg)}
+      100%{transform:rotate(360deg)}
+    }
+    .download-neon-btn::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:999px;
+      background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 60%);
+      mix-blend-mode:overlay;
+      opacity:.25;
+      animation:innerPulse 4.2s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes innerPulse{
+      0%,100%{opacity:.25}
+      50%{opacity:.45}
+    }
+    .download-neon-btn:hover{
+      transform:translateY(-5px) scale(1.04);
+      background-position:100% 0;
+      box-shadow:
+        0 26px 80px rgba(0,255,231,.40),
+        0 18px 60px rgba(255,0,170,.35),
+        0 0 0 2px rgba(0,0,0,.55) inset;
+      filter:saturate(1.14) brightness(1.04);
+    }
+    .download-neon-btn:active{
+      transform:translateY(-2px) scale(1.02);
+      box-shadow:
+        0 16px 46px rgba(0,255,231,.28),
+        0 10px 34px rgba(255,0,170,.25);
+    }
+    .download-neon-btn.secondary{
+      background:linear-gradient(180deg,rgba(18,20,28,.96),rgba(10,10,14,.98));
+      color:#dffbfb;
+      box-shadow:
+        0 12px 36px rgba(0,0,0,.7),
+        0 0 0 1px rgba(255,255,255,.10) inset;
+    }
+    .download-neon-btn.secondary::before{
+      background:conic-gradient(from 0deg,var(--neon-cyan),var(--neon-pink),var(--neon-cyan));
+      filter:blur(5px);
+      opacity:.45;
+    }
+    .download-neon-btn.secondary:hover{
+      filter:saturate(1.25) brightness(1.08);
+      box-shadow:
+        0 26px 70px rgba(0,0,0,.8),
+        0 0 28px rgba(0,255,231,.35),
+        0 0 22px rgba(255,0,170,.30);
+      color:#fff;
+    }
+    .download-neon-btn.small{
+      font-size:.54rem;
+      padding:9px 18px 8px;
+    }
+    .download-neon-btn small{
+      font-size:.54rem;
+      opacity:.9;
+    }
+
+    .download-buttons-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:10px;
+      margin-bottom:4px;
+    }
+
+    .download-badge{
+      display:inline-block;
+      padding:3px 10px;
+      border-radius:999px;
+      font-size:.65rem;
+      font-family:'Roboto',sans-serif;
+      letter-spacing:.3px;
+      background:rgba(0,0,0,.55);
+      color:#9ff;
+      border:1px solid rgba(0,255,231,.35);
+      margin-bottom:8px;
+    }
+
+    .small-note{
+      font-size:.78rem;
+      color:#cfecec;
+      opacity:.9;
+    }
+
+    @media (max-width:640px){
+      .download-neon-btn{
+        width:100%;
+        justify-content:center;
+        font-size:.58rem;
+        padding:10px 12px 9px;
+      }
+    }
+
+    .nav-buttons-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="wrap">
+
+    <header id="shared-header"></header>
+
+    <div class="page-title" role="heading" aria-level="1">
+      Option File V5 – PES 2018 (PS4/PS5 & PC)
+    </div>
+
+    <section class="hero-feature" role="img" aria-label="Miniatura Option File V5 PES 2018">
+      <div class="db-frame" aria-hidden="true"></div>
+      <div class="db-pill">
+        <img class="db-pill-img" src="../img/Option Files/OF V 5.png" alt="Miniatura Option File V5 PES 2018">
+        <span class="db-label">OF V5</span>
+      </div>
+    </section>
+
+    <article class="hero blog-single" role="article" aria-label="Detalle Option File V5 PES 2018">
+      <div class="hero-feature" style="padding:24px;min-height:auto">
+        <div class="content-block" style="max-width:960px;margin:0 auto">
+
+          <!-- Encabezado + CTA -->
+          <header style="margin-bottom:18px">
+            <h2 style="margin-top:0;font-family:'Bungee','Press Start 2P';letter-spacing:.6px">
+              Option File V5 – PES 2018 (PS4/PS5 & PC)
+            </h2>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Nueva versión del <strong>Option File V5</strong> para <strong>PES 2018</strong>,
+              ahora disponible tanto para <strong>PS4/PS5</strong> como para <strong>PC</strong>.
+            </p>
+            <p class="small-note">
+              Contraseña del RAR: <strong>LAqP</strong> (respetando mayúsculas).
+            </p>
+
+            <div class="download-buttons-row" aria-label="Descargas Option File V5">
+              <a class="download-neon-btn" href="https://www.mediafire.com/file/7yj05itv1bkftk6/OF_PES_2018_al_2025_V5_PS4-PS5_by_LAqP.rar/file" target="_blank" rel="noopener">
+                DESCARGAR OF V5 – PS4/PS5
+              </a>
+              <a class="download-neon-btn secondary" href="https://www.mediafire.com/file/zuq3n0sr004w40p/OF_PES_2018_al_2025_V5_PC_by_LAqP.rar/file" target="_blank" rel="noopener">
+                DESCARGAR OF V5 – PC
+              </a>
+            </div>
+            <p class="small-note">
+              Ambos archivos están comprimidos con contraseña <strong>LAqP</strong>.
+            </p>
+
+            <!-- Botón tutorial de instalación (YouTube) -->
+            <div style="margin-top:10px">
+              <a class="download-neon-btn small secondary" href="https://youtu.be/3HkpYyyUnxU?si=k-KpbJ7Ib1vqwxvD" target="_blank" rel="noopener">
+                VER TUTORIAL DE INSTALACIÓN EN YOUTUBE
+              </a>
+            </div>
+          </header>
+
+          <!-- Resumen ligas incluidas -->
+          <section aria-label="Ligas incluidas" style="margin-top:10px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Ligas incluidas en V5
+            </h3>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Esta versión trae <strong>completas</strong> las siguientes ligas:
+            </p>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li>Premier League</li>
+              <li>LaLiga <strong>(* NUEVO)</strong></li>
+              <li>Liga Argentina</li>
+              <li>Brasileirão</li>
+              <li>Otros equipos latinoamericanos</li>
+              <li>Selecciones de CONMEBOL <strong>(* NUEVO)</strong></li>
+            </ul>
+            <p style="color:#cfecec;letter-spacing:.4px;margin-top:6px">
+              Fuera de esas ligas, el OF solo incluye los <strong>equipos TOP del mundo</strong>
+              o clubes con jugadores muy reconocidos.
+            </p>
+          </section>
+
+          <!-- Contenido por equipo -->
+          <section aria-label="Contenido por equipo" style="margin-top:16px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              ¿Qué incluye cada equipo?
+            </h3>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li><strong>Caras creadas</strong> con el editor interno del juego.</li>
+              <li><strong>Stats y medias</strong> actualizadas a la temporada actual.</li>
+              <li><strong>Nombres de DT y estadios</strong> puestos correctamente.</li>
+              <li><strong>Kits actuales</strong> de clubes y selecciones cubiertas.</li>
+            </ul>
+          </section>
+
+          <!-- Cambios vs V4 -->
+          <section aria-label="Cambios respecto a la versión anterior" style="margin-top:16px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Cambios respecto a la V4
+            </h3>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li>Las <strong>GRL</strong> de todos los equipos sudamericanos fueron corregidas.</li>
+              <li>Se mejoraron los <strong>nombres de los jugadores</strong>: ahora aparecen con nombre y apellido completo.</li>
+              <li>Los equipos de <strong>LaLiga</strong> vienen con sus <strong>minifaces y caras hechas</strong>.</li>
+              <li>Ya no se incluyen <strong>fotos de entrenadores ni estadios</strong> para evitar problemas con imágenes en futuras versiones.</li>
+              <li>Las convocatorias de las selecciones de <strong>CONMEBOL</strong> se basan en la <strong>última fecha de Eliminatorias</strong> (las últimas “convocatorias serias”).</li>
+            </ul>
+          </section>
+
+          <!-- Novedad PC -->
+          <section aria-label="Novedad principal versión PC" style="margin-top:16px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Novedad principal: versión para PC
+            </h3>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              La gran novedad de la V5 es que ahora también está disponible una
+              <strong>versión específica para PC</strong>.
+            </p>
+
+            <h4 style="color:#dffbfb;letter-spacing:.4px;margin:10px 0 4px;font-family:'Roboto',sans-serif">
+              Diferencias de la versión PC
+            </h4>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li>Los <strong>escudos</strong> vienen en un archivo <strong>.cpk</strong> que debe importarse con el programa <strong>DpListGenerator</strong>.</li>
+              <li>Incluye <strong>minifaces REALES</strong> en algunos equipos:
+                River, Boca, Carabobo, Nacional, Barcelona, Argentina, Flamengo,
+                Gornik Zabrze y Halcones Dorados (también dentro de un .cpk).</li>
+              <li>En versiones futuras se agregarán más minifaces y se buscará convertir este OF en un <strong>parche completo</strong>.</li>
+              <li>Ya no aparece el error que <strong>duplicaba jugadores</strong> al importar equipos en PC.</li>
+              <li>Salvo estas dos novedades (.cpk de escudos y minifaces reales), el contenido es <strong>exactamente el mismo</strong> que en PS4/PS5.</li>
+            </ul>
+
+            <h4 style="color:#dffbfb;letter-spacing:.4px;margin:10px 0 4px;font-family:'Roboto',sans-serif">
+              Requisitos de la versión PC
+            </h4>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Para que la versión de PC funcione correctamente:
+            </p>
+            <ul style="color:#dffbfb;letter-spacing:.4px;line-height:1.6">
+              <li>Es compatible solo con la versión <strong>1.05.02 – Data Pack 4.01</strong>.</li>
+              <li>Necesitás tener el juego:
+                <ul style="margin-top:4px;">
+                  <li>Comprado en <strong>Steam</strong>, o</li>
+                  <li>Instalado con el método que explico en mi canal (link en la descripción del video correspondiente).</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+
+          <!-- Advertencias / cosas a tener en cuenta -->
+          <section aria-label="Cosas a tener en cuenta" style="margin-top:18px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Antes de instalar el Option File
+            </h3>
+            <ul style="color:#ffb3b3;letter-spacing:.4px;line-height:1.6">
+              <li>El Option File sigue en construcción: <strong>NO</strong> trae actualizados <strong>todos</strong> los equipos del juego.</li>
+              <li>El OF puede <strong>arruinar una Liga Master</strong> creada antes de su instalación; se recomienda empezar una nueva si usás este archivo.</li>
+              <li>Se recomienda tener el juego <strong>lo más limpio posible</strong> para evitar conflictos con otros OF/parches.</li>
+              <li>El Option File <strong>NO sirve</strong> para <strong>PS4/PS5 pirateadas</strong>, ya que el juego exige iniciar sesión para poder importar.</li>
+              <li>No hace falta tener versiones anteriores instaladas: la V5 <strong>incluye TODO el contenido anterior</strong>.</li>
+              <li>El Option File es <strong>compatible</strong> con cualquiera de las versiones anteriores de <strong>MI OF</strong> (no rompe la compatibilidad hacia atrás).</li>
+            </ul>
+          </section>
+
+          <!-- Navegación: PES 2018 + V4 -->
+          <section aria-label="Otros enlaces relacionados" style="margin-top:22px">
+            <h3 style="font-family:'Press Start 2P';letter-spacing:.8px">
+              Otros enlaces útiles
+            </h3>
+            <p style="color:#cfecec;letter-spacing:.4px">
+              Este Option File V5 es compatible con la versión de <strong>PES 2018</strong>
+              que explico cómo descargar e instalar en mi web.
+            </p>
+            <div class="nav-buttons-row">
+              <a class="download-neon-btn secondary" href="../pages/Descargar PES 2018.html">
+                VER GUÍA PARA DESCARGAR PES 2018 (PC)
+              </a>
+              <a class="download-neon-btn secondary" href="../pages/PES 2018 al 2025.html">
+                VER PÁGINA DEL OPTION FILE V4
+              </a>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </article>
+
+    <footer class="site-footer" role="contentinfo">© La Araña Que Pica — Página Oficial</footer>
+  </div>
+
+  <script>
+    (async function initBlog(){
+      const headerTarget = document.getElementById('shared-header');
+      try{
+        const res = await fetch('../index.html',{method:'GET'});
+        if(!res.ok) throw new Error('No se pudo leer ../index.html');
+        const html = await res.text();
+        const doc  = new DOMParser().parseFromString(html,'text/html');
+        const originalHeader = doc.querySelector('header.site-header');
+        headerTarget.innerHTML = originalHeader ? originalHeader.outerHTML
+          : '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+      }catch(e){
+        console.warn('Header fallback:',e);
+        headerTarget.innerHTML =
+          '<header class="site-header"><div class="brand"><div class="logo"></div><h1>LAqP</h1></div><nav class="main-nav"><a href="../index.html">Inicio</a></nav></header>';
+      }
+
+      const nav = headerTarget.querySelector('.main-nav');
+      if(nav){
+        nav.querySelectorAll('a[href]').forEach(a=>{
+          const href  = a.getAttribute('href') || '';
+          const isAbs = /^https?:\/\//i.test(href);
+          const isRoot= href.startsWith('/');
+          const isHash= href.startsWith('#');
+          const text  = a.textContent.trim().toLowerCase();
+
+          if(text==='inicio' || href==='#'){
+            a.setAttribute('href','../index.html');
+            return;
+          }
+          if(!isAbs && !isRoot && !isHash){
+            a.setAttribute('href',`../${href}`);
+          }
+        });
+      }
+
+      (function(){
+        const OPEN_DELAY=80,CLOSE_DELAY=220;
+        const dropdowns=headerTarget.querySelectorAll('.dropdown');
+
+        dropdowns.forEach(dd=>{
+          let ot=null,ct=null;
+          const btn = dd.querySelector('.dropbtn');
+          const menu= dd.querySelector('.dropdown-menu');
+
+          function open(){
+            if(ct){clearTimeout(ct);ct=null;}
+            dd.classList.add('open');
+            btn && btn.setAttribute('aria-expanded','true');
+          }
+          function close(){
+            if(ot){clearTimeout(ot);ot=null;}
+            dd.classList.remove('open');
+            btn && btn.setAttribute('aria-expanded','false');
+          }
+
+          dd.addEventListener('mouseenter',()=>{ if(ct) clearTimeout(ct); ot=setTimeout(open,OPEN_DELAY); });
+          dd.addEventListener('mouseleave',()=>{ if(ot) clearTimeout(ot); ct=setTimeout(close,CLOSE_DELAY); });
+
+          if(menu){
+            menu.addEventListener('click',e=>{
+              const act = e.target.closest('a,button,[role="menuitem"]');
+              if(act){ close(); return; }
+              const sum = e.target.closest('summary');
+              if(sum){ setTimeout(close,0); }
+            });
+            menu.addEventListener('mouseleave',()=>{ ct=setTimeout(close,CLOSE_DELAY); });
+          }
+
+          if(btn){
+            btn.addEventListener('click',e=>{
+              e.preventDefault();
+              dd.classList.contains('open') ? close() : open();
+            });
+            btn.addEventListener('keydown',e=>{
+              if(['Enter',' '].includes(e.key)){
+                e.preventDefault();
+                dd.classList.contains('open') ? close() : open();
+              }else if(e.key==='Escape'){
+                close(); btn.focus();
+              }else if(e.key==='ArrowDown'){
+                open();
+                const first = menu?.querySelector('a,summary,[role="menuitem"]');
+                first && first.focus();
+              }
+            });
+            btn.addEventListener('click',()=>{
+              dropdowns.forEach(o=>{
+                if(o!==dd){
+                  o.classList.remove('open');
+                  const b=o.querySelector('.dropbtn');
+                  b && b.setAttribute('aria-expanded','false');
+                }
+              });
+            });
+          }
+
+          document.addEventListener('click',e=>{
+            if(!dd.contains(e.target)) close();
+          });
+        });
+
+        document.addEventListener('keydown',e=>{
+          if(e.key==='Escape'){
+            headerTarget.querySelectorAll('.dropdown.open').forEach(d=>{
+              d.classList.remove('open');
+              const b=d.querySelector('.dropbtn');
+              b && b.setAttribute('aria-expanded','false');
+            });
+          }
+        });
+      })();
+    })();
+  </script>
+</body>
+</html>

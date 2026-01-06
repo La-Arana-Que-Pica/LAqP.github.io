@@ -128,6 +128,22 @@
     "members": "Desconocido"
   },
   {
+    "id": 125,
+    "name": "Atalanta",
+    "league_id": 4,
+    "logo": "img/equipos/Atalanta Bergamasca Calcio.png",
+    "slug": "atalanta",
+    "sofifa_url": "https://sofifa.com/squad/2339368",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1907",
+    "stadium": "Gewiss Stadium",
+    "capacity": "24.000",
+    "city": "Bérgamo",
+    "nickname": "La Dea",
+    "members": "Desconocido"
+  },
+  {
     "id": 58,
     "name": "Athletic Club",
     "league_id": 5,
@@ -368,6 +384,22 @@
     "members": "323.586"
   },
   {
+    "id": 126,
+    "name": "Bologna",
+    "league_id": 4,
+    "logo": "img/equipos/Bologna FC.png",
+    "slug": "bologna",
+    "sofifa_url": "https://sofifa.com/squad/2373684",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1909",
+    "stadium": "Renato Dall'Ara",
+    "capacity": "36.462",
+    "city": "Bolonia",
+    "nickname": "Rossoblù",
+    "members": "Desconocido"
+  },
+  {
     "id": 103,
     "name": "Bolívar",
     "league_id": 10,
@@ -477,6 +509,22 @@
     "capacity": "21.944",
     "city": "Burnley",
     "nickname": "Clarets",
+    "members": "Desconocido"
+  },
+  {
+    "id": 127,
+    "name": "Cagliari",
+    "league_id": 4,
+    "logo": "img/equipos/Cagliari Calcio.png",
+    "slug": "cagliari",
+    "sofifa_url": "https://sofifa.com/squad/2373703",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1920",
+    "stadium": "Sardegna Arena",
+    "capacity": "16.416",
+    "city": "Cagliari",
+    "nickname": "Gli Isolani",
     "members": "Desconocido"
   },
   {
@@ -592,6 +640,22 @@
     "members": "58.500"
   },
   {
+    "id": 128,
+    "name": "Como",
+    "league_id": 4,
+    "logo": "img/equipos/Como 1907.png",
+    "slug": "como",
+    "sofifa_url": "https://sofifa.com/squad/2373718",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1907",
+    "stadium": "Giuseppe Sinigaglia",
+    "capacity": "12.039",
+    "city": "Como",
+    "nickname": "Lariani",
+    "members": "Desconocido"
+  },
+  {
     "id": 84,
     "name": "Corinthians",
     "league_id": 7,
@@ -605,6 +669,22 @@
     "capacity": "47.605",
     "city": "São Paulo",
     "nickname": "Timão",
+    "members": "Desconocido"
+  },
+  {
+    "id": 129,
+    "name": "Cremonese",
+    "league_id": 4,
+    "logo": "img/equipos/US Cremonese.png",
+    "slug": "cremonese",
+    "sofifa_url": "https://sofifa.com/squad/2373763",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1903",
+    "stadium": "Giovanni Zini",
+    "capacity": "16.003",
+    "city": "Cremona",
+    "nickname": "I Grigiorossi",
     "members": "Desconocido"
   },
   {
@@ -752,6 +832,22 @@
     "members": "Desconocido"
   },
   {
+    "id": 130,
+    "name": "Fiorentina",
+    "league_id": 4,
+    "logo": "img/equipos/Fiorentina.png",
+    "slug": "fiorentina",
+    "sofifa_url": "https://sofifa.com/squad/2373803",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1926",
+    "stadium": "Artemio Franchi",
+    "capacity": "43.147",
+    "city": "Florencia",
+    "nickname": "La Viola",
+    "members": "Desconocido"
+  },
+  {
     "id": 86,
     "name": "Flamengo",
     "league_id": 7,
@@ -893,6 +989,38 @@
     "capacity": "55.662",
     "city": "Porto Alegre",
     "nickname": "Tricolor Gaúcho",
+    "members": "Desconocido"
+  },
+  {
+    "id": 131,
+    "name": "Génova",
+    "league_id": 4,
+    "logo": "img/equipos/Genoa CFC.png",
+    "slug": "genova",
+    "sofifa_url": "https://sofifa.com/squad/2374413",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1893",
+    "stadium": "Luigi Ferraris",
+    "capacity": "36.685",
+    "city": "Génova",
+    "nickname": "Il Grifone",
+    "members": "Desconocido"
+  },
+  {
+    "id": 132,
+    "name": "Hellas Verona",
+    "league_id": 4,
+    "logo": "img/equipos/Hellas Verona FC.png",
+    "slug": "hellas-verona",
+    "sofifa_url": "https://sofifa.com/squad/2374426",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1903",
+    "stadium": "Marcantonio Bentegodi",
+    "capacity": "31.045",
+    "city": "Verona",
+    "nickname": "I Gialloblu",
     "members": "Desconocido"
   },
   {
@@ -1088,6 +1216,22 @@
     "members": "38.450"
   },
   {
+    "id": 133,
+    "name": "Lazio",
+    "league_id": 4,
+    "logo": "img/equipos/SS Lazio.png",
+    "slug": "lazio",
+    "sofifa_url": "https://sofifa.com/squad/2374491",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1900",
+    "stadium": "Olimpico",
+    "capacity": "73.261",
+    "city": "Roma",
+    "nickname": "I Biancocelesti",
+    "members": "Desconocido"
+  },
+  {
     "id": 112,
     "name": "LDU Quito",
     "league_id": 12,
@@ -1101,6 +1245,22 @@
     "capacity": "41.500",
     "city": "Quito",
     "nickname": "Albos",
+    "members": "Desconocido"
+  },
+  {
+    "id": 134,
+    "name": "Lecce",
+    "league_id": 4,
+    "logo": "img/equipos/US Lecce.png",
+    "slug": "lecce",
+    "sofifa_url": "https://sofifa.com/squad/2374535",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1908",
+    "stadium": "Via del Mare",
+    "capacity": "33.876",
+    "city": "Lecce",
+    "nickname": "I Salentini",
     "members": "Desconocido"
   },
   {
@@ -1424,6 +1584,22 @@
     "members": "Desconocido"
   },
   {
+    "id": 135,
+    "name": "Parma",
+    "league_id": 4,
+    "logo": "img/equipos/Parma Calcio 1913.png",
+    "slug": "parma",
+    "sofifa_url": "https://sofifa.com/squad/2374564",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1913",
+    "stadium": "Ennio Tardini",
+    "capacity": "22.350",
+    "city": "Parma",
+    "nickname": "I Crociati",
+    "members": "Desconocido"
+  },
+  {
     "id": 121,
     "name": "Peñarol",
     "league_id": 15,
@@ -1437,6 +1613,22 @@
     "capacity": "40.000",
     "city": "Montevideo",
     "nickname": "Carboneros",
+    "members": "Desconocido"
+  },
+  {
+    "id": 136,
+    "name": "Pisa",
+    "league_id": 4,
+    "logo": "img/equipos/Pisa Sporting Club.png",
+    "slug": "pisa",
+    "sofifa_url": "https://sofifa.com/squad/2375299",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1909",
+    "stadium": "Arena Garibaldi",
+    "capacity": "12.508",
+    "city": "Pisa",
+    "nickname": "Nerazzurri",
     "members": "Desconocido"
   },
   {
@@ -1696,6 +1888,22 @@
     "members": "10.000"
   },
   {
+    "id": 137,
+    "name": "Sassuolo",
+    "league_id": 4,
+    "logo": "img/equipos/US Sassuolo.png",
+    "slug": "sassuolo",
+    "sofifa_url": "https://sofifa.com/squad/2375308",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1920",
+    "stadium": "MAPEI Stadium",
+    "capacity": "21.584",
+    "city": "Sassuolo",
+    "nickname": "I Neroverdi",
+    "members": "Desconocido"
+  },
+  {
     "id": 74,
     "name": "Sevilla",
     "league_id": 5,
@@ -1808,6 +2016,22 @@
     "members": "20.000"
   },
   {
+    "id": 138,
+    "name": "Torino",
+    "league_id": 4,
+    "logo": "img/equipos/Torino FC.png",
+    "slug": "torino",
+    "sofifa_url": "https://sofifa.com/squad/2375319",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1906",
+    "stadium": "Olímpico de Turín",
+    "capacity": "28.140",
+    "city": "Turín",
+    "nickname": "Il Toro",
+    "members": "Desconocido"
+  },
+  {
     "id": 48,
     "name": "Tottenham Hotspur",
     "league_id": 2,
@@ -1838,6 +2062,22 @@
     "city": "Santiago",
     "nickname": "La U",
     "members": "40.000"
+  },
+  {
+    "id": 139,
+    "name": "Udinese",
+    "league_id": 4,
+    "logo": "img/equipos/Udinese Calcio.png",
+    "slug": "udinese",
+    "sofifa_url": "https://sofifa.com/squad/2375324",
+    "tactics_video_url": "",
+    "faces_video_url": "",
+    "founded_year": "1896",
+    "stadium": "Bluenergy Stadium",
+    "capacity": "25.144",
+    "city": "Údine",
+    "nickname": "I Bianconeri",
+    "members": "Desconocido"
   },
   {
     "id": 118,

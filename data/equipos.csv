@@ -7,6 +7,7 @@ id,name,league_id,logo,slug,sofifa_url,tactics_video_url,faces_video_url,founded
 19,Argentinos Juniors,1,img/equipos/Argentinos Juniors.png,argentinos-juniors,https://sofifa.com/squad/2211948,,,1904,Diego Armando Maradona,26.000,Buenos Aires,Bicho,36.500
 31,Arsenal,2,img/equipos/Arsenal.png,arsenal,https://sofifa.com/squad/2223652,,,1886,Emirates Stadium,60.704,Londres,Gunners,Desconocido
 32,Aston Villa,2,img/equipos/Aston Villa.png,aston-villa,https://sofifa.com/squad/2271177,,,1874,Villa Park,42.682,Birmingham,Villans,Desconocido
+125,Atalanta,4,img/equipos/Atalanta Bergamasca Calcio.png,atalanta,https://sofifa.com/squad/2339368,,,1907,Gewiss Stadium,24.000,Bérgamo,La Dea,Desconocido
 58,Athletic Club,5,img/equipos/Athletic Club.png,athletic-club,https://sofifa.com/squad/2286711,,,1898,San Mamés,53.289,Bilbao,Los Leones,Desconocido
 106,Atlético Bucaramanga,11,img/equipos/CA Bucaramanga.png,atletico-bucaramanga,https://sofifa.com/squad/2242004,,,1949,Estadio Alfonso López,25.000,Bucaramanga,Leopardos,Desconocido
 59,Atlético de Madrid,5,img/equipos/Atlético de Madrid.png,atletico-de-madrid,https://sofifa.com/squad/2217322,,,1903,Cívitas Metropolitano,70.460,Madrid,Los Colchoneros,Desconocido
@@ -22,6 +23,7 @@ id,name,league_id,logo,slug,sofifa_url,tactics_video_url,faces_video_url,founded
 79,Bayern München,6,img/equipos/FC Bayern Munchen.png,bayern-munchen,https://sofifa.com/squad/2223432,,,1900,Allianz Arena,75.024,Múnich,Die Roten,432.500
 9,Belgrano,1,img/equipos/Club Atletico Belgrano.png,belgrano,https://sofifa.com/squad/2211983,,,1905,Gigante de Alberdi,33.000,Córdoba,Pirata,65.139
 2,Boca Juniors,1,img/equipos/Boca Juniors.png,boca-juniors,https://sofifa.com/squad/2211126,None,None,1905,La Bombonera,57.200,Buenos Aires,Xeneizes,323.586
+126,Bologna,4,img/equipos/Bologna FC.png,bologna,https://sofifa.com/squad/2373684,,,1909,Renato Dall'Ara,36.462,Bolonia,Rossoblù,Desconocido
 103,Bolívar,10,img/equipos/Club Bolivar.png,bolivar,https://sofifa.com/squad/2218561,,,1925,Estadio Hernando Siles,41.143,La Paz,La Academia Celeste,Desconocido
 78,Borussia Dortmund,6,img/equipos/Borussia Dortmund.png,borussia-dortmund,https://sofifa.com/squad/2228100,,,1909,Signal Iduna Park,81.365,Dortmund,Die Schwarzgelben,230.000
 82,Botafogo,7,img/equipos/Botafogo.png,botafogo,https://sofifa.com/squad/2306913,,,1894,Estádio Nilton Santos,46.831,Río de Janeiro,Alvinegro,67.000+ (sep 2024)
@@ -29,6 +31,7 @@ id,name,league_id,logo,slug,sofifa_url,tactics_video_url,faces_video_url,founded
 34,Brentford,2,img/equipos/Brentford.png,brentford,https://sofifa.com/squad/2270961,,,1889,Gtech Community Stadium,17.250,Londres,Bees,Desconocido
 35,Brighton & Hove Albion,2,img/equipos/Brighton & Hove Albion.png,brighton-hove-albion,https://sofifa.com/squad/2270285,,,1901,American Express Stadium,31.876,Brighton,Seagulls,Desconocido
 36,Burnley,2,img/equipos/Burnley.png,burnley,https://sofifa.com/squad/2271205,,,1882,Turf Moor,21.944,Burnley,Clarets,Desconocido
+127,Cagliari,4,img/equipos/Cagliari Calcio.png,cagliari,https://sofifa.com/squad/2373703,,,1920,Sardegna Arena,16.416,Cagliari,Gli Isolani,Desconocido
 122,Carabobo F.C.,16,img/equipos/Carabobo FC.png,carabobo-fc,,,,1997,Polideportivo Misael Delgado,10.400,Valencia,Granates,Desconocido
 83,Ceará,7,img/equipos/Ceará.png,ceara,https://sofifa.com/squad/2306905,,,1914,Arena Castelão,63.903,Fortaleza,Vozão,Desconocido
 62,Celta,5,img/equipos/R.C. Celta de Vigo.png,rcd-celta-de-vigo,https://sofifa.com/squad/2292501,,,1923,Abanca Balaídos,29.000,Vigo,Os Celestes,Desconocido
@@ -36,7 +39,9 @@ id,name,league_id,logo,slug,sofifa_url,tactics_video_url,faces_video_url,founded
 113,Cerro Porteño,13,img/equipos/Cerro Porteño.png,cerro-porteno,,,,1912,Estadio General Pablo Rojas,45.000,Asunción,El Ciclón,Desconocido
 37,Chelsea,2,img/equipos/Chelsea.png,chelsea,https://sofifa.com/squad/2224390,,,1905,Stamford Bridge,40.343,Londres,Blues,Desconocido
 100,Colo Colo,8,img/equipos/Colo Colo.png,colo-colo,https://sofifa.com/squad/2237546,,,1925,Estadio Monumental,47.347,Santiago,Cacique,58.500
+128,Como,4,img/equipos/Como 1907.png,como,https://sofifa.com/squad/2373718,,,1907,Giuseppe Sinigaglia,12.039,Como,Lariani,Desconocido
 84,Corinthians,7,img/equipos/Corinthians.png,corinthians,https://sofifa.com/squad/2305953,,,1910,Neo Química Arena,47.605,São Paulo,Timão,Desconocido
+129,Cremonese,4,img/equipos/US Cremonese.png,cremonese,https://sofifa.com/squad/2373763,,,1903,Giovanni Zini,16.003,Cremona,I Grigiorossi,Desconocido
 85,Cruzeiro,7,img/equipos/Cruzeiro.png,cruzeiro,https://sofifa.com/squad/2305949,,,1921,Mineirão,61.927,Belo Horizonte,Raposa,95.000 (sep 2025)
 38,Crystal Palace,2,img/equipos/Crystal Palace.png,crystal-palace,https://sofifa.com/squad/2271230,,,1905,Selhurst Park,25.486,Londres,Eagles,Desconocido
 22,Defensa y Justicia,1,img/equipos/Club Social y Deportivo Defensa y Justicia.png,defensa-y-justicia,https://sofifa.com/squad/2213233,,,1935,Norberto Tomaghello,20.000,Buenos Aires,Halcón,12.000
@@ -46,6 +51,7 @@ id,name,league_id,logo,slug,sofifa_url,tactics_video_url,faces_video_url,founded
 64,Espanyol,5,img/equipos/R.C.D. Espanyol.png,rcd-espanyol,https://sofifa.com/squad/2302728,,,1900,Stage Front Stadium,40.000,Barcelona,Pericos,Desconocido
 27,Estudiantes (LP),1,img/equipos/Club Estudiantes de La Plata.png,estudiantes-lp,https://sofifa.com/squad/2211227,,,1905,Jorge Luis Hirschi,30.000,Buenos Aires,Pincha,60.000
 39,Everton,2,img/equipos/Everton.png,everton,https://sofifa.com/squad/2271542,,,1878,Hill Dickinson Stadium (a partir de 2025/26),~53.000 (aproximado),Liverpool,Toffees,Desconocido
+130,Fiorentina,4,img/equipos/Fiorentina.png,fiorentina,https://sofifa.com/squad/2373803,,,1926,Artemio Franchi,43.147,Florencia,La Viola,Desconocido
 86,Flamengo,7,img/equipos/Flamengo.png,flamengo,https://sofifa.com/squad/2305912,,,1895,Maracanã,78.838,Río de Janeiro,Mengão,Desconocido
 87,Fluminense,7,img/equipos/Fluminense.png,fluminense,https://sofifa.com/squad/2305903,,,1902,Maracanã,78.838,Río de Janeiro,Tricolor,Desconocido
 88,Fortaleza,7,img/equipos/Fortaleza.png,fortaleza,https://sofifa.com/squad/2305899,,,1918,Arena Castelão,63.903,Fortaleza,Leão,Desconocido
@@ -55,6 +61,8 @@ id,name,league_id,logo,slug,sofifa_url,tactics_video_url,faces_video_url,founded
 66,Girona,5,img/equipos/Girona F.C..png,girona-fc,https://sofifa.com/squad/2304903,,,1930,Montilivi,14.624,Gerona,Blanquivermells,Desconocido
 12,Godoy Cruz,1,img/equipos/Godoy Cruz.png,godoy-cruz,https://sofifa.com/squad/2213570,,,1921,Malvinas Argentinas,42.000,Mendoza,Tomba,35.000
 89,Grêmio,7,img/equipos/Grêmio.png,gremio,https://sofifa.com/squad/2305893,,,1903,Arena do Grêmio,55.662,Porto Alegre,Tricolor Gaúcho,Desconocido
+131,Génova,4,img/equipos/Genoa CFC.png,genova,https://sofifa.com/squad/2374413,,,1893,Luigi Ferraris,36.685,Génova,Il Grifone,Desconocido
+132,Hellas Verona,4,img/equipos/Hellas Verona FC.png,hellas-verona,https://sofifa.com/squad/2374426,,,1903,Marcantonio Bentegodi,31.045,Verona,I Gialloblu,Desconocido
 13,Huracán,1,img/equipos/Club Atletico Huracan.png,huracan,https://sofifa.com/squad/2211965,,,1908,Tomás Adolfo Ducó,48.314,Buenos Aires,Globo,42.000
 4,Independiente,1,img/equipos/CAI.png,independiente,https://sofifa.com/squad/2211176,None,None,1905,Ricardo Enrique Bochini,52.777,Buenos Aires,Rojo,160.000
 111,Independiente del Valle,12,img/equipos/Independiente del Valle.png,independiente-del-valle,,,,1977,Estadio Banco Guayaquil,12.000,Sangolquí,Negriazules,Desconocido
@@ -67,7 +75,9 @@ id,name,league_id,logo,slug,sofifa_url,tactics_video_url,faces_video_url,founded
 91,Juventude,7,img/equipos/Juventude.png,juventude,https://sofifa.com/squad/2305883,,,1913,Alfredo Jaconi,19.919,Caxias do Sul,Papo,Desconocido
 53,Juventus,4,img/equipos/Juventus FC.png,juventus,https://sofifa.com/squad/2233382,,,1897,Allianz Stadium,41.507,Turín,La Vecchia Signora,Desconocido
 15,Lanús,1,img/equipos/CA Lanus.png,lanus,https://sofifa.com/squad/2211922,,,1915,Ciudad de Lanús,47.027,Buenos Aires,Granate,38.450
+133,Lazio,4,img/equipos/SS Lazio.png,lazio,https://sofifa.com/squad/2374491,,,1900,Olimpico,73.261,Roma,I Biancocelesti,Desconocido
 112,LDU Quito,12,img/equipos/LDU Quito.png,ldu-quito,,,,1930,Estadio Rodrigo Paz Delgado,41.500,Quito,Albos,Desconocido
+134,Lecce,4,img/equipos/US Lecce.png,lecce,https://sofifa.com/squad/2374535,,,1908,Via del Mare,33.876,Lecce,I Salentini,Desconocido
 41,Leeds United,2,img/equipos/Leeds United.png,leeds-united,https://sofifa.com/squad/2271811,,,1919,Elland Road,37.890,Leeds,Whites,Desconocido
 67,Levante,5,img/equipos/Levante U.D..png,levante-ud,https://sofifa.com/squad/2305689,,,1909,Estadio Ciudad de Valencia,26.354,Valencia,Granotas,Desconocido
 114,Libertad,13,img/equipos/Libertad.png,libertad,,,,1905,Estadio Tigo La Huerta,10.000,Asunción,Gumarelo,Desconocido
@@ -88,7 +98,9 @@ id,name,league_id,logo,slug,sofifa_url,tactics_video_url,faces_video_url,founded
 69,Osasuna,5,img/equipos/C.A. Osasuna.png,ca-osasuna,https://sofifa.com/squad/2307649,,,1920,El Sadar,23.516,Pamplona,Rojillos,Desconocido
 93,Palmeiras,7,img/equipos/Palmeiras.png,palmeiras,https://sofifa.com/squad/2305876,,,1914,Allianz Parque,43.713,São Paulo,Verdão,Desconocido
 51,Paris Saint-Germain,3,img/equipos/Paris Saint Germain.png,paris-saint-germain,https://sofifa.com/squad/2215506,https://youtu.be/xRbSOiYRTOU?si=AOqcl1e84GBiNyoo,,1970,Parc des Princes,"47,929",Paris,Les Parisiens,Desconocido
+135,Parma,4,img/equipos/Parma Calcio 1913.png,parma,https://sofifa.com/squad/2374564,,,1913,Ennio Tardini,22.350,Parma,I Crociati,Desconocido
 121,Peñarol,15,img/equipos/Penarol.png,penarol,,,,1891,Estadio Campeón del Siglo,40.000,Montevideo,Carboneros,Desconocido
+136,Pisa,4,img/equipos/Pisa Sporting Club.png,pisa,https://sofifa.com/squad/2375299,,,1909,Arena Garibaldi,12.508,Pisa,Nerazzurri,Desconocido
 24,Platense,1,img/equipos/Club Atletico Platense.png,platense,https://sofifa.com/squad/2211900,,,1905,Ciudad de Vicente López,28.320,Buenos Aires,Calamar,15.000
 3,Racing Club,1,img/equipos/Racing Club.png,racing-club,https://sofifa.com/squad/2211138,None,None,1903,Presidente PerónNone,50.880,Buenos Aires,Academia,103.422
 72,Rayo Vallecano,5,img/equipos/Rayo Vallecano.png,rayo-vallecano,https://sofifa.com/squad/2307662,,,1924,Estadio de Vallecas,14.505,Madrid,Franjirrojos,Desconocido
@@ -105,6 +117,7 @@ id,name,league_id,logo,slug,sofifa_url,tactics_video_url,faces_video_url,founded
 30,San Martín (SJ),1,img/equipos/Club Atlético San Martín.png,san-martin-sj,https://sofifa.com/squad/2217307,,,1907,Ingeniero Hilario Sánchez,25.250,San Juan,Verdinegro,15.000
 95,Santos,7,img/equipos/Santos.png,santos,https://sofifa.com/squad/2305861,,,1912,Vila Belmiro,16.068,Santos,Peixe,Desconocido
 17,Sarmiento,1,img/equipos/Sarmiento de Junin.png,sarmiento,https://sofifa.com/squad/2214179,,,1911,Eva Perón,22.000,Buenos Aires,Verde,10.000
+137,Sassuolo,4,img/equipos/US Sassuolo.png,sassuolo,https://sofifa.com/squad/2375308,,,1920,MAPEI Stadium,21.584,Sassuolo,I Neroverdi,Desconocido
 74,Sevilla,5,img/equipos/Sevilla F.C..png,sevilla-fc,https://sofifa.com/squad/2310285,,,1890,Ramón Sánchez Pizjuán,43.833,Sevilla,Hispalenses,Desconocido
 96,Sport Recife,7,img/equipos/Sport.png,sport,https://sofifa.com/squad/2258978,,,1905,Ilha do Retiro,32.983,Recife,Leão,Desconocido
 117,Sporting Cristal,14,img/equipos/Sporting Cristal.png,sporting-cristal,,,,1955,Estadio Alberto Gallardo,18.000,Lima,Cerveceros,Desconocido
@@ -112,8 +125,10 @@ id,name,league_id,logo,slug,sofifa_url,tactics_video_url,faces_video_url,founded
 97,São Paulo,7,img/equipos/São Paulo.png,sao-paulo,https://sofifa.com/squad/2305858,,,1930,Morumbi,72.039,São Paulo,Tricolor Paulista,Desconocido
 7,Talleres,1,img/equipos/Club Atlético Talleres.png,talleres,https://sofifa.com/squad/2211241,,,1913,Mario Alberto Kempes,57.000,Córdoba,Matador,74.262
 25,Tigre,1,img/equipos/Club Atletico Tigre.png,tigre,https://sofifa.com/squad/2213585,,,1902,José Dellagiovanna,26.282,Buenos Aires,Matador,20.000
+138,Torino,4,img/equipos/Torino FC.png,torino,https://sofifa.com/squad/2375319,,,1906,Olímpico de Turín,28.140,Turín,Il Toro,Desconocido
 48,Tottenham Hotspur,2,img/equipos/Tottenham Hotspur.png,tottenham-hotspur,https://sofifa.com/squad/2226770,,,1882,Tottenham Hotspur Stadium,62.850,Londres,Spurs,Desconocido
 101,U de Chile,8,img/equipos/UdeChile.png,u-de-chile,https://sofifa.com/squad/2237646,,,1927,Estadio Nacional Julio Martínez Prádanos,48.665,Santiago,La U,40.000
+139,Udinese,4,img/equipos/Udinese Calcio.png,udinese,https://sofifa.com/squad/2375324,,,1896,Bluenergy Stadium,25.144,Údine,I Bianconeri,Desconocido
 118,Universitario,14,img/equipos/Universitario.png,universitario,,,,1924,Estadio Monumental de la U,80.000,Lima,Cremas,Desconocido
 18,Unión,1,img/equipos/Club Atletico Union Santa Fe.png,union,https://sofifa.com/squad/2214213,,,1907,15 de Abril,28.000,Santa Fe,Tatengue,26.000
 75,Valencia,5,img/equipos/Valencia C.F..png,valencia-cf,https://sofifa.com/squad/2310335,,,1919,Mestalla,48.600,Valencia,Che,Desconocido
